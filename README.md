@@ -1,6 +1,6 @@
 ### Microfan's Smart Contract Security Knowledge Base
 
-#### 前言
+#### 动机
 
 相比于个人网站，我似乎更需要一个个人的知识库。我的学习总是东一块，西一块不成体系，希望自己在构建知识库的过程中，可以逐渐明晰学习的路线，方便复习。
 
@@ -12,26 +12,5 @@ git commit -m '说明'      #提交到本地仓库
 git push origin master   #推送到GitHub网站上
 ```
 
-#### Directory
-
-##### most used smart contracts
-
-- [ ] Token contracts
-- [ ] Proxies
-- [ ] Masterchef
-- [ ] Compound
-- [ ] UniswapV2
-  - [x] UniswapV2Factory
-  - [ ] UniswapV2Pair
-
-
-##### recurrence
-
-- 20230218 - RevertFinance
-
-##### enviroment
-
-- foundry
-
-......加载中
+已经将知识库维护的命令做成了一个脚本，可以更加方便的更新。
 
