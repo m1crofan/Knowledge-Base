@@ -54,6 +54,75 @@ uniswap支持闪电贷
 
 ![](https://raw.githubusercontent.com/m1crofan/image/main/Uniswap.png)
 
+### Pair合约
+
+pair合约主要有三个功能：mint、burn、swap
+
+#### mint
+
+将用户转过来的token pair(同时转两种货币)换成代表流动性的token
+
+```solidity
+function mint(address to) external lock returns (uint256 liquidity)
+```
+
+`getReserves()` 是一个只读函数，返回合约在最新一笔用户转账之前账户的两种货币储备量
+
+```solidity
+(uint112 _reserve0, uint112 _reserve1, ) = getReserves();
+```
+
+获取当前合约拥有的token0、token1的数量并赋值给balance0（包括了最新一笔用户转账）
+
+```solidity
+uint256 balance0 = IERC20(token0).balanceOf(address(this));
+uint256 balance1 = IERC20(token1).balanceOf(address(this));
+```
+
+获取代表流动性token的总量
+
+```solidity
+uint256 _totalSupply = totalSupply;
+```
+
+当代表流动性token的总量为0时，基于安全考虑转1000流动性代币给地址零。流动性等于两种代币数量的乘积开根号再减去1000。
+
+当代表流动性token的总量不为0时，按照两种代币中用户提供代币的数量比上资金池的储量最小的比例，等比例分配流动性
+
+```solidity
+if (_totalSupply == 0) {
+	liquidity = Math.sqrt(amount0.mul(amount1)).sub(MINIMUM_LIQUIDITY);
+    _mint(address(0), MINIMUM_LIQUIDITY); 
+        } else {
+            liquidity = Math.min(
+                amount0.mul(_totalSupply) / _reserve0,
+                amount1.mul(_totalSupply) / _reserve1
+            );
+        }
+```
+
+铸造流动性给to地址
+
+```solidity
+_mint(to, liquidity);
+```
+
+更新储备量
+
+```solidity
+_update(balance0, balance1, _reserve0, _reserve1);
+```
+
+#### burn
+
+将用户持有的流动性代币销毁，换成两种代币
+
+核心就是铸造的反向操作
+
+#### swap
+
+一种代币换成另一种代币
+
 
 
 ### 学习资料

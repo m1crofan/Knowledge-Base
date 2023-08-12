@@ -26,9 +26,9 @@ contract UniswapV2Pair is IUniswapV2Pair, UniswapV2ERC20 {
     uint112 private reserve0; // 储备量0
     uint112 private reserve1; // 储备量1
     uint32 private blockTimestampLast; // 更新储备量的最后时间戳
-    //价格0最后累计
+    //价格0最新累计
     uint256 public price0CumulativeLast;
-    //价格1最后累计
+    //价格1最新累计
     uint256 public price1CumulativeLast;
 
     //在最近一次流动性事件之后的K值
@@ -126,6 +126,12 @@ contract UniswapV2Pair is IUniswapV2Pair, UniswapV2ERC20 {
      * @param value 数额
      * @dev 私有安全发送
      */
+    /**
+     * @param private 只能被本合约的其他函数调用
+     * @param public  
+     * @param external 不能被本合约以及继承本合约的子合约访问
+     * @param internal 只能被本合约以及继承本合约的子合约访问
+     */
     function _safeTransfer(
         address token,
         address to,
@@ -200,6 +206,7 @@ contract UniswapV2Pair is IUniswapV2Pair, UniswapV2ERC20 {
         returns (bool feeOn)
     {
         //查询工厂合约的feeTo变量值
+        //静态调用的方式
         address feeTo = IUniswapV2Factory(factory).feeTo();
         //如果feeTo不等于0地址,feeOn等于true否则为false
         feeOn = feeTo != address(0);
@@ -353,7 +360,7 @@ contract UniswapV2Pair is IUniswapV2Pair, UniswapV2ERC20 {
         address to,
         bytes calldata data
     ) external lock {
-        //确认amount0Out和amount1Out都大于0
+        //确认amount0Out或amount1Out都大于0
         require(
             amount0Out > 0 || amount1Out > 0,
             "UniswapV2: INSUFFICIENT_OUTPUT_AMOUNT"
@@ -382,6 +389,7 @@ contract UniswapV2Pair is IUniswapV2Pair, UniswapV2ERC20 {
             //如果`输出数量1` > 0 安全发送`输出数量1`的token1到to地址
             if (amount1Out > 0) _safeTransfer(_token1, to, amount1Out); // optimistically transfer tokens
             //如果data的长度大于0 调用to地址的接口
+            //用于配合路由合约进行闪电贷
             if (data.length > 0)
                 IUniswapV2Callee(to).uniswapV2Call(
                     msg.sender,
