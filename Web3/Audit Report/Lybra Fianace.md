@@ -54,8 +54,8 @@ modifier checkRole(bytes32 role) {
 ```solidity
 modifier onlyRole(bytes32 role) {
     require(GovernanceTimelock.checkOnlyRole(role, msg.sender),"onlyRole");
-    _;
-    }
+ 	_;
+}
 
 modifier checkRole(bytes32 role) {
     require(GovernanceTimelock.checkOnlyRole(role, msg.sender),"onlyRole");
