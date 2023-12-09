@@ -78,11 +78,11 @@ comment=%3Cscript%3E%2F*%2BBad%2Bstuff%2Bhere...%2B*%2F%3C%2Fscript%3E
 
 #### what is DOM-based cross-site scripting
 
-当js从攻击者**可控的来源**获取并将其传递到支持动态代码执行的接收器(如eval()或innerHTML)时，通常会出现基于DOM的xss漏洞。这使攻击者能够执行恶意JS
+当js从攻击者可控的来源（如URL）获取数据并将其传递到支持动态代码执行的接收器（如`eval()`或`innerHTML`）时，通常会出现基于DOM的XSS漏洞。
 
-若要提供基于DOM的xss攻击，需要将数据放入源中，以便将其传播到接收器并导致执行任意javascript。
-
-DOM XSS 最常见的来源是URL，通常使用`windows.location`对象访问该URL。攻击者可以构造一个链接，将受害者发送到易受攻击的页面，并在查询字符串和URL的片段部分中包含payload。
-
-
+>**eval()**
+>
+>The `eval()` function is a global functionn in JS that evaluates a strings as if it were JavaScript code and executes it.
+>
+>
 
