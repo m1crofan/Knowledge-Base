@@ -1,0 +1,2412 @@
+<!DOCTYPE html>
+<!-- saved from url=(0044)https://www.cnblogs.com/gk0d/p/16905038.html -->
+<html lang="zh-cn" style="--olcb-folder-code-block-max-height: 80vh; --cnb-code-bg: rgb(245, 245, 245); --cnb-code-font-size: 12px; --cnb-code-color: rgb(68, 68, 68);" mode="light" theme="e"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="origin-when-cross-origin">
+    <meta name="description" content="逻辑漏洞 逻辑漏洞是指由于程序逻辑输入管控不严或者逻辑太复杂，导致程序不能够正常处理或处理错误，逻辑漏洞根据功能需求的不同产生的漏洞方式也不同。一般出现在网站程序的登录注册、密码找回、验证方式、信息查看、交易支付金额等地方。 这类漏洞不同于常见WEB漏洞，常见WEB漏洞都可以总结为一定的范式，而逻辑">
+    <meta property="og:description" content="逻辑漏洞 逻辑漏洞是指由于程序逻辑输入管控不严或者逻辑太复杂，导致程序不能够正常处理或处理错误，逻辑漏洞根据功能需求的不同产生的漏洞方式也不同。一般出现在网站程序的登录注册、密码找回、验证方式、信息查看、交易支付金额等地方。 这类漏洞不同于常见WEB漏洞，常见WEB漏洞都可以总结为一定的范式，而逻辑">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>逻辑漏洞挖掘 - gk0d - 博客园</title>
+    <link id="favicon" rel="shortcut icon" href="https://common.cnblogs.com/favicon.svg" type="image/svg+xml">
+    
+    <style>#home :not(.cnblogs_code):not(.cnblogs_Highlighter)>pre:not([highlighted]):not([class*="brush:"]) code:not(.hljs), :not(.cnblogs_code):not(.cnblogs_Highlighter)>pre:not([highlighted]):not([class*="brush:"]) code:not(.hljs) {background: rgb(245, 245, 245);
+        padding: 12px;
+        border: 0.770416px solid rgb(204, 204, 204);
+        border-radius: 3px;
+        border-color: transparent;
+        color: rgb(68, 68, 68);
+        font-family: "Courier New", sans-serif;
+        font-size: 12px</style><link rel="stylesheet" href="./逻辑漏洞挖掘_files/blog-common.min.css">
+    
+
+    
+        <link id="highlighter-theme-cnblogs" type="text/css" rel="stylesheet" href="./逻辑漏洞挖掘_files/cnblogs.css">
+    <link type="text/css" rel="stylesheet" href="./逻辑漏洞挖掘_files/custom.css">
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="./逻辑漏洞挖掘_files/mobile-common.min.css">
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/gk0d/rss">
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/gk0d/rsd.xml">
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/gk0d/wlwmanifest.xml">
+    <script>
+        var currentBlogId = 772453;
+        var currentBlogApp = 'gk0d';
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'Custom';
+        var visitorUserId = '';
+        var hasCustomScript = true;
+        window.cb_enable_mathjax = false;
+        window.mathEngine = 1;
+        window.codeHighlightEngine = 1;
+        window.enableCodeLineNumber = false;
+        window.codeHighlightTheme = 'cnblogs';
+        window.darkModeCodeHighlightTheme = 'vs2015';
+        window.isDarkCodeHighlightTheme = false;
+        window.isDarkModeCodeHighlightThemeDark = true;
+        window.isDisableCodeHighlighter = false;
+        window.enableCodeThemeTypeFollowSystem = false;
+        window.enableMacStyleCodeBlock = false;
+    </script>
+        <script>
+            window.currentPostId = 16905038;
+            window.currentPostDateAdded = '2022-11-18 22:12';
+        </script>
+    <script src="./逻辑漏洞挖掘_files/jquery-2.2.0.min.js.下载"></script>
+    <script src="./逻辑漏洞挖掘_files/blog-common.min.js.下载"></script><style>.medium-zoom-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 300ms;
+  will-change: opacity;
+}
+
+.medium-zoom--opened .medium-zoom-overlay {
+  cursor: pointer;
+  cursor: zoom-out;
+  opacity: 1;
+}
+
+.medium-zoom-image {
+  cursor: pointer;
+  cursor: zoom-in;
+  /*
+    The `transition` is marked as "!important" for the animation to happen
+    even though it's overriden by another inline `transition` style attribute.
+
+    This is problematic with frameworks that generate inline styles on their
+    images (e.g. Gatsby).
+
+    See https://github.com/francoischalifour/medium-zoom/issues/110
+   */
+  transition: transform 300ms cubic-bezier(0.2, 0, 0.2, 1) !important;
+}
+
+.medium-zoom-image--hidden {
+  visibility: hidden;
+}
+
+.medium-zoom-image--opened {
+  position: relative;
+  cursor: pointer;
+  cursor: zoom-out;
+  will-change: transform;
+}
+</style><script id="hljs-script" src="./逻辑漏洞挖掘_files/highlight.min.js.下载" type="text/javascript" async=""></script>
+        <script>updateCustomBlogReferrer();</script>
+    
+<meta property="og:image" content="https://img2022.cnblogs.com/blog/3010963/202211/3010963-20221118220011872-804458209.png"><style type="text/css">@font-face {
+  font-family: "xm-iconfont";
+  src: url('//at.alicdn.com/t/font_792691_ptvyboo0bno.eot?t=1574048839056');
+  /* IE9 */
+  src: url('//at.alicdn.com/t/font_792691_ptvyboo0bno.eot?t=1574048839056#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAAksAAsAAAAAEYAAAAjeAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCEUgqTXI8lATYCJAM0CxwABCAFhG0HgTwbZQ4jEbaCkVIj+4sD3sS6BFAp9ka91ulVG4leTC/+h+3V+zyRYCTyREKkcZ+D5/u137lPdveLGJBMunoiNPOQPBMq0/FQtEKIkMRDZng69d+hOiQumAr7bJdBOEzMTU77s78mhbI58aCg7ebCs4LBTgCk+cD/4ZqWUHebipp7al3tyKOjwCV/hVyw9PdzaktxI7IMQs26/1N8gV4DI0bVut3UhCaflGGgwM3oTXg1IfRMbCsmrEnriJVeYM2eXHII4KdMMzL4OoACHgZBCTasITcReDUBE8kWPLMTCGoQaDV+eKpUPQI49r8vP6BTPIDCaiBSml3oOQX0voNPebv/u2P0AUfP1w0s5EADzYBZsNdByylo2eVq/NtRdgFpovQR5x2CIwmIZeik6/u0T/m/A7RJP00sCmmyksj/kwc+LC5BFBqDEMDDjwPiANDB9MpJTXwHmsO3YyBwWDA4OFwwJLRcRgAOBUYMDg0mHRwGTAYozsV0AgWYruDwwExDHfzwKWf4OurQ9jzQDtoF+wpistfBfluQ5bQiiJa4ZQoKhShLiMayBbyg05AIkYBoIBJEEApQy/FwYv4HchADIUBXl61dW6mpwIgyp7p8PrHddieSjhY9oqTxyPB/FGNYDklpfYh8VtaoqSgb0bKoGB17CuVUp9Ll2nS2UpNGMSw9hyirA7C6+QLyByIQS0sSSmxvArC5odZmYZMxZSiBR5OkQl0uiufxMH5eL8t3u0d4XKyuq6EMdcpNe2+oXA8p9yPa+4T1PM7+A54tc7tpl2vcAHAftnhZj2chy1CyaCRFsyMqQ5nkNnskEt2yxxZinPsOZjFm4+XWvKqLkfCGS1k4MNP82isxSMf7ZsGYvQVCNAeSSVtzWCxRdXGxyZlA2CvCEevuO7y9M2z2NWH8icydzq/qAJSp1lGvDWFp6Nw3xChJowPD+76nU+upQk6Kw9jI0Rgym9Ct8VlxMI3CSIaDCZja5tDYt0/EYra4tn0Kp3v8Rdezk8svcy1mKhoSvNcZz3LKlUe777Gmval0s7bzAc0k13LGk896V9DuvNn34N0ebKgItkQgOomuJtgQPChNI4cwa7CEWCvfk5QjJFlem6i3SfVShWi5LTFRG+JwdCNpSqbpRFwrtb1TbcRkJi/AbJJQOmfCdnswLNGVM7qqSRO1zO0Q0j5Vr3cYQ07HB0MX6KoIZhx+D9Djs2C5bXtVwvbgJHtSCIL7hjFJme4sZDdS5IlJdKUO1Qt8opn0trBafz3AX933kmCRgyMEWGZjMAkRKhwmIHJGR4ruwFCdWKYzrap2R/mvd2UKajzRAZu88pGAD90Y+02kTFCKrBSXwGGJ3wRcPCdIppTxSmHOfESRwIli0S5J/8AYDCxTGh4XZua4xvfvGx320rDK2qA8g5FlS7pWNLx71+BwgA/KZ5I0aeKmNeCNoNPl8qNHu8uHHzqaKc86fHi4vPuRI4ny+I/vjxw+clh4HXVCFvVnVFx07EHZwVhSRliTTMWSEi0h6YuS6DxCRmiin0B3L4ry6cvR0ijYexFdBL3wGQM0YOrUAZCBkLOBBtQ+xdk7omfgUv+u++admyUeXduyxLM+r/+49rPfhgEZor6GymToNYksNsZyC7ntwAH0928UpgMpxpF0ydNlsMMBw7QsxTCmu0Hf3F+/+vb99Yumhb+e9R0LBNm+4O+hu7lQ5bGjI9j5G88qQ5SLFyuEC7cwd25xoYo2j4eA4bhpM7TZhPtmc+uhVEVSMYXLWh0bfjI8dvUpvDUocPZmU4kwwOfc83wB5wPehrpD3waApbwW+fgRrZXcxw+mB/3woZT+8JFMYwRMIy2k/18qhqcKpjYeYSnIACaUoRDu0e3kQFh98R5fiI8oJqwwGZSJDSbehLzZs7zIeWTQ4UGOIs2c4j2/Q/tn7n7j9juO33On6WhURCT/wO6Y3QdmWFY0Ef6JUeGRggO7ZbtaZlh5RYKWXbLPBLc3l/5h4A0mu3ZXTZ+u6t6VHMAzZhxak50T+24NnRuaOmehRkXlqVR5lIpuwezUUDUdCuJysv8Z/0/8uNE1s7jIJIubFWnI/x7g4nAZx79yYpFoAOU3a9iwT1O/GxUxPY0ljVPv9EukI3qNrl/So2YfzasqHCroNjS0+w0tlPlsYfC6v/01ixquizJH1Kd/VK+OS3iS3rTJWmqsMPdU3B3oFyC9RSumWE/0gG36IjTysfH51IJ/5oOgNYu6p4yb5Fdufhr/Kjtu0oSyYP/WJQrz35aNFnMhtFcwb55NlNnH8Wdu1b+XZA9zqlZrhdPo/V3uBhiUlQ66h0LhbAmFYIncdFOpVMh6Fl7peqy5Z2ZdQBITO2x1Asj1dRFjIBMC3hbuUh8Ooc4W03EjAdo8UL/t0oUfyU8630bmMcw/vqDNAsC9BQD4OqCgH+ljy0UhJB8AAJA+8EmArxk5gnRLik90AElf8rBm+IMvBTWnucb3+0o0ARk+r0ZBv8sU01nnSmP45/H8Dp8C8X+iE9e+ZvXymK/sQJ5/DuqhYKebPnKmPqLYuDcIMWS2/Rjxp2s8Do821LVn6A/xMK1RKvBLK5gyDsZ5uQ6bYusmx2yqLFe4lECHDPcFhojmckuAbnCI6Cn308RI6AAJdtCICQLQyBHKhSgX5YowN6BBPIEB8VxuSfNncpAuutzPnCSiDHDEo+DsKQBPoJi4MpRktepIs2zjO5h84IEMM3ffECKSZU1ZHxfewEI4h494MuuUNNOBjuw18QKHAzEXaAcylS3m3baq9MpnKenYmfEUgCdbXTHEtTVKsvruNGv9/DuYfOAhcuKu9TeEiA9nNJTUDOUbbVkn3sv2eDJrEnVrpvcHOjJeqRsOcpYYLuxoBzKVtCOm3ZaKbtJcurw+e/zN6c7Pd6r4gqUo0WLEiiOueOITvwQkKCEJM9nO3F60y5HkqLhdqUyXZtK3lqwReQ+G40O92UhOt0x/KmKM+u7LTPMzoEBOCYtiUPfSjODiuFXjSDm2idzAoc4Tj9bs2eJYDOU7HQA=') format('woff2'), url('//at.alicdn.com/t/font_792691_ptvyboo0bno.woff?t=1574048839056') format('woff'), url('//at.alicdn.com/t/font_792691_ptvyboo0bno.ttf?t=1574048839056') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */ url('//at.alicdn.com/t/font_792691_ptvyboo0bno.svg?t=1574048839056#iconfont') format('svg');
+  /* iOS 4.1- */
+}
+.xm-iconfont {
+  font-family: "xm-iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.xm-icon-quanxuan:before {
+  content: "\e62c";
+}
+.xm-icon-caidan:before {
+  content: "\e610";
+}
+.xm-icon-fanxuan:before {
+  content: "\e837";
+}
+.xm-icon-pifu:before {
+  content: "\e668";
+}
+.xm-icon-qingkong:before {
+  content: "\e63e";
+}
+.xm-icon-sousuo:before {
+  content: "\e600";
+}
+.xm-icon-danx:before {
+  content: "\e62b";
+}
+.xm-icon-duox:before {
+  content: "\e613";
+}
+.xm-icon-close:before {
+  content: "\e601";
+}
+.xm-icon-expand:before {
+  content: "\e641";
+}
+.xm-icon-banxuan:before {
+  content: "\e60d";
+}
+</style><style type="text/css">@-webkit-keyframes xm-upbit {
+  from {
+    -webkit-transform: translate3d(0, 30px, 0);
+    opacity: 0.3;
+  }
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+@keyframes xm-upbit {
+  from {
+    transform: translate3d(0, 30px, 0);
+    opacity: 0.3;
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+@-webkit-keyframes loader {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes loader {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+xm-select {
+  background-color: #FFF;
+  position: relative;
+  border: 1px solid #E6E6E6;
+  border-radius: 2px;
+  display: block;
+  width: 100%;
+  cursor: pointer;
+  outline: none;
+}
+xm-select * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 14px;
+  font-weight: 400;
+  text-overflow: ellipsis;
+  user-select: none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+xm-select:hover,
+xm-select:focus {
+  border-color: #C0C4CC;
+}
+xm-select > .xm-tips {
+  color: #999999;
+  padding: 0 10px;
+  position: absolute;
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
+xm-select > .xm-icon {
+  display: inline-block;
+  overflow: hidden;
+  position: absolute;
+  width: 0;
+  height: 0;
+  right: 10px;
+  top: 50%;
+  margin-top: -3px;
+  cursor: pointer;
+  border: 6px dashed transparent;
+  border-top-color: #C2C2C2;
+  border-top-style: solid;
+  transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+}
+xm-select > .xm-icon-expand {
+  margin-top: -9px;
+  transform: rotate(180deg);
+}
+xm-select > .xm-label.single-row {
+  position: absolute;
+  top: 0;
+  bottom: 0px;
+  left: 0px;
+  right: 30px;
+  overflow: auto hidden;
+}
+xm-select > .xm-label.single-row .scroll {
+  overflow-y: hidden;
+}
+xm-select > .xm-label.single-row .label-content {
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+xm-select > .xm-label.auto-row .label-content {
+  flex-wrap: wrap;
+  padding-right: 30px !important;
+}
+xm-select > .xm-label.auto-row .xm-label-block > span {
+  white-space: unset;
+  height: 100%;
+}
+xm-select > .xm-label .scroll .label-content {
+  display: flex;
+  padding: 3px 10px;
+}
+xm-select > .xm-label .xm-label-block {
+  display: flex;
+  position: relative;
+  padding: 0px 5px;
+  margin: 2px 5px 2px 0;
+  border-radius: 3px;
+  align-items: baseline;
+  color: #FFF;
+}
+xm-select > .xm-label .xm-label-block > span {
+  display: flex;
+  color: #FFF;
+  white-space: nowrap;
+}
+xm-select > .xm-label .xm-label-block > i {
+  color: #FFF;
+  margin-left: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+}
+xm-select > .xm-label .xm-label-block.disabled {
+  background-color: #C2C2C2 !important;
+  cursor: no-drop !important;
+}
+xm-select > .xm-label .xm-label-block.disabled > i {
+  cursor: no-drop !important;
+}
+xm-select > .xm-body {
+  position: absolute;
+  left: 0;
+  top: 42px;
+  padding: 5px 0;
+  z-index: 999;
+  width: 100%;
+  min-width: fit-content;
+  border: 1px solid #E6E6E6;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+  animation-name: xm-upbit;
+  animation-duration: 0.3s;
+  animation-fill-mode: both;
+}
+xm-select > .xm-body .scroll-body {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+xm-select > .xm-body .scroll-body::-webkit-scrollbar {
+  width: 8px;
+}
+xm-select > .xm-body .scroll-body::-webkit-scrollbar-track {
+  -webkit-border-radius: 2em;
+  -moz-border-radius: 2em;
+  -ms-border-radius: 2em;
+  border-radius: 2em;
+  background-color: #FFF;
+}
+xm-select > .xm-body .scroll-body::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 2em;
+  -moz-border-radius: 2em;
+  -ms-border-radius: 2em;
+  border-radius: 2em;
+  background-color: #C2C2C2;
+}
+xm-select > .xm-body.up {
+  top: auto;
+  bottom: 42px;
+}
+xm-select > .xm-body.relative {
+  position: relative;
+  display: block !important;
+  top: 0;
+  box-shadow: none;
+  border: none;
+  animation-name: none;
+  animation-duration: 0;
+  min-width: 100%;
+}
+xm-select > .xm-body .xm-group {
+  cursor: default;
+}
+xm-select > .xm-body .xm-group-item {
+  display: inline-block;
+  cursor: pointer;
+  padding: 0 10px;
+  color: #999;
+  font-size: 12px;
+}
+xm-select > .xm-body .xm-option {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 0 10px;
+  cursor: pointer;
+}
+xm-select > .xm-body .xm-option-icon {
+  color: transparent;
+  display: flex;
+  border: 1px solid #E6E6E6;
+  border-radius: 3px;
+  justify-content: center;
+  align-items: center;
+}
+xm-select > .xm-body .xm-option-icon.xm-custom-icon {
+  color: unset;
+  border: unset;
+}
+xm-select > .xm-body .xm-option-icon-hidden {
+  margin-right: -10px;
+}
+xm-select > .xm-body .xm-option-icon.xm-icon-danx {
+  border-radius: 100%;
+}
+xm-select > .xm-body .xm-option-content {
+  display: flex;
+  position: relative;
+  padding-left: 15px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  ;
+  width: calc(100% - 20px);
+}
+xm-select > .xm-body .xm-option.hide-icon .xm-option-content {
+  padding-left: 0;
+}
+xm-select > .xm-body .xm-option.selected.hide-icon .xm-option-content {
+  color: #FFF !important;
+}
+xm-select > .xm-body .xm-option .loader {
+  width: 0.8em;
+  height: 0.8em;
+  margin-right: 6px;
+  color: #C2C2C2;
+}
+xm-select > .xm-body .xm-select-empty {
+  text-align: center;
+  color: #999;
+}
+xm-select > .xm-body .disabled {
+  cursor: no-drop;
+}
+xm-select > .xm-body .disabled:hover {
+  background-color: #FFF;
+}
+xm-select > .xm-body .disabled .xm-option-icon {
+  border-color: #C2C2C2 !important;
+}
+xm-select > .xm-body .disabled .xm-option-content {
+  color: #C2C2C2 !important;
+}
+xm-select > .xm-body .disabled.selected > .xm-option-icon {
+  color: #C2C2C2 !important;
+}
+xm-select > .xm-body .xm-search {
+  background-color: #FFF !important;
+  position: relative;
+  padding: 0 10px;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+xm-select > .xm-body .xm-search > i {
+  position: absolute;
+  color: ;
+}
+xm-select > .xm-body .xm-search-input {
+  border: none;
+  border-bottom: 1px solid #E6E6E6;
+  padding-left: 27px;
+  cursor: text;
+}
+xm-select > .xm-body .xm-paging {
+  padding: 0 10px;
+  display: flex;
+  margin-top: 5px;
+}
+xm-select > .xm-body .xm-paging > span:first-child {
+  border-radius: 2px 0 0 2px;
+}
+xm-select > .xm-body .xm-paging > span:last-child {
+  border-radius: 0 2px 2px 0;
+}
+xm-select > .xm-body .xm-paging > span {
+  display: flex;
+  flex: auto;
+  justify-content: center;
+  vertical-align: middle;
+  margin: 0 -1px 0 0;
+  background-color: #fff;
+  color: #333;
+  font-size: 12px;
+  border: 1px solid #e2e2e2;
+  flex-wrap: nowrap;
+  width: 100%;
+  overflow: hidden;
+  min-width: 50px;
+}
+xm-select > .xm-body .xm-toolbar {
+  padding: 0 10px;
+  display: flex;
+  margin: -3px 0;
+  cursor: default;
+}
+xm-select > .xm-body .xm-toolbar .toolbar-tag {
+  cursor: pointer;
+  display: flex;
+  margin-right: 20px;
+  color: ;
+  align-items: baseline;
+}
+xm-select > .xm-body .xm-toolbar .toolbar-tag:hover {
+  opacity: 0.8;
+}
+xm-select > .xm-body .xm-toolbar .toolbar-tag:active {
+  opacity: 1;
+}
+xm-select > .xm-body .xm-toolbar .toolbar-tag > i {
+  margin-right: 2px;
+  font-size: 14px;
+}
+xm-select > .xm-body .xm-toolbar .toolbar-tag:last-child {
+  margin-right: 0;
+}
+xm-select > .xm-body .xm-body-custom {
+  line-height: initial;
+  cursor: default;
+}
+xm-select > .xm-body .xm-body-custom * {
+  box-sizing: initial;
+}
+xm-select > .xm-body .xm-tree {
+  position: relative;
+}
+xm-select > .xm-body .xm-tree-icon {
+  display: inline-block;
+  margin-right: 3px;
+  cursor: pointer;
+  border: 6px dashed transparent;
+  border-left-color: #C2C2C2;
+  border-left-style: solid;
+  transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  z-index: 2;
+  visibility: hidden;
+}
+xm-select > .xm-body .xm-tree-icon.expand {
+  margin-top: 3px;
+  margin-right: 5px;
+  margin-left: -2px;
+  transform: rotate(90deg);
+}
+xm-select > .xm-body .xm-tree-icon.xm-visible {
+  visibility: visible;
+}
+xm-select > .xm-body .xm-tree .left-line {
+  position: absolute;
+  left: 13px;
+  width: 0;
+  z-index: 1;
+  border-left: 1px dotted #c0c4cc !important;
+}
+xm-select > .xm-body .xm-tree .top-line {
+  position: absolute;
+  left: 13px;
+  height: 0;
+  z-index: 1;
+  border-top: 1px dotted #c0c4cc !important;
+}
+xm-select > .xm-body .xm-tree .xm-tree-icon + .top-line {
+  margin-left: 1px;
+}
+xm-select > .xm-body .scroll-body > .xm-tree > .xm-option > .top-line,
+xm-select > .xm-body .scroll-body > .xm-option > .top-line {
+  width: 0 !important;
+}
+xm-select > .xm-body .xm-cascader-box {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  padding: 5px 0;
+  border: 1px solid #E6E6E6;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+  margin: -1px;
+}
+xm-select > .xm-body .xm-cascader-box::before {
+  content: ' ';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-right-color: #E6E6E6;
+  top: 10px;
+  left: -12px;
+}
+xm-select > .xm-body .xm-cascader-box::after {
+  content: ' ';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-right-color: #fff;
+  top: 10px;
+  left: -11px;
+}
+xm-select > .xm-body .xm-cascader-scroll {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+xm-select > .xm-body.cascader {
+  width: unset;
+  min-width: unset;
+}
+xm-select > .xm-body.cascader .xm-option-content {
+  padding-left: 8px;
+}
+xm-select > .xm-body.cascader .disabled .xm-right-arrow {
+  color: #C2C2C2 !important;
+}
+xm-select > .xm-body.cascader .hide-icon.disabled .xm-right-arrow {
+  color: #999 !important;
+}
+xm-select .xm-input {
+  cursor: pointer;
+  border-radius: 2px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #E6E6E6;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #FFF;
+  line-height: 1.3;
+  padding-left: 10px;
+  outline: 0;
+  user-select: text;
+  -ms-user-select: text;
+  -moz-user-select: text;
+  -webkit-user-select: text;
+}
+xm-select .dis {
+  display: none;
+}
+xm-select .loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+xm-select .loader {
+  border: 0.2em dotted currentcolor;
+  border-radius: 50%;
+  -webkit-animation: 1s loader linear infinite;
+  animation: 1s loader linear infinite;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  color: inherit;
+  vertical-align: middle;
+  pointer-events: none;
+}
+xm-select .xm-select-default {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: none;
+  visibility: hidden;
+}
+xm-select .xm-select-disabled {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  cursor: no-drop;
+  z-index: 2;
+  opacity: 0.3;
+  background-color: #FFF;
+}
+xm-select .item--divided {
+  border-top: 1px solid #ebeef5;
+  width: calc(100% - 20px);
+  cursor: initial;
+}
+xm-select .xm-right-arrow {
+  position: absolute;
+  color: ;
+  right: 5px;
+  top: -1px;
+  font-weight: 700;
+  transform: scale(0.6, 1);
+}
+xm-select .xm-right-arrow::after {
+  content: '>';
+}
+xm-select[size='large'] {
+  min-height: 40px;
+  line-height: 40px;
+}
+xm-select[size='large'] .xm-input {
+  height: 40px;
+}
+xm-select[size='large'] .xm-label .scroll .label-content {
+  line-height: 34px;
+}
+xm-select[size='large'] .xm-label .xm-label-block {
+  height: 30px;
+  line-height: 30px;
+}
+xm-select[size='large'] .xm-body .xm-option .xm-option-icon {
+  height: 20px;
+  width: 20px;
+  font-size: 20px;
+}
+xm-select[size='large'] .xm-paging > span {
+  height: 34px;
+  line-height: 34px;
+}
+xm-select[size='large'] .xm-tree .left-line {
+  height: 100%;
+  bottom: 20px;
+}
+xm-select[size='large'] .xm-tree .left-line-group {
+  height: calc(100% - 40px);
+}
+xm-select[size='large'] .xm-tree .xm-tree-icon.xm-hidden + .top-line {
+  top: 19px;
+}
+xm-select[size='large'] .item--divided {
+  margin: 10px;
+}
+xm-select {
+  min-height: 36px;
+  line-height: 36px;
+}
+xm-select .xm-input {
+  height: 36px;
+}
+xm-select .xm-label .scroll .label-content {
+  line-height: 30px;
+}
+xm-select .xm-label .xm-label-block {
+  height: 26px;
+  line-height: 26px;
+}
+xm-select .xm-body .xm-option .xm-option-icon {
+  height: 18px;
+  width: 18px;
+  font-size: 18px;
+}
+xm-select .xm-paging > span {
+  height: 30px;
+  line-height: 30px;
+}
+xm-select .xm-tree .left-line {
+  height: 100%;
+  bottom: 18px;
+}
+xm-select .xm-tree .left-line-group {
+  height: calc(100% - 36px);
+}
+xm-select .xm-tree .xm-tree-icon.xm-hidden + .top-line {
+  top: 17px;
+}
+xm-select .item--divided {
+  margin: 9px;
+}
+xm-select[size='small'] {
+  min-height: 32px;
+  line-height: 32px;
+}
+xm-select[size='small'] .xm-input {
+  height: 32px;
+}
+xm-select[size='small'] .xm-label .scroll .label-content {
+  line-height: 26px;
+}
+xm-select[size='small'] .xm-label .xm-label-block {
+  height: 22px;
+  line-height: 22px;
+}
+xm-select[size='small'] .xm-body .xm-option .xm-option-icon {
+  height: 16px;
+  width: 16px;
+  font-size: 16px;
+}
+xm-select[size='small'] .xm-paging > span {
+  height: 26px;
+  line-height: 26px;
+}
+xm-select[size='small'] .xm-tree .left-line {
+  height: 100%;
+  bottom: 16px;
+}
+xm-select[size='small'] .xm-tree .left-line-group {
+  height: calc(100% - 32px);
+}
+xm-select[size='small'] .xm-tree .xm-tree-icon.xm-hidden + .top-line {
+  top: 15px;
+}
+xm-select[size='small'] .item--divided {
+  margin: 8px;
+}
+xm-select[size='mini'] {
+  min-height: 28px;
+  line-height: 28px;
+}
+xm-select[size='mini'] .xm-input {
+  height: 28px;
+}
+xm-select[size='mini'] .xm-label .scroll .label-content {
+  line-height: 22px;
+}
+xm-select[size='mini'] .xm-label .xm-label-block {
+  height: 18px;
+  line-height: 18px;
+}
+xm-select[size='mini'] .xm-body .xm-option .xm-option-icon {
+  height: 14px;
+  width: 14px;
+  font-size: 14px;
+}
+xm-select[size='mini'] .xm-paging > span {
+  height: 22px;
+  line-height: 22px;
+}
+xm-select[size='mini'] .xm-tree .left-line {
+  height: 100%;
+  bottom: 14px;
+}
+xm-select[size='mini'] .xm-tree .left-line-group {
+  height: calc(100% - 28px);
+}
+xm-select[size='mini'] .xm-tree .xm-tree-icon.xm-hidden + .top-line {
+  top: 13px;
+}
+xm-select[size='mini'] .item--divided {
+  margin: 7px;
+}
+.layui-form-pane xm-select {
+  margin: -1px -1px -1px 0;
+}
+</style><link rel="stylesheet" href="./逻辑漏洞挖掘_files/lightbox.min.css"><style data-id="immersive-translate-input-injected-css">.immersive-translate-input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 2147483647;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.immersive-translate-loading-spinner {
+  vertical-align: middle !important;
+  width: 10px !important;
+  height: 10px !important;
+  display: inline-block !important;
+  margin: 0 4px !important;
+  border: 2px rgba(221, 244, 255, 0.6) solid !important;
+  border-top: 2px rgba(0, 0, 0, 0.375) solid !important;
+  border-left: 2px rgba(0, 0, 0, 0.375) solid !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  -webkit-animation: immersive-translate-loading-animation 0.6s infinite linear !important;
+  animation: immersive-translate-loading-animation 0.6s infinite linear !important;
+}
+
+@-webkit-keyframes immersive-translate-loading-animation {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+
+  to {
+    -webkit-transform: rotate(359deg);
+  }
+}
+
+@keyframes immersive-translate-loading-animation {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+
+.immersive-translate-input-loading {
+  --loading-color: #f78fb6;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: block;
+  margin: 12px auto;
+  position: relative;
+  color: white;
+  left: -100px;
+  box-sizing: border-box;
+  animation: immersiveTranslateShadowRolling 1.5s linear infinite;
+}
+
+@keyframes immersiveTranslateShadowRolling {
+  0% {
+    box-shadow: 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0);
+  }
+
+  12% {
+    box-shadow: 100px 0 var(--loading-color), 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0);
+  }
+
+  25% {
+    box-shadow: 110px 0 var(--loading-color), 100px 0 var(--loading-color), 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0);
+  }
+
+  36% {
+    box-shadow: 120px 0 var(--loading-color), 110px 0 var(--loading-color), 100px 0 var(--loading-color), 0px 0 rgba(255, 255, 255, 0);
+  }
+
+  50% {
+    box-shadow: 130px 0 var(--loading-color), 120px 0 var(--loading-color), 110px 0 var(--loading-color), 100px 0 var(--loading-color);
+  }
+
+  62% {
+    box-shadow: 200px 0 rgba(255, 255, 255, 0), 130px 0 var(--loading-color), 120px 0 var(--loading-color), 110px 0 var(--loading-color);
+  }
+
+  75% {
+    box-shadow: 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 130px 0 var(--loading-color), 120px 0 var(--loading-color);
+  }
+
+  87% {
+    box-shadow: 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 130px 0 var(--loading-color);
+  }
+
+  100% {
+    box-shadow: 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0);
+  }
+}
+
+
+.immersive-translate-search-recomend {
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  position: relative;
+  font-size: 16px;
+}
+.immersive-translate-search-enhancement-en-title {
+  color: #4d5156;
+}
+/* dark */
+@media (prefers-color-scheme: dark) {
+  .immersive-translate-search-recomend {
+    border: 1px solid #3c4043;
+  }
+  .immersive-translate-close-action svg {
+    fill: #bdc1c6;
+  }
+
+.immersive-translate-search-enhancement-en-title {
+  color: #bdc1c6;
+}
+}
+
+
+.immersive-translate-search-settings {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  cursor: pointer;
+}
+
+.immersive-translate-search-recomend::before {
+  /* content: " "; */
+  /* width: 20px; */
+  /* height: 20px; */
+  /* top: 16px; */
+  /* position: absolute; */
+  /* background: center / contain url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAxlBMVEUAAADpTInqTIjpSofnSIfqS4nfS4XqS4nqTIjsTYnrTInqTIroS4jvQIDqTIn////+/v7rSYjpTIn8/v7uaZzrTIr9/f3wfansWJL88/b85e73qc39+/v3xNnylrvrVI/98fb62Obva5/8+fr76vH4y9zpSIj74e353Oj1ocTzm77xhK/veKbtYpjsXJTqU47oTInxjrXyh7L99fj40eH2ttH1udD3sc31ssz1rMnykLXucqPtbqD85e/1xdn2u9DzqcXrUY6FaJb8AAAADnRSTlMA34BgIM8Q37/fz7+/EGOHcVQAAAGhSURBVDjLhZPncuowEEZFTW7bXVU7xsYYTO/p7bb3f6lICIOYJOT4h7/VnFmvrBFjrF3/CR/SajBHswafctG0Qg3O8O0Xa8BZ6uw7eLjqr30SofCDVSkemMinfL1ecy20r5ygR5zz3ArcAqJExPTPKhDENEmS30Q9+yo4lEQkqVTiIEAHCT10xWERRdH0Bq0aCOPZNDV3s0xaYce1lHEoDHU8wEh3qRJypNcTAeKUIjgKMeGLDoRCLVLTVf+Ownj8Kk6H9HM6QXPgYjQSB0F00EJEu10ILQrs/QeP77BSSr0MzLOyuJJQbnUoOOIUI/A8EeJk9E4YUHUWiRyTVKGgQUB8/3e/NpdGlfI+FMQyWsCBWyz4A/ZyHXyiiz0Ne5aGZssoxRmcChw8/EFKQ5JwwkUo3FRT5yXS7q+Y/rHDZmFktzpGMvO+5QofA4FPpEmGw+EWRCFvnaof7Zhe8NuYSLR0xErKLThUSs8gnODh87ssy6438yzbLzxl012HS19vfCf3CNhnbWOL1eEsDda+gDPUvri8tSZzNFrwIZf1NmNvqC1I/t8j7nYAAAAASUVORK5CYII='); */
+}
+
+.immersive-translate-search-title {}
+
+.immersive-translate-search-title-wrapper {}
+
+.immersive-translate-search-time {
+  font-size: 12px;
+  margin: 4px 0 24px;
+  color: #70757a;
+}
+
+.immersive-translate-expand-items {
+  display: none;
+}
+
+.immersive-translate-search-more {
+  margin-top: 16px;
+  font-size: 14px;
+}
+
+.immersive-translate-modal {
+  display: none;
+  position: fixed;
+  z-index: 1000000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+  font-size:15px;
+}
+
+.immersive-translate-modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 500px;
+  font-family: system-ui, -apple-system, "Segoe UI", "Roboto", "Ubuntu",
+    "Cantarell", "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+.immersive-translate-modal-title {
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin-bottom: 20px;
+  color: hsl(205, 20%, 32%);
+}
+
+.immersive-translate-modal-body {
+  color: hsl(205, 20%, 32%)
+}
+
+.immersive-translate-close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.immersive-translate-close:hover,
+.immersive-translate-close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.immersive-translate-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.immersive-translate-btn {
+  width: fit-content;
+  color: #fff;
+  background-color: #ea4c89;
+  border: none;
+  font-size: 14px;
+  margin: 5px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.immersive-translate-btn:hover {
+  background-color: #f082ac;
+}
+.immersive-translate-cancel-btn {
+  /* gray color */
+  background-color: rgb(89, 107, 120);
+}
+
+
+.immersive-translate-cancel-btn:hover {
+  background-color: hsl(205, 20%, 32%);
+}
+
+
+.immersive-translate-btn svg {
+  margin-right: 5px;
+}
+
+.immersive-translate-link {
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-drag: none;
+  text-decoration: none;
+  color: #007bff;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, .1);
+}
+
+.immersive-translate-primary-link {
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-drag: none;
+  text-decoration: none;
+  color: #ea4c89;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, .1);
+}
+
+.immersive-translate-modal input[type="radio"] {
+  margin: 0 6px;
+  cursor: pointer;
+}
+
+.immersive-translate-modal label {
+  cursor: pointer;
+}
+
+.immersive-translate-close-action {
+  position: absolute;
+  top: 2px;
+  right: 0px;
+  cursor: pointer;
+}
+</style></head>
+<body class="skin-custom no-navbar hljs-engine">
+    <a name="top"></a>
+    <div id="top_nav" class="navbar forpc navbar-custom">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding">
+                    <a href="https://www.cnblogs.com/" title="开发者的网上家园" role="banner">
+                        <img src="./逻辑漏洞挖掘_files/logo.svg" alt="博客园Logo">
+                    </a>
+                </li>
+                <li><a href="https://cnblogs.vip/">会员</a></li>
+                <li>
+                    <a href="https://news.cnblogs.com/" onclick="countClicks(&#39;nav&#39;, &#39;skin-navbar-news&#39;)">新闻</a>
+                </li>
+                <li>
+                    <a href="https://q.cnblogs.com/" onclick="countClicks(&#39;nav&#39;, &#39;skin-navbar-q&#39;)">博问</a>
+                </li>
+                <li>
+                    <a href="https://ing.cnblogs.com/" onclick="countClicks(&#39;nav&#39;, &#39;skin-navbar-ing&#39;)">闪存</a>
+                </li>
+                <li>
+                    <a href="https://edu.cnblogs.com/" onclick="countClicks(&#39;nav&#39;, &#39;skin-navbar-edu&#39;)">班级</a>
+                </li>
+                <li>
+                    <a href="https://ai.hanghang.com/page/4649915" target="_blank">AI培训</a>
+                </li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search dropdown" action="https://zzk.cnblogs.com/s" method="get" role="search">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="search" tabindex="3" autocomplete="off">
+                        <button id="zzk_search_button" onclick="window.navbarSearchManager.triggerActiveOption()">
+                            <img id="search_icon" class="focus-hidden" src="./逻辑漏洞挖掘_files/search.svg" alt="搜索">
+                            <img class="hidden focus-visible" src="./逻辑漏洞挖掘_files/enter.svg" alt="搜索">
+                        </button>
+                        <ul id="navbar_search_options" class="dropdown-menu quick-search-menu">
+                            <li tabindex="0" class="active" onclick="zzkSearch(event, document.getElementById(&#39;zzk_search_input&#39;).value)">
+                                <div class="keyword-wrapper">
+                                    <img src="./逻辑漏洞挖掘_files/search.svg" alt="搜索">
+                                    <div class="keyword"></div>
+                                </div>
+                                <span class="search-area">所有博客</span>
+                            </li>
+                                    <li tabindex="1" onclick="zzkBlogSearch(event, &#39;gk0d&#39;, document.getElementById(&#39;zzk_search_input&#39;).value)">
+                                        <div class="keyword-wrapper">
+                                            <img src="./逻辑漏洞挖掘_files/search.svg" alt="搜索">
+                                            <div class="keyword"></div>
+                                        </div>
+                                        <span class="search-area">当前博客</span>
+                                    </li>
+                        </ul>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔" style="display: none;">
+                        <img id="new_post_icon" class="navbar-icon" src="./逻辑漏洞挖掘_files/newpost.svg" alt="写随笔">
+                    </a>
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客" style="display: none;">
+                        <img id="myblog_icon" class="navbar-icon" src="./逻辑漏洞挖掘_files/myblog.svg" alt="我的博客">
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息" style="display: none;">
+                        <img id="msg_icon" class="navbar-icon" src="./逻辑漏洞挖掘_files/message.svg" alt="短消息">
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <a id="navbar_lite_mode_indicator" data-current-page="blog" style="display: none" href="javascript:void(0)" alt="简洁模式" title="简洁模式启用，您在访问他人博客时会使用简洁款皮肤展示">
+                        <img class="navbar-icon" src="./逻辑漏洞挖掘_files/lite-mode-on.svg" alt="简洁模式">
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown" style="display: none;">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="./逻辑漏洞挖掘_files/avatar-default.svg" alt="用户头像">
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="./逻辑漏洞挖掘_files/lite-mode-check.svg" class="hide" style="display: none;"><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                            <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup" style="display: inline;">注册</a>
+                    <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()" style="display: inline;">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <div id="page_begin_html">
+        <div class="loading" style="display: none;">
+  <div class="box">
+    <h2>Loading</h2>
+    <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+  </div>
+</div>
+    </div>
+
+    <!--done-->
+<div id="home">
+<div id="header"><div class="esa-mobile-menu material-symbols-outlined">menu</div>
+	<div id="blogTitle">
+        <a id="lnkBlogLogo" href="https://www.cnblogs.com/gk0d/"><img id="blogLogo" src="./逻辑漏洞挖掘_files/logo.gif" alt="返回主页"></a>		
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/gk0d/">gk0d</a>
+</h1>
+<h2></h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+
+<li><a class="menu" target="_self" href="https://www.cnblogs.com/gk0d/tag/">标签</a></li><li><a class="menu" target="_self" href="https://www.cnblogs.com/gk0d/p/">归档</a></li>
+
+
+
+<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+		<div class="blogStats">
+			<span id="stats_post_count">随笔 - 22&nbsp; </span>
+<span id="stats_article_count">文章 - 0&nbsp; </span>
+<span id="stats-comment_count">评论 - 0&nbsp; </span>
+<span id="stats-total-view-count">阅读 - 
+<span title="总阅读数: 9260">
+9260</span></span>
+
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		<div id="post_detail">
+    <!--done-->
+    <div id="topics">
+        <div class="post">
+            <h1 class="postTitle">
+                
+<a id="cb_post_title_url" class="postTitle2 vertical-middle" href="https://www.cnblogs.com/gk0d/p/16905038.html">
+    <span role="heading" aria-level="2">逻辑漏洞挖掘</span>
+    
+
+</a>
+
+            </h1>
+            <div class="clear"></div>
+            <div class="postBody">
+                    <div id="cnblogs_post_description" style="display: none">
+        
+        学习常见逻辑漏洞
+    </div>
+<div id="cnblogs_post_body" class="blogpost-body cnblogs-markdown">
+<h1 id="逻辑漏洞">逻辑漏洞<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E" class="esa-anchor" style="opacity: 0;">#</a></h1>
+<p>逻辑漏洞是指由于程序逻辑输入管控不严或者逻辑太复杂，导致程序不能够正常处理或处理错误，逻辑漏洞根据功能需求的不同产生的漏洞方式也不同。一般出现在网站程序的登录注册、密码找回、验证方式、信息查看、交易支付金额等地方。</p>
+<p>这类漏洞不同于常见WEB漏洞，常见WEB漏洞都可以总结为一定的范式，而逻辑漏洞不行</p>
+<p>逻辑漏洞出现的原因也是有很多种，需要有一定个人经验积累才能在代码审计过程中发现此类漏洞</p>
+<h1 id="挖掘思路">挖掘思路<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E6%8C%96%E6%8E%98%E6%80%9D%E8%B7%AF" class="esa-anchor" style="opacity: 0;">#</a></h1>
+<p>首先将所有逻辑漏洞的问题分为前端和后端两个部分，先测试绕过前端规则限制再测试绕过后端规则限制，一般情况下只要能够突破原有规则限制的都就可以算是漏洞。</p>
+<p>挖掘逻辑漏洞总体步骤分为以下三步：</p>
+<ol>
+<li>明确业务逻辑流程，根据业务需求的特点，有针对性的进行测试。</li>
+<li>寻找流程中可以被操控的环节，分析可被操控环节中可能产生的逻辑问题。</li>
+<li>珠宝修改参数触发逻辑问题，重放包对比结果差异。</li>
+</ol>
+<h1 id="业务逻辑漏洞">业务逻辑漏洞<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E" class="esa-anchor" style="opacity: 0;">#</a></h1>
+<ul>
+<li></li>
+</ul>
+<h2 id="登录模块">登录模块<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E7%99%BB%E5%BD%95%E6%A8%A1%E5%9D%97" class="esa-anchor" style="opacity: 0;">#</a></h2>
+<ul>
+<li>暴力破解</li>
+<li>任意用户/密码登陆</li>
+<li>短信/邮箱轰炸</li>
+<li>验证码绕过/爆破/重放/回传</li>
+<li>用户名/手机号枚举</li>
+<li>越权登陆（例如修改数据包中用户ID）</li>
+<li>账号权限绕过（越权）</li>
+<li>Cookie伪造</li>
+<li>用户空密码登陆</li>
+</ul>
+<p><a href="./逻辑漏洞挖掘_files/3010963-20221118220011872-804458209.png" data-title="" data-alt="登陆模块" data-lightbox="roadtrip"><img src="./逻辑漏洞挖掘_files/3010963-20221118220011872-804458209.png" alt="登陆模块" loading="lazy" class="medium-zoom-image"></a></p>
+<h2 id="注册模块">注册模块<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E6%B3%A8%E5%86%8C%E6%A8%A1%E5%9D%97" class="esa-anchor" style="opacity: 0;">#</a></h2>
+<ul>
+<li>前端验证绕过</li>
+<li>用户任意/批量注册</li>
+<li>恶意验证注册账户</li>
+<li>账户重复注册</li>
+<li>用户名/绑定手机号枚举</li>
+<li>注册信息插入XSS</li>
+<li>短信/邮箱轰炸</li>
+<li>验证码绕过/爆破/重放/回传</li>
+<li>其他验证机制绕过</li>
+</ul>
+<p><a href="./逻辑漏洞挖掘_files/3010963-20221118220011594-758559000.png" data-title="" data-alt="注册模块" data-lightbox="roadtrip"><img src="./逻辑漏洞挖掘_files/3010963-20221118220011594-758559000.png" alt="注册模块" loading="lazy" class="medium-zoom-image"></a></p>
+<h2 id="密码找回">密码找回<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E5%AF%86%E7%A0%81%E6%89%BE%E5%9B%9E" class="esa-anchor">#</a></h2>
+<ul>
+<li>任意/批量用户密码重置</li>
+<li>任意邮箱/手机号验证（验证码与绑定用户未统一验证）</li>
+<li>用户绑定手机号枚举</li>
+<li>新密码劫持</li>
+<li>短信验证码劫持/绕过/回传/爆破/重放</li>
+<li>用户邮箱劫持/篡改</li>
+<li>其他验证机制绕过</li>
+</ul>
+<p><a href="./逻辑漏洞挖掘_files/3010963-20221118220012447-2054354929.png" data-title="" data-alt="密码找回" data-lightbox="roadtrip"><img src="./逻辑漏洞挖掘_files/3010963-20221118220012447-2054354929.png" alt="密码找回" loading="lazy" class="medium-zoom-image"></a></p>
+<h2 id="购买支付充值">购买支付/充值<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E8%B4%AD%E4%B9%B0%E6%94%AF%E4%BB%98%E5%85%85%E5%80%BC" class="esa-anchor">#</a></h2>
+<ul>
+<li>商品金额/数量篡改</li>
+<li>替换支付模块</li>
+<li>交易信息泄露</li>
+<li>虚假充值金额</li>
+<li>充值账户/金额/数量篡改</li>
+<li>支付验证绕过</li>
+<li>整数溢出，int最大值为2147483647</li>
+<li>修改本地JS或服务端返回的数据包中的关键值</li>
+</ul>
+<h2 id="个人资料">个人资料<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E4%B8%AA%E4%BA%BA%E8%B5%84%E6%96%99" class="esa-anchor">#</a></h2>
+<ul>
+<li>手机号/用户/邮箱枚举</li>
+<li>修改个人资料插入XSS</li>
+<li>邮箱/用户/手机号篡改</li>
+<li>用户信息遍历/泄露</li>
+<li>越权修改他人账户资料</li>
+</ul>
+<h2 id="抽奖活动">抽奖/活动<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E6%8A%BD%E5%A5%96%E6%B4%BB%E5%8A%A8" class="esa-anchor" style="opacity: 0;">#</a></h2>
+<ul>
+<li>任意抽奖</li>
+<li>盗刷奖品/积分</li>
+<li>抽奖积分/次数篡改</li>
+<li>并发抽奖</li>
+<li>邀请码XSS（验证码URL可能包含用户名，可将用户名修改为XSS代码）</li>
+</ul>
+<h2 id="代金券优惠券">代金券/优惠券<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E4%BB%A3%E9%87%91%E5%88%B8%E4%BC%98%E6%83%A0%E5%88%B8" class="esa-anchor" style="opacity: 0;">#</a></h2>
+<ul>
+<li>批量刷取代金券/优惠券</li>
+<li>更改代金券金额/数量</li>
+<li>更改优惠券数量</li>
+<li>并发逻辑漏洞（burp批量获取优惠劵等）</li>
+</ul>
+<h2 id="订单">订单<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E8%AE%A2%E5%8D%95" class="esa-anchor">#</a></h2>
+<ul>
+<li>订单信息遍历/泄露</li>
+<li>订单信息泄露导致用户信息泄露</li>
+<li>越权修改/删除他人订单</li>
+</ul>
+<h2 id="账户">账户<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E8%B4%A6%E6%88%B7" class="esa-anchor">#</a></h2>
+<ul>
+<li>账户验证绕过</li>
+<li>账户金额篡改</li>
+<li>账户绑定手机号绕过</li>
+<li>账户第三方账户绑定绕过</li>
+</ul>
+<h2 id="会员系统">会员系统<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E4%BC%9A%E5%91%98%E7%B3%BB%E7%BB%9F" class="esa-anchor">#</a></h2>
+<ul>
+<li>用户越权操作访问</li>
+<li>个人资料信息遍历/泄露</li>
+<li>修改个人信息头像上传任意文件</li>
+<li>如果遇到xlsx/docx，可能存在XXE，上传恶意文档盲测</li>
+<li>修改个人信息页面插入XSS</li>
+</ul>
+<h2 id="传输过程">传输过程<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E4%BC%A0%E8%BE%93%E8%BF%87%E7%A8%8B" class="esa-anchor">#</a></h2>
+<ul>
+<li>POST/Cookie注入</li>
+<li>cookie劫持</li>
+<li>修改信息处无session/token导致CSRF</li>
+<li>明文传输账号密码</li>
+</ul>
+<h2 id="评论模块">评论模块<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E8%AF%84%E8%AE%BA%E6%A8%A1%E5%9D%97" class="esa-anchor">#</a></h2>
+<ul>
+<li>POST注入</li>
+<li>无session/token导致CSRF</li>
+<li>评论时插入XSS</li>
+<li>遍历用户ID导致用户信息泄露</li>
+<li>恶意批量刷评论数量</li>
+</ul>
+<h2 id="第三方系统">第三方系统<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E7%AC%AC%E4%B8%89%E6%96%B9%E7%B3%BB%E7%BB%9F" class="esa-anchor">#</a></h2>
+<ul>
+<li>第三方系统未授权访问</li>
+<li>第三方账户信息遍历</li>
+<li>第三方账户越权访问</li>
+<li>第三方账户信息泄露</li>
+<li>第三方应用版本漏洞</li>
+</ul>
+<h2 id="验证码安全">验证码安全<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E9%AA%8C%E8%AF%81%E7%A0%81%E5%AE%89%E5%85%A8" class="esa-anchor">#</a></h2>
+<ul>
+<li>验证码参数删除绕过</li>
+<li>验证码生成规律预测</li>
+<li>验证码图像内容可被工具识别</li>
+<li>验证码长期不失效，进行爆破</li>
+<li>验证码回显到页面或者数据包中</li>
+<li>单个验证码可多次重复利用</li>
+<li>短信验证码与手机号未统一验证</li>
+<li>短信验证码未对单个手机号发送次数进行限制</li>
+<li>短信验证码未做发送时间限制，导致短信轰炸</li>
+<li>可能存在万能验证码</li>
+</ul>
+<h2 id="接口调用">接口调用<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8" class="esa-anchor">#</a></h2>
+<ul>
+<li>
+<p>未授权访问敏感数据接口</p>
+</li>
+<li>
+<p>短信api接口泄露被恶意调用</p>
+</li>
+<li>
+<p>数据库接口泄露，导致数据可被恶意操作</p>
+<h1 id="逻辑漏洞利用">逻辑漏洞利用<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8" class="esa-anchor">#</a></h1>
+</li>
+</ul>
+<h2 id="验证码">验证码<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E9%AA%8C%E8%AF%81%E7%A0%81" class="esa-anchor" style="opacity: 0;">#</a></h2>
+<p><strong>万能验证码：</strong></p>
+<p>程序员在开发验证码模块时，为了方便调用验证码验证功能是否完善，故意设置了几个万能的验证码作为测试数据。在开发结束后由于程序员的疏忽，没有删除该测试验证码数据从而导致该漏洞的产生。</p>
+<p><strong>验证码回传：</strong></p>
+<p>通过抓包的方式，可以看到验证码内容回显在了数据包中；或者通过查看网页源代码可以看到验证码中的内容，导致正确验证码可以被直接读取利用到。</p>
+<p><strong>删除验证码绕过：</strong></p>
+<p>通过抓包将验证码的值删除或者直接删除验证码参数，然后将修改后的数据包进行重放导致验证码验证被绕过。</p>
+<p><strong>验证码爆破：</strong></p>
+<p>此处验证码爆破通常是指手机短信验证的方式，由于没有对输入同一个验证码的次数做限制，并且验证码的内容太简单，例如4位或者6位的纯数字组成。可以通过Burp的Intruder模块对验证码内容进行爆破，直到匹配到正确的验证码。</p>
+<p><strong>验证码重放</strong></p>
+<p>首先，输入错误的验证码，进行抓包重放一次，观察验证的返回的数据包内容，再用正确的验证码再进行抓包重放，对比两个数据包的差异，然后根据这些差异验证码是否失效。</p>
+<p>然后将正确的验证码发送至Burp的Intruder模进行不断的重放，比较这些数据包是否都是正确验证码时返回的一样内容，如果数据包内容一样说明存在验证码重放的漏洞。</p>
+<p><strong>验证码与手机号未统一匹配</strong></p>
+<p>首先用自己的手机收到正确验证码，在点击注册时拦截包将手机号改为其他手机号，如果成功的话就注册了别人的手机号，这是因为后端仅验证了验证码是否是正确的而没有验证验证码是否与手机匹配。</p>
+<h2 id="短信轰炸">短信轰炸<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E7%9F%AD%E4%BF%A1%E8%BD%B0%E7%82%B8" class="esa-anchor">#</a></h2>
+<p>尝试不断重放发送验证码的数据包，查看手机是否在短时间内收到了多条短信，是的话则存在短信轰炸漏洞，这是因为后端没有对发送手机短信做时间/次数限制。</p>
+<p>如果后端对短信验证码做了限制，那么可以尝试以下几种方式进行绕过：</p>
+<ul>
+<li>删除修改cookie或者返回值，重放数据包</li>
+<li>遍历参数发送数据包</li>
+<li>对参数进行叠加</li>
+<li>手机号后面加空格(%20)或者前面加其他的比如+86、逗号、分号、字母等</li>
+<li>请求参数修改大小写，或者添加请求参数&amp;id=1</li>
+<li>多接口测试，可能登陆位置做了防护，但密码找回出没有防护</li>
+<li>利用调用接口绕过短信轰炸限制</li>
+<li>修改IP绕过短信轰炸限制</li>
+<li>添加重复的手机号参数，重放数据包</li>
+</ul>
+<h2 id="越权操作">越权操作<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E8%B6%8A%E6%9D%83%E6%93%8D%E4%BD%9C" class="esa-anchor" style="opacity: 0;">#</a></h2>
+<p>首先用一个账号登陆系统后，通过抓包修改用户参数，可以达到查看或者修改他人账号的目的，尽量对多接口或者多功能模块进行不断测试越权操作。同时也要多个账号登陆，分析对比这些账号数据包中的请求参数差异，通过修改这些存在差异的参数，看看是否能够达到越权操作的目的。</p>
+<p>越权漏洞又分为平行越权，垂直越权和交叉越权。</p>
+<ul>
+<li>平行越权：权限类型不变，权限ID改变</li>
+<li>垂直越权：权限ID不变，权限类型改变</li>
+<li>交叉越权：即改变ID，也改变权限</li>
+</ul>
+<h2 id="用户信息泄露">用户信息泄露<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2" class="esa-anchor">#</a></h2>
+<p>可能存在用户个人信息页面、密码找回处以及各种调用到用户信息数据的地方，通过抓包查看返回信息是否加载了一些敏感的数据信息，比如查询用户信息的时候也将用户的密码数据在数据包中回显了；或者在用户个人资料页面，通过抓包修改用户ID参数，可以通过遍历查询到其他账号的用户资料，导致用户信息泄露；</p>
+<h2 id="任意用户密码重置">任意用户密码重置<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E4%BB%BB%E6%84%8F%E7%94%A8%E6%88%B7%E5%AF%86%E7%A0%81%E9%87%8D%E7%BD%AE" class="esa-anchor">#</a></h2>
+<p>通常发生在忘记密码处，由于系统没有严格匹配用户忘记密码时的验证方式，通过抓包修改用户参数，导致任意用户的密码都能够被重置。</p>
+<p>比如某个忘记密码功能处采用手机号短信验证的方式来重置用户密码，如果该验证手机号没有对用户账户进行绑定，那么就可以通过输入任意手机号接收短信验证，然后就可以利用该验证码重置用户密码了。</p>
+<h2 id="订单金额任意修改">订单金额任意修改<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E8%AE%A2%E5%8D%95%E9%87%91%E9%A2%9D%E4%BB%BB%E6%84%8F%E4%BF%AE%E6%94%B9" class="esa-anchor" style="opacity: 0;">#</a></h2>
+<p>很多中小型的购物网站都存在订单金额任意修改漏洞。在提交订单的时候抓取数据包或者直接修改前端代码，然后对订单的金额任意修改。</p>
+<p>经常见到的参数大多为：rmb 、value 、amount 、cash 、fee 、money 等</p>
+<p>关于支付的逻辑漏洞这一块还有很多种思路，比如相同价格增加订单数量，相同订单数量减少产品价格，订单价格设定为负数等等。</p>
+<h2 id="未授权访问">未授权访问<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE" class="esa-anchor">#</a></h2>
+<p>有些业务的接口，因为缺少了对用户的登陆凭证的较验或者是验证存在缺陷，导致黑客可以未经授权访问这些敏感信息甚至是越权操作。</p>
+<p>一般容易出现在文件导出下载，JSON数据页面，第三方应用页面等位置。</p>
+<p>常见案例：</p>
+<ol>
+<li>某电商后台主页面，直接在管理员web路径后面输入main.php之类的即可进入。</li>
+<li>某航空公司订单ID枚举</li>
+<li>某电子认证中心敏感文件下载</li>
+<li>某站越权操作及缺陷，其主要原因是没对ID参数做cookie验证导致</li>
+</ol>
+<p>实际上还有很多案例，他们都存在一个共同的特性，就是没有对用户的登陆凭证进行效验</p>
+<h2 id="接口无限制枚举">接口无限制枚举<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E6%8E%A5%E5%8F%A3%E6%97%A0%E9%99%90%E5%88%B6%E6%9E%9A%E4%B8%BE" class="esa-anchor" style="opacity: 0;">#</a></h2>
+<p>有些关键性的接口因为没有做验证或者其它预防机制，容易遭到枚举攻击。</p>
+<p>常见案例：</p>
+<ol>
+<li>某电商登陆接口无验证导致撞库</li>
+<li>某招聘网验证码无限制枚举</li>
+<li>某快递公司优惠券枚举</li>
+<li>某电商会员卡卡号枚举</li>
+<li>某超市注册用户信息获取</li>
+</ol>
+<h2 id="cookietoken设计存在缺陷">cookie/token设计存在缺陷<a href="https://www.cnblogs.com/gk0d/p/16905038.html#cookietoken%E8%AE%BE%E8%AE%A1%E5%AD%98%E5%9C%A8%E7%BC%BA%E9%99%B7" class="esa-anchor">#</a></h2>
+<p>cookie的效验值过于简单。有些web对于cookie的生成过于单一或者简单，导致黑客可以对cookie的效验值进行一个枚举。或者通过修改cookie中的某个参数可以登陆其他用户，即cookie仿冒。</p>
+<p>token一般是操作令牌，每个用户在登录系统时，服务器会为每个用户生成token令牌作为操作凭证。如果token设计太过于简单，那么可能会被破解；或者token没有设置过期的时间，使得用户token不唯一，导致用户token存在被盗用的风险。</p>
+<h2 id="找回密码存在设计缺陷">找回密码存在设计缺陷<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E6%89%BE%E5%9B%9E%E5%AF%86%E7%A0%81%E5%AD%98%E5%9C%A8%E8%AE%BE%E8%AE%A1%E7%BC%BA%E9%99%B7" class="esa-anchor" style="opacity: 0;">#</a></h2>
+<p>auth设计缺陷</p>
+<p>经常研究逻辑漏洞的人可能会对以下URL很熟悉</p>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-html highlighter-hljs hljs language-xml">www.xxx.com/resetpassword.php?id=MD5
+</code></pre>
+<p>用户修改密码时，邮箱中会收到一个含有auth的链接，在有效期内用户点击链接，即可进入重置密码环节。而大部分网站对于auth的生成都是采用rand()函数，那么这里就存在一个问题了，Windows环境下rand()最大值为32768，所以这个auth的值是可以被枚举的。</p>
+<p>如下面这个代码可以对auth的值做一个字典。</p>
+<pre class="highlighter-hljs" highlighted="true" has-selection="true"><code class="language-none highlighter-hljs hljs">$a=0;
+for ($a=0;$a&lt;=32768;$a++){
+    $b=md5($a);
+    echo "\r\n";
+    echo $b;
+}
+</code></pre>
+<p>然后重置某个账号，并且对重置链接内的auth进行枚举。</p>
+<h2 id="签约漏洞">签约漏洞<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E7%AD%BE%E7%BA%A6%E6%BC%8F%E6%B4%9E" class="esa-anchor">#</a></h2>
+<ol>
+<li>使用A手机登陆账号A打开要测试的业务，点击自动续费，支付时停留在支付界面。</li>
+<li>使用B手机登陆账号A打开要测试的业务，点击自动续费，支付时停留在支付界面。</li>
+<li>重复多台手机进行同样操作</li>
+<li>A手机点击支付进行签约</li>
+<li>A手机支付成功后，在第三方APP中解除自动续费</li>
+<li>B手机进行支付，支付成功后在第三方APP中解除自动续费</li>
+<li>全部支付完成后，系统就会为你开通相应的次数，由于提前打开了支付界面，所以金额都是享受到新用户首月优惠的金额。</li>
+<li>最终的效果是，一个<br>
+账户享受到了多次新用户首月优惠金额，即证明漏洞的存在。</li>
+</ol>
+<p><a href="./逻辑漏洞挖掘_files/3010963-20221118220011405-500699165.png" data-title="" data-alt="签约漏洞" data-lightbox="roadtrip"><img src="./逻辑漏洞挖掘_files/3010963-20221118220011405-500699165.png" alt="签约漏洞" loading="lazy" class="medium-zoom-image"></a></p>
+<blockquote>
+<p>通常这种漏洞比较容易出现在活动页面的会员优惠开通，而且要考虑到支付后要比正常购买优惠才算是漏洞。</p>
+</blockquote>
+<h2 id="会员升级">会员升级<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E4%BC%9A%E5%91%98%E5%8D%87%E7%BA%A7" class="esa-anchor">#</a></h2>
+<ol>
+<li>使用A手机登陆账号A，并且开通会员。开通超级会员，进入到升级页面，进行补齐差价开通。</li>
+<li>使用B手机登陆账号A，点击开通超级会员，进入到升级页面，进行补齐差价开通。</li>
+<li>A手机进行支付，B手机进行支付。服务器认为你补齐了多个月份的超级会员，然后到账多次。</li>
+<li>其实这个和签约漏洞的原理差不多，绕过了支付后服务器才去校验是否可以升级的逻辑。</li>
+</ol>
+<h2 id="订单关闭">订单关闭<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E8%AE%A2%E5%8D%95%E5%85%B3%E9%97%AD" class="esa-anchor" style="opacity: 0;">#</a></h2>
+<ol>
+<li>使用优惠券创建一个订单，停留在支付界面</li>
+<li>关闭订单，返回优惠券</li>
+<li>使用优惠券再次创建订单；把第一个未支付的订单进行支付</li>
+<li>商品从关闭，重新进入到了代发货的阶段，优惠券却仍然存在，即证明漏洞存在</li>
+</ol>
+<h2 id="支付金额">支付金额<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E6%94%AF%E4%BB%98%E9%87%91%E9%A2%9D" class="esa-anchor">#</a></h2>
+<ol>
+<li>有些业务在支付时会忽略分以后的单位，这时候就导致了存在分单位的金额也可以生成订单</li>
+<li>比如0.019=0.02，在支付时客户端给服务器传了0.019元的订单。而第三方付支通常最小的单位为分</li>
+<li>这就导致了返回的金额会吧后面的9屏蔽掉，只返回0.01（也有些直接四舍五入变成0.02的）</li>
+<li>当你支付完0.01后，第三方会通知服务器支付成功，而服务器那边生成的是0.019，可能这个软件的侨胞最小单位也是分，四舍五入变成了0.02</li>
+</ol>
+<h2 id="int整数溢出">int整数溢出<a href="https://www.cnblogs.com/gk0d/p/16905038.html#int%E6%95%B4%E6%95%B0%E6%BA%A2%E5%87%BA" class="esa-anchor">#</a></h2>
+<blockquote>
+<p>注意：在做溢出测试时，有可能导致目标服务器宕机，需要向授权单位申请授权后才能进行测试。</p>
+</blockquote>
+<ol>
+<li>int的范围是-2147483648~2147483647。你可以把它看作是一个循环，当超过最大值后就重新从0开始计算</li>
+<li>比如2147483649=-2147483647。有时候支付里面没有负数所以从0开始计算了</li>
+<li>当支付金额为2147483649时，支付金额就变成了1，即2147483649-2147483648=1</li>
+<li>支付的时候可以直接吧金额改成这个值，在测试商品时也可以让总价格为这个数。2147483648/物品单价+1=物品数量</li>
+<li>以上的做法目的，简单的来说就是通过整数溢出来修改支付金额或者购买商品数量。</li>
+</ol>
+<h2 id="突破时间限制">突破时间限制<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E7%AA%81%E7%A0%B4%E6%97%B6%E9%97%B4%E9%99%90%E5%88%B6" class="esa-anchor" style="opacity: 0;">#</a></h2>
+<p>一些网站中的限时活动设置了活动时间范围，可以通过抓包尝试更改时间参数为活动未限定范围内的。</p>
+<h2 id="前端验证">前端验证<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E5%89%8D%E7%AB%AF%E9%AA%8C%E8%AF%81" class="esa-anchor">#</a></h2>
+<p>前端加密、后端解密校验。比如在用户登录时，通过抓包发现用户密码被加密传输了，可以利用一些解密工具进行破解，如：Burp解密或者一些在线解密网站。</p>
+<h2 id="暴力破解撞库">暴力破解/撞库<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3%E6%92%9E%E5%BA%93" class="esa-anchor">#</a></h2>
+<p>首先在没有验证码或者验证码可以被绕过的情况下，尝试5次或者10次账号密码登陆，检测目标是否封禁账户，如果没有封禁规则，可以不断进行爆破。采用账号密码爆破，对于一些商城、应用、政府、学校采用撞库方式判断是否存在该账号（需要准备各类字典：手机号撞库、邮箱撞库、姓名撞库）。</p>
+<h2 id="密码找回-1">密码找回<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E5%AF%86%E7%A0%81%E6%89%BE%E5%9B%9E-1" class="esa-anchor" style="opacity: 0;">#</a></h2>
+<ol>
+<li>通过邮箱找回密码，访问链接重置密码，输入新密码后提交抓包，虽然有token，但是依然可以直接修改用户ID进而修改他人密码</li>
+<li>通过他人手机号找回密码，抓包，将他人手机号替换为自己的手机号，获取验证码，提交后修改密码</li>
+<li>通过自己手机号找回密码，获取验证码后抓包，将数据包中的用户ID改为他人账号ID，提交后成功修改他人密码</li>
+<li>通过邮箱找回密码，URL链接中修改用户ID为他人，邮箱不变，之后通过链接可以将他人账户绑定为自己的邮箱，之后通过邮箱找回密码</li>
+</ol>
+<h2 id="任意url跳转">任意url跳转<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E4%BB%BB%E6%84%8Furl%E8%B7%B3%E8%BD%AC" class="esa-anchor">#</a></h2>
+<p>url跳转漏洞也叫开发重定向漏洞，可以把用户重定向到攻击者自己构造的页面去，简单的说就是可以跳转到任意指定的url。一般出现在验证跳转、sso登陆等位置。</p>
+<p>服务端未对传入的跳转url变量进行检查和控制，可能导致可恶意构造任意一个恶意地址，诱导用户跳转到恶意网站。</p>
+<p>危害：</p>
+<ul>
+<li>网站钓鱼</li>
+<li>配合CSRF操作危险请求</li>
+<li>配合XSS执行JS盗取cookie</li>
+<li>配合浏览器漏洞（CVE-2018-8174）</li>
+</ul>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-html highlighter-hljs hljs language-xml">http://www.xxx.com?url=https://www.baidu.com
+</code></pre>
+<p>替换url参数后能够跳转到对应页面，但是一些网站可能会对url跳转做限制，可以尝试绕过bypass</p>
+<pre class="highlighter-hljs" highlighted="true" has-selection="true"><code class="language-html highlighter-hljs hljs language-xml">1.利用问号绕过限制,最终跳转到京东页面
+url=https://www.baidu.com?www.jd.com
+2.利用@绕过限制,最终跳转到京东页面
+url=https://www.baidu.com@www.jd.com
+3.利用斜杆反斜杠绕过限制
+4.利用#绕过限制
+url=https://www.baidu.com@www.jd.com
+5.利用子域名绕过
+6.利用畸形url绕过
+7.利用跳转IP绕过
+</code></pre>
+<h1 id="支付逻辑漏洞">支付逻辑漏洞<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E6%94%AF%E4%BB%98%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E" class="esa-anchor">#</a></h1>
+<p>在支付环节中由于逻辑不严谨而产生的漏洞称为支付漏洞。</p>
+<p><a href="./逻辑漏洞挖掘_files/3010963-20221118220012490-1548013943.png" data-title="" data-alt="img" data-lightbox="roadtrip"><img src="./逻辑漏洞挖掘_files/3010963-20221118220012490-1548013943.png" alt="img" loading="lazy" class="medium-zoom-image"></a></p>
+<h2 id="测试思路">测试思路<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E6%B5%8B%E8%AF%95%E6%80%9D%E8%B7%AF" class="esa-anchor" style="opacity: 0;">#</a></h2>
+<p>只要有参数，都可以修改，都有可能出现问题。</p>
+<p>通常使用两个账号来对比测试，这样可以更快发现可疑参数</p>
+<h3 id="订单模块">订单模块<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E8%AE%A2%E5%8D%95%E6%A8%A1%E5%9D%97" class="esa-anchor" style="opacity: 0;">#</a></h3>
+<ol>
+<li>下单之后修改商品价格</li>
+<li>下单之后更改数量设为负数，产生正负逻辑</li>
+<li>并发购买是否出现逻辑问题</li>
+<li>商品为0，是否存在购买的可能</li>
+<li>生成订单时修改订单金额</li>
+</ol>
+<h3 id="结算模块">结算模块<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E7%BB%93%E7%AE%97%E6%A8%A1%E5%9D%97" class="esa-anchor" style="opacity: 0;">#</a></h3>
+<ol>
+<li>优惠券重复利用</li>
+<li>修改结算状态</li>
+<li>更改支付API或者支付模式</li>
+<li>伪造成功结算请求</li>
+</ol>
+<h3 id="退货模块">退货模块<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E9%80%80%E8%B4%A7%E6%A8%A1%E5%9D%97" class="esa-anchor">#</a></h3>
+<ol>
+<li>更改货物状态</li>
+<li>更改退货价格</li>
+</ol>
+<h3 id="收货模块">收货模块<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E6%94%B6%E8%B4%A7%E6%A8%A1%E5%9D%97" class="esa-anchor">#</a></h3>
+<ol>
+<li>绕过客户直接确认收货</li>
+</ol>
+<h3 id="边界值问题">边界值问题<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E8%BE%B9%E7%95%8C%E5%80%BC%E9%97%AE%E9%A2%98" class="esa-anchor">#</a></h3>
+<p>正常的逻辑是用户购买商品，然后价格累加得到一个总价进行扣款。这个时候就会产生逻辑问题：如果说用户购买的商品是负数了，那么计算的总数就是负数。反过来钱给用户</p>
+<h3 id="顺序执行缺陷">顺序执行缺陷<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E9%A1%BA%E5%BA%8F%E6%89%A7%E8%A1%8C%E7%BC%BA%E9%99%B7" class="esa-anchor">#</a></h3>
+<p>正常的逻辑是a-b-c-d 循环渐进的进行流程操作。这个时候就会产生逻辑问题：可以直接从中绕过某一个过程进入到下一步操作。如果说有一项是支付的操作，那么也就会产生支付绕过，如果说有一项是验证机制，就会绕过验证直接进入下一步。</p>
+<h3 id="金额直接传输导致篡改">金额直接传输导致篡改<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E9%87%91%E9%A2%9D%E7%9B%B4%E6%8E%A5%E4%BC%A0%E8%BE%93%E5%AF%BC%E8%87%B4%E7%AF%A1%E6%94%B9" class="esa-anchor">#</a></h3>
+<p>直接对下单的金额进行修改值，这里可以使用fd或者burp抓包</p>
+<h3 id="确定支付之后还可以加入购物车">确定支付之后还可以加入购物车<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E7%A1%AE%E5%AE%9A%E6%94%AF%E4%BB%98%E4%B9%8B%E5%90%8E%E8%BF%98%E5%8F%AF%E4%BB%A5%E5%8A%A0%E5%85%A5%E8%B4%AD%E7%89%A9%E8%BD%A6" class="esa-anchor">#</a></h3>
+<p>把商品放入购物车点击下单支付，会跳转到微信，支付宝等第三方支付平台。这个时候还可以继续在购物车中加入商品，支付结束之后，商家发放的商品是现在的购物车里面的东西。</p>
+<h3 id="请求重放">请求重放<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E8%AF%B7%E6%B1%82%E9%87%8D%E6%94%BE" class="esa-anchor" style="opacity: 0;">#</a></h3>
+<p>购买成功之后，继续重放请求，可以让购买的商品一直增加。购买成功之后，会有一个银行对商户网站跳转的过程，如果反复进行操作，有几率会导致商品反复购买和增加，但是不需要付更多的钱。</p>
+<h3 id="请求参数干扰">请求参数干扰<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0%E5%B9%B2%E6%89%B0" class="esa-anchor" style="opacity: 0;">#</a></h3>
+<p>金钱做了签名认证之后，修改后不通过，但是在里面仍然会有一个参数对金额产生影响导致问题产生。</p>
+<h3 id="订单替换">订单替换<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E8%AE%A2%E5%8D%95%E6%9B%BF%E6%8D%A2" class="esa-anchor" style="opacity: 0;">#</a></h3>
+<p>订单替换发生在支付之后的事件处理，同时向服务器发起二次支付请求一个多一个少，支付金额少的，然后支付之后进行替换，告知服务器订单支付完成，并且过程可以反复的回放。</p>
+<h3 id="欺诈">欺诈<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E6%AC%BA%E8%AF%88" class="esa-anchor" style="opacity: 0;">#</a></h3>
+<p>需要两个收款人，一个是正常的商家，一个是伪造的商家</p>
+<h3 id="单位替换">单位替换<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E5%8D%95%E4%BD%8D%E6%9B%BF%E6%8D%A2" class="esa-anchor" style="opacity: 0;">#</a></h3>
+<p>产生在paypal类似的国际支付的场景。</p>
+<h3 id="用户替换">用户替换<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E7%94%A8%E6%88%B7%E6%9B%BF%E6%8D%A2" class="esa-anchor">#</a></h3>
+<p>在支付过程中发生用户替换现象，首先登陆自己的账户，然后取得另外一个人的账户名等有效信息，在业务流程中用对方的用户名替换自己的用户名，用对方的余额购买完成后，再替换自己的账户名，这样就形成别人的钱买自己的东西</p>
+<h3 id="强制攻击">强制攻击<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E5%BC%BA%E5%88%B6%E6%94%BB%E5%87%BB" class="esa-anchor">#</a></h3>
+<p>强制攻击发生在暴力破解的情况下，如果一个商家运用一个自己的网店，接入第三方支付接口，由于设计上的不当导致商家与第三方支付约定的密钥Key可以单独被MD5加密，导致可以使用MD5碰撞技术对密钥进行破解，攻击者可以设计简单的密钥加密信息使得MD5加密是可以用MD5碰撞技术进行暴力破解。</p>
+<h3 id="秘钥泄漏">秘钥泄漏<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E7%A7%98%E9%92%A5%E6%B3%84%E6%BC%8F" class="esa-anchor" style="opacity: 0;">#</a></h3>
+<p>内置支付功能的app为了设计上的方便有可能会把Md5或者是RSA的私钥泄漏导致攻击者反编译apk之后获取密钥信息使得交易信息可以被篡改。<br>
+13.函数修改：apk反编译之后的函数修改，可能导致商家在最后一步向支付方提交订单时未验证信息的准确性，仍然被篡改。</p>
+<h2 id="修复建议">修复建议<a href="https://www.cnblogs.com/gk0d/p/16905038.html#%E4%BF%AE%E5%A4%8D%E5%BB%BA%E8%AE%AE" class="esa-anchor">#</a></h2>
+<ul>
+<li>生成数据签名，对用户金额和订单签名</li>
+<li>敏感参数不要放在url中</li>
+<li>服务端校验/过滤客户端提交的参数</li>
+<li>在服务端计算金额的时候，一定要判断是否为正数</li>
+<li>支付过程中加一个服务器生成的key，用户校验参数有没有被篡改</li>
+<li>用url传递相关参数，后端进行数字验证</li>
+<li>订单金额和充值接口返回的数据进行校验</li>
+<li>提交订单时后台判断单价是否与数据库中相符，若不符则返回数据</li>
+<li>支付时应从服务器拉取数据，而不是直接读取客户端的值</li>
+</ul>
+
+</div><div class="esa-post-signature"> 
+                <p>作者：gk0d</p> 
+                <p>出处：<a href="https://www.cnblogs.com/gk0d/p/16905038.html">https://www.cnblogs.com/gk0d/p/16905038.html</a></p> 
+                <p>版权：本作品采用「<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">署名-非商业性使用-相同方式共享 4.0 国际</a>」许可协议进行许可。</p> 
+                <p>留言:  如果文中有什么错误，欢迎指出。以免更多的人被误导</p> 
+            </div>
+<div class="clear"></div>
+<div id="blog_post_info_block" role="contentinfo">
+
+
+<div id="BlogPostCategory">
+    分类: 
+            <a href="https://www.cnblogs.com/gk0d/category/2239575.html" target="_blank">Web安全</a>
+</div>
+
+    <div id="blog_post_info">
+<div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(16905038,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+        <a id="green_channel_follow" onclick="follow(&#39;20acfbd1-36f4-4629-c8fe-08daa8657cf0&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareManager.wechatShare()"><img src="./逻辑漏洞挖掘_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/gk0d/" target="_blank"><img src="./逻辑漏洞挖掘_files/20221021181919.png" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/gk0d/">gk0d</a>
+            <br>
+            <a href="https://home.cnblogs.com/u/gk0d/followers/">粉丝 - <span class="follower-count">5</span></a>
+            <a href="https://home.cnblogs.com/u/gk0d/followees/">关注 - <span class="following-count">0</span></a><br>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow" class="follow-tip">
+                <a href="javascript:void(0);" onclick="follow(&#39;20acfbd1-36f4-4629-c8fe-08daa8657cf0&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(16905038,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">2</span>
+    </div>
+    <div class="buryit" onclick="votePost(16905038,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+
+<script type="text/javascript">
+    currentDiggType = 0;
+</script>
+</div>
+    <div class="clear"></div>
+    <div id="post_next_prev">
+
+    <a href="https://www.cnblogs.com/gk0d/p/16890478.html" class="p_n_p_prefix">« </a> 上一篇：    <a href="https://www.cnblogs.com/gk0d/p/16890478.html" data-featured-image="" title="发布于 2022-11-18 11:53">字符集的一些疑惑</a>
+    <br>
+    <a href="https://www.cnblogs.com/gk0d/p/16916862.html" class="p_n_p_prefix">» </a> 下一篇：    <a href="https://www.cnblogs.com/gk0d/p/16916862.html" data-featured-image="" title="发布于 2022-11-22 23:10">渗透测试流程</a>
+
+</div>
+</div>
+            </div>
+            <div class="postDesc">posted @ 
+<span id="post-date" data-last-update-days="411.71172996940163" data-date-created="BlogServer.Application.Dto.BlogPost.BlogPostDto" data-date-updated="2022-11-18 22:17" aria-expanded="false">2022-11-18 22:12</span>&nbsp;
+<a href="https://www.cnblogs.com/gk0d/">gk0d</a>&nbsp;
+阅读(<span id="post_view_count">1078</span>)&nbsp;
+评论(<span id="post_comment_count">0</span>)&nbsp;
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=16905038" rel="nofollow">编辑</a>&nbsp;
+<a href="javascript:void(0)" onclick="AddToWz(16905038);return false;">收藏</a>&nbsp;
+<a href="javascript:void(0)" onclick="reportManager.report({ currentUserId: &#39;&#39;, targetType: &#39;blogPost&#39;, targetId: &#39;16905038&#39;, targetLink: &#39;https://www.cnblogs.com/gk0d/p/16905038.html&#39;, title: &#39;逻辑漏洞挖掘&#39; })">举报</a>
+</div>
+        </div>
+	    
+	    
+    </div><!--end: topics 文章、评论容器-->
+</div>
+<script>
+    var cb_entryId = 16905038, cb_entryCreatedDate = '2022-11-18 22:12', cb_postType = 1, cb_postTitle = '逻辑漏洞挖掘';
+    var allowComments = true, cb_blogId = 772453, cb_blogApp = 'gk0d', cb_blogUserGuid = '20acfbd1-36f4-4629-c8fe-08daa8657cf0';
+    mermaidRender.render()
+    markdown_highlight()
+    zoomManager.apply("#cnblogs_post_body img:not(.code_img_closed):not(.code_img_opened)");    
+</script>
+<a id="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav">
+            <a class="comment-nav-left forpc" href="https://cnblogs.vip/" target="_blank">会员力量，点亮园子希望</a>
+        <div class="comment-nav-right">
+            <span id="span_refresh_tips"></span><a href="https://www.cnblogs.com/gk0d/p/16905038.html#" onclick="return RefreshPage();">刷新页面</a><a href="https://www.cnblogs.com/gk0d/p/16905038.html#top">返回顶部</a>
+        </div>
+    </div>
+    <div id="comment_form_container"><div class="login_tips">
+    登录后才能查看或发表评论，立即 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return account.login(&#39;!comments&#39;);">登录</a> 或者
+    <a href="https://www.cnblogs.com/">逛逛</a> 博客园首页
+</div>
+</div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+        <div id="cnblogs_ch"></div>
+    <div id="opt_under_post"></div>
+        <div id="cnblogs_c1" class="under-post-card">
+            <a href="https://cnblogs.vip/" rel="nofollow" target="_blank" onclick="countCreativeClicks(&#39;C1-博客园-会员&#39;)">
+                <img src="./逻辑漏洞挖掘_files/35695-20231121143812081-926795020.png" onload="countCreativeImpressions(&#39;C1-博客园-会员&#39;)" alt="">
+                <span id="c1_impression" style="display:none"></span>
+            </a>
+        </div>
+    <div id="under_post_card1"><div class="under-post-card">
+<b>编辑推荐：</b>
+<br>
+
+· <a href="https://www.cnblogs.com/huangxincheng/p/17940282.html" target="_blank">聊一聊 C# 的线程本地存储 TLS 到底是什么</a>
+    <br>
+· <a href="https://www.cnblogs.com/tcjiaan/p/17938449.html" target="_blank">「ASP.NET Core」使用 SignalR 推送服务器日志</a>
+    <br>
+· <a href="https://www.cnblogs.com/zengzuo613/p/17934654.html" target="_blank">如何保障 Cookie 的信息安全</a>
+    <br>
+· <a href="https://www.cnblogs.com/dasusu/p/17932742.html" target="_blank">善用浏览器的一些调试技巧</a>
+    <br>
+· <a href="https://www.cnblogs.com/mantgh/p/17934911.html" target="_blank">三个月我们迁移了 100PB 数据 </a>
+    <br>
+</div></div>
+    <div id="under_post_card2"><div class="itnews under-post-card">
+    <b>阅读排行：</b>
+    <br>
+ ·          <a href="https://www.cnblogs.com/cmt/p/17940002" target="_blank">园子开店记-周边第一款：鼠标垫设计图出炉</a>
+        <br>
+ ·          <a href="https://www.cnblogs.com/jpld/p/17941328" target="_blank">微软真是活菩萨，面向初学者的机器学习、数据科学、AI、LLM课程统统免费</a>
+        <br>
+ ·          <a href="https://www.cnblogs.com/Jcloud/p/17942507" target="_blank">DDD落地实践-架构师眼中的餐厅 | 京东云技术团队</a>
+        <br>
+ ·          <a href="https://www.cnblogs.com/Can-daydayup/p/17944249" target="_blank">C#/.NET/.NET Core优秀项目和框架2023年12月简报</a>
+        <br>
+ ·          <a href="https://www.cnblogs.com/zhangyi1357/p/17940788" target="_blank">VSCode 中优雅地编写 Markdown</a>
+        <br>
+</div></div>
+    <div id="HistoryToday" class="under-post-card"></div>
+    <script type="text/javascript">
+        var commentManager = new blogCommentManager();
+        commentManager.renderComments(0);
+        fixPostBody();
+        window.footnoteTipManager.generateFootnoteTips();
+
+                setTimeout(function() { countViews(cb_blogId, cb_entryId); }, 50);
+            
+            deliverT2();
+            deliverC1C2();
+            loadNewsAndKb();
+            
+                LoadPostCategoriesTags(cb_blogId, cb_entryId);
+            
+            LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+            GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+            loadOptUnderPost();
+            GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+                </script>
+</div>
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+	<div id="sideBar">
+		<div id="sideBarMain"><img class="esa-profile-avatar" src="./逻辑漏洞挖掘_files/3010963-20221115214637589-817220849.jpg">
+			<div id="sidebar_news" class="newsItem">
+    <h3 class="catListTitle">公告</h3>
+<div id="blog-news">    
+    <div id="sidebar_news_content"><script type="text/javascript">window['__document_write_ajax_callbacks__']['4']();</script><script>window['__document_write_ajax_callbacks__']['1']();</script>
+<script type="text/javascript">window['__document_write_ajax_callbacks__']['5']();</script><script type="text/javascript">window['__document_write_ajax_callbacks__']['6']();</script><script>window['__document_write_ajax_callbacks__']['2']();</script>
+<div id="profile_block">
+    昵称：
+    <a href="https://home.cnblogs.com/u/gk0d/">
+        gk0d
+    </a>
+    <br>
+    园龄：
+    <a href="https://home.cnblogs.com/u/gk0d/" title="入园时间：2022-10-18">
+        1年2个月
+    </a>
+    <br>
+    粉丝：
+    <a class="follower-count" href="https://home.cnblogs.com/u/gk0d/followers/">
+        5
+    </a>
+    <br>
+    关注：
+    <a class="folowing-count" href="https://home.cnblogs.com/u/gk0d/followees/">
+        0
+    </a>
+    <div id="p_b_follow" class="follow-tip">
+<a href="javascript:void(0)" onclick="follow(&#39;20acfbd1-36f4-4629-c8fe-08daa8657cf0&#39;)">+加关注</a></div>
+    <script type="text/javascript">window['__document_write_ajax_callbacks__']['7']();</script><script>window['__document_write_ajax_callbacks__']['3']();</script>
+</div>
+</div>
+</div>
+<script>loadBlogNews();</script>
+
+ 
+</div>
+<div id="sidebar_c3"></div>
+			<div id="blog-calendar" style="display:none"></div><script>loadBlogDefaultCalendar();</script>			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"><!-- 搜索 -->
+<div id="sidebar_search" class="sidebar-block">
+    
+</div>
+
+<!-- 常用链接 -->
+
+
+<!-- 最新随笔 -->
+
+
+<!-- 我的标签 -->
+
+
+<!-- 积分与排名 -->
+
+
+<!-- 随笔分类、随笔档案、文章分类、新闻分类、相册、链接 -->
+<div id="sidebar_categories">
+
+    <div id="sidebar_postcategory" class="catListPostCategory sidebar-block">
+        <h3 class="catListTitle">
+            
+    <a class="sidebar-card-title-a" href="https://www.cnblogs.com/gk0d/post-categories">随笔分类</a>
+<span class="sidebar-category-item-count">
+    (22)
+</span>
+
+
+        </h3>
+
+        <ul>
+
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/gk0d/category/2244775.html" style="--cnb-category-item-link-indent-size: calc(0 * 1em)" class="category-item-link" rel="" target="">CodeQL(1)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/gk0d/category/2232825.html" style="--cnb-category-item-link-indent-size: calc(0 * 1em)" class="category-item-link" rel="" target="">Java安全(16)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/gk0d/category/2238343.html" style="--cnb-category-item-link-indent-size: calc(0 * 1em)" class="category-item-link" rel="" target="">Tips(2)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/gk0d/category/2239575.html" style="--cnb-category-item-link-indent-size: calc(0 * 1em)" class="category-item-link" rel="" target="">Web安全(3)</a>
+ 
+                </li>                
+            
+        </ul>
+
+
+    </div>    
+</div>
+
+<!-- 最新评论 -->
+
+
+
+<!-- 阅读排行榜 -->
+
+
+<!-- 评论排行榜 -->
+
+
+<!-- 推荐排行榜 -->
+</div>
+                    <script>loadBlogSideColumn();</script>
+			</div>			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		<!--done-->
+Copyright © 2024 gk0d
+<br><span id="poweredby">Powered by .NET 8.0 on Kubernetes</span>
+
+
+
+	<span class="esa-copyright">&amp; Theme <a href="https://github.com/esofar/cnblogs-theme-silence" target="_blank">Silence v3.0.0-rc2</a></span></div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+
+    <div id="page_end_html">
+        <script>
+  /**
+   * @author:me@makergyt.com
+   * @version:2020-07-01
+   * @------------------------------------------------------------------
+   * @update 2021-5-6 https://github.com/hiszm/cnblogs-theme-next-pro
+   */
+  window.config = {
+    avatar: 'https://pic.cnblogs.com/avatar/1170988/20210329201859.png',
+    github: 'hiszm',
+    gallery: '1833698'
+  }
+</script>
+<!-- 下方内容请勿擅自修改，除非知道明确含义，如进行完善和扩展，请fork源码(https://github.com/MakerGYT/cnblogs-theme-next)后提交pull request;-->
+<!-- 引入在线字体-->
+<link rel="stylesheet" href="./逻辑漏洞挖掘_files/css2">
+<!-- 引入图标库-->
+<link href="./逻辑漏洞挖掘_files/font-awesome.min.css" rel="stylesheet">
+<!-- 更改高亮样式-->
+<link href="./逻辑漏洞挖掘_files/github.min.css" rel="stylesheet">
+<!-- 顶部滚动条-->
+<script src="./逻辑漏洞挖掘_files/ToProgress.min.js.下载"></script>
+<script type="text/javascript">
+  let progressBar = new ToProgress({
+    color: getComputedStyle(document.documentElement).getPropertyValue('--primary-color')
+  })
+  progressBar.reset()
+  // 如未做大幅修改，请保留下方内容
+  $('#poweredby').append('&nbsp;&&nbsp;<a rel="nofollow noopener"  href="https://github.com/hiszm/cnblogs-theme-next-pro">cnblogs-theme-next-pro</a>')
+  // 获取默认基础信息
+  window.isPost = $('.forFlow').find('#post_detail').length ? true : false;
+  window.blogSlug = currentBlogApp;
+  var footerOverTestArray = $($("#footer")[0].childNodes[2]).text().trim().split(" ");
+
+  config = Object.assign({
+    siteTitle: $('#Header1_HeaderTitle').text(),
+    author: footerOverTestArray[footerOverTestArray.length - 1],
+    avatar: $('.author_avatar').attr('src'),
+    github: blogSlug,
+    gallery: null
+  }, config);
+
+  var linkObject = document.createElement("link");
+  linkObject.rel = "shortcut icon";
+  linkObject.href = config.avatar;
+
+  // 设置摘要
+  function setDesc() {
+    $('#cnblogs_post_description').css('display', 'block')
+    $('#cnblogs_post_description').prepend('<h3 id="post-description-meta">摘 要</h3>')
+    // 由于标签是网络请求，可能在修改dom后返回，故重新请求后再修改
+    $.ajax({
+      url: getAjaxBaseUrl() + "CategoriesTags.aspx",
+      type: "get",
+      contentType: "application/json; charset=utf-8",
+      data: {
+        blogId: cb_blogId,
+        postId: cb_entryId,
+      },
+      cache: !1,
+      dataType: "text",
+      timeout: 1e4,
+      success: function (n) {
+        n && $("#cnblogs_post_description").append(n.replace('EntryTag', 'post-keyword').replace('标签', '关键词'))
+        $('#EntryTag').remove()
+      }
+    })
+  }
+  // 设置参考文献标题
+  function setFoot() {
+    $('.footnotes').prepend('<h2 id="-参考文献" class="footnotes-meta">参 考 文 献</h2>')
+  }
+  // 设置左侧目录
+  function setContent() {
+    if ($('#post-toc-wrap').length) return;
+    var toc = $('<div id="post-toc-wrap"><h3 style="text-align:center">目录</h3></div>')
+    $('#blog-news').prepend(toc)
+    var captions_ori = $("#cnblogs_post_body h2"),
+      captions_ori2 = $("#cnblogs_post_body h3"),
+      captions = $("#cnblogs_post_body h2,#cnblogs_post_body h3").clone(),
+      content = $("<ol id='post-toc'></ol>");
+
+    toc.append(content.append(captions));
+    toc.append('<div class="back-to-top" onclick="toScroll(0,500)"><i class="fa fa-arrow-up"></i>&nbsp;<span id="btc-persent">0%</span></div>')
+
+    var index = -1, index2 = -1;
+    captions.replaceWith(function () {
+      var self = this;
+      if (self.tagName == "H2" || self.tagName == "h2") {
+        // 设置点击目录跳转
+        index += 1;
+        $('<a rel="nofollow noopener"  name="' + '_caption_' + index + '"></a>').insertBefore(captions_ori[index]);
+        return '<li id="' + index + 'li"><a rel="nofollow noopener"  href="#_caption_' + index + '">' + self.innerHTML + '</a><ol></ol></li>';
+      } else {
+        index2 += 1;
+        $('<a rel="nofollow noopener"  name="' + '_caption' + index2 + '"></a>').insertBefore(captions_ori2[index2]);
+        $("#" + index + "li ol").append("<li><a rel="nofollow noopener"  href='#_caption" + index2 + "' style='color:#5f5f5f;'>" + self.innerHTML + "</a></li>");
+        return;
+      }
+    });
+  }
+  // 滚动至顶部
+  function toScroll(endScroll, time) {
+    $('html,body').stop().animate({ scrollTop: endScroll }, time);
+  }
+  function onScroll() {
+    // 上拉至指定位置贴顶
+    var oldScrollNum = 0;
+
+    window.onscroll = function () {
+      var t = document.documentElement.scrollTop || document.body.scrollTop;
+      if (t > oldScrollNum) {
+        if (t > 135) {
+          $('.site-author').remove()
+          $('#sidebar_categories').hide()
+          setContent()
+        }
+        if (t > 270) {
+          $("#post-toc-wrap").addClass("affix");
+        }
+      } else {
+        if (t <= 135) {
+          $('#post-toc-wrap').remove()
+          $('#sidebar_categories').show()
+          setAuthor()
+        }
+        if (t <= 270) {
+          $("#post-toc-wrap").removeClass("affix");
+        }
+      }
+      oldScrollNum = t;
+      // 滚动条
+      var docHeight = $(document).height(),
+        windowHeight = $(window).height(),
+        scrollPercent = (t / (docHeight - windowHeight)) * 100;
+      progressBar.setProgress(scrollPercent);
+      $('#btc-persent').replaceWith('<span id="btc-persent">' + scrollPercent.toFixed() + '%</span>')
+    }
+  }
+  function setAuthor() {
+    if ($('.site-author').length) return;
+    var siteAuthor = $('<div class="site-author motion-element"><img class="site-author-image" src="' + config.avatar + '"><p class="site-author-name">' + config.author + '</p></div>');
+    siteAuthor.append('<div class="site-state">' + $('.blogStats').html() + '</div>')
+    var links = $('<div class="links-of-author"></div>')
+    links.append('<div class="links-of-author-item"><a rel="nofollow noopener"  href="https://msg.cnblogs.com/send/'+ config.author+'"><i class="fa fa-fw fa-envelope"></i></a></div>'
+      +'<div class="links-of-author-item"><a rel="nofollow noopener"  id="blog_nav_rss" href="https://www.cnblogs.com/'+blogSlug+'/rss/" data-rss="https://www.cnblogs.com/'+blogSlug+'/rss/" style="display: inline !important;"><i class="fa fa-fw fa-rss"></i></a></div>')
+    $('#blog-news').prepend(siteAuthor.append(links))
+  }
+  // 设置导航区
+  function setNav() {
+    var url = window.location.href;
+    $('.brand').attr('href', '/' + blogSlug)
+    $('.site-title').text(config.siteTitle)
+    $('.menu-item-home a:first').attr('href', '/' + blogSlug)
+    $('.menu-item-archives a:first').attr('href', '/' + blogSlug+'/p')
+    if(config.gallery) {
+      $('.menu-item-gallery a:first').attr('href', '/' + blogSlug+'/gallery/'+config.gallery+'.html')
+      $('.menu-item-gallery').css('display','block')
+
+      if(/gallery/.test(url)){
+        $('.menu-item-home').removeClass('menu-item-active')
+        $('.menu-item-gallery').addClass('menu-item-active')
+      }
+    }
+    
+    if(/(\/p)$/.test(url)) {
+      $('.menu-item-home').removeClass('menu-item-active')
+      $('.menu-item-archives').addClass('menu-item-active')
+    } 
+  }
+
+  // 设置右上角github跳转链接
+  function setGithub() {
+    $('.github-corner').attr('href', 'https://github.com/gk0d' + config.github)
+  }
+  // 在响应式设计中，菜单折叠打开事件
+  function setToggle() {
+    document.querySelector('.site-nav-toggle .toggle').addEventListener('click', () => {
+      event.currentTarget.classList.toggle('toggle-close');
+      var e = document.querySelector('.site-nav'),
+        t = e.classList.contains('site-nav-on') ? 'slideUp' : 'slideDown';
+      'function' == typeof Velocity ? Velocity(e, t, {
+        duration: 200,
+        complete: function () {
+          e.classList.toggle('site-nav-on')
+        }
+      }) : e.classList.toggle('site-nav-on')
+    });
+  }
+  function setCommentStyle() {
+    let t = $(".feedbackItem");
+    if (t.length > 0) {
+      $.each(t, function (t) {
+        let e = $(this)
+          , n = e.find(".feedbackCon")
+          , o = e.find(".feedbackListSubtitle")
+          , i = n.length ? n.find(".blog_comment_body") : []
+          , s = ""
+          , a = i.length ? i.attr("id").split("_") : void 0;
+        if (a && a.length > 0) {
+          let t = a[a.length - 1]
+            , n = t.toString().match(/[0-9]/g);
+          $.isArray(n) && (t = n.join(""));
+          let o = $("#comment_" + t + "_avatar")
+            , i = o.length > 0 ? $.trim(o.text()) : "https://cdn.jsdelivr.net/gh/BNDong/Cnblogs-Theme-SimpleMemory@master/img/webp/default_avatar.webp"
+            , l = $("#a_comment_author_" + t)
+            , c = l.length ? l.attr("href") : "javascropt:void(0);";
+          s = '<div class="feedbackAvatar"><a rel="nofollow noopener"  href="' + c + '" target="_blank"><img src="' + i + '"/></a></div>',
+            e.prepend(s)
+        }
+        o.length && o.find(".louzhu").length && o.addClass("feedbackListSubtitle-louzhu")
+      })
+    }
+  }
+  function setPreNext() {
+    var pnp = $("#post_next_prev a");
+    if(!pnp.length) return;
+    var cont = $('#post_next_prev').text();
+    var wrapper = $('<div class="post_next_prev"><div class="pre-block"></div><div class="next-block"></div></div>')
+    $("#post_next_prev").replaceWith(wrapper)
+    var pre = $('<a rel="nofollow noopener"  href="'+pnp[1].href+'"><div class="post_next_prev_label">&#9668上一篇</div><div>'+pnp[1].innerText+'</div></a>')
+    
+    if(pnp.length>2){
+      $('.pre-block').append(pre)
+      var next = $('<a rel="nofollow noopener"  href="'+pnp[3].href+'"><div class="post_next_prev_label">下一篇&#9658</div><div>'+pnp[3].innerText+'</div></a>')
+      $('.next-block').append(next)
+    } else {
+      if(/上一篇/.test(cont)) {
+        $('.pre-block').append(pre)
+      } else if(/下一篇/.test(cont)) {
+        var next = $('<a rel="nofollow noopener"  href="'+pnp[1].href+'"><div class="post_next_prev_label">下一篇&#9658</div><div>'+pnp[1].innerText+'</div></a>')
+        $('.next-block').append(next)
+      }
+    }
+  }
+  setGithub();
+  setToggle();
+  setNav();
+  setTimeout(() => {
+    setAuthor();
+  }, 500);
+  // 只对文章页
+  if (isPost) {
+    setFoot();
+    // 由于加载需要时间故增加延时后操作
+    setTimeout(() => {
+      setDesc();
+      setPreNext();
+      onScroll();
+    }, 500);
+    setTimeout( () => {
+      setCommentStyle()
+    }, 1000)
+  }
+</script>
+
+    </div>
+
+    <input type="hidden" id="antiforgery_token" value="CfDJ8DZoAyJmInJHoSwqM1IbzdSC1qNcdZ8jSZdMERKDzzFbD-G88BFPFH8OjjHIPnDAR1jHEfiedFKkHa59YSo8fEjA0bh0J7tVHKIEeDLzaRVVx2N6w_yPJonFJDD9Qs2QUiILr_ttx4EF1jYXjsWDx0o">
+    <script async="" src="./逻辑漏洞挖掘_files/js"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-M95P3TTWJZ');
+</script>
+<script defer="" src="./逻辑漏洞挖掘_files/hm.js.下载"></script>
+
+
+<div style="z-index: 998; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); display: none; flex-direction: column; align-items: center; justify-content: center">
+<div style="background: #fff;padding: 30px; margin: 30px; border-radius: 16px;">
+  <div style="width: 200px; height: 200px; background: rgba(255, 255, 255, 0.8); position: absolute; top: -100px; right: -100px; border-radius: 100px"></div>
+  <div style="text-align: center; font-size: 18px; margin-bottom: 10px;">点击右上角即可分享</div>
+  <img src="./逻辑漏洞挖掘_files/35695-20230906145857937-1471873834.gif" alt="微信分享提示">
+</div>   
+    </div><script type="text/javascript">
+  window.$silence = {
+    avatar: 'https://img2022.cnblogs.com/blog/3010963/202211/3010963-20221115214637589-817220849.jpg',
+    github: 'https://github.com/gk0d',
+    defaultTheme: 'e',
+    navbars: [{
+      title: '标签',
+      url: 'https://www.cnblogs.com/gk0d/tag/'
+    }, {
+      title: '归档',
+      url: 'https://www.cnblogs.com/gk0d/p/'
+    }],
+    catalog: {
+      enable: true,
+      index: true,
+      active: false,
+      levels: ['h1', 'h2', 'h3'],
+    },
+    signature: {
+      enable: true,
+      author: 'gk0d',
+      license: ['署名-非商业性使用-相同方式共享 4.0 国际', 'https://creativecommons.org/licenses/by-nc-sa/4.0/'],
+      remark: '留言:  如果文中有什么错误，欢迎指出。以免更多的人被误导'
+    },
+    sponsor: {
+      enable: false,
+    }
+  };
+</script><a href="https://github.com/gk0d" class="github-corner" title="GitHub" target="_blank">
+                <svg width="60" height="60" viewBox="0 0 250 250" style="color:#fff" aria-hidden="true">
+                    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+                    <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+                    <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+                </svg>
+            </a><div class="esa-toolbar">
+        <div class="material-symbols-outlined bars bars-show">more_horiz</div>
+        <span class="material-symbols-outlined up up-show" title="返回顶部">keyboard_arrow_up</span>
+        <span class="material-symbols-outlined mode mode-show" title="切换模式">dark_mode</span>
+        <span class="material-symbols-outlined skin skin-show" title="切换主题">palette</span>
+        <div class="skin-popup">
+            <div class="item">
+                <div class="title">选择主题</div>
+                <div class="themes">
+                    <button data-theme="a" style="background: #2D8CF0;"></button>
+                    <button data-theme="b" style="background: #FA7298;"></button>
+                    <button data-theme="c" style="background: #42B983;"></button>
+                    <button data-theme="d" style="background: #607D8B;"></button>
+                    <button data-theme="e" style="background: #5E72E4;"></button>
+                    <button data-theme="f" style="background: #FF9700;"></button>
+                    <button data-theme="g" style="background: #FF5722;"></button>
+                    <button data-theme="h" style="background: #009688;"></button>
+                    <button data-theme="i" style="background: #673BB7;"></button>
+                    <button data-theme="j" style="background: #906f61;"></button>
+                </div>
+            </div>
+        </div>
+        <span class="material-symbols-outlined contents contents-show" title="目录导航">menu</span></div>
+    <div class="esa-contents noactive"><ul><li class="h1" title="逻辑漏洞">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E"><span class="level1">1. </span>逻辑漏洞</a>
+                 </li><li class="h1" title="挖掘思路">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E6%8C%96%E6%8E%98%E6%80%9D%E8%B7%AF"><span class="level1">2. </span>挖掘思路</a>
+                 </li><li class="h1" title="业务逻辑漏洞">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E"><span class="level1">3. </span>业务逻辑漏洞</a>
+                 </li><li class="h2" title="登录模块">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E7%99%BB%E5%BD%95%E6%A8%A1%E5%9D%97"><span class="level2">3.1. </span>登录模块</a>
+                 </li><li class="h2" title="注册模块">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E6%B3%A8%E5%86%8C%E6%A8%A1%E5%9D%97"><span class="level2">3.2. </span>注册模块</a>
+                 </li><li class="h2" title="密码找回">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E5%AF%86%E7%A0%81%E6%89%BE%E5%9B%9E"><span class="level2">3.3. </span>密码找回</a>
+                 </li><li class="h2" title="购买支付/充值">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E8%B4%AD%E4%B9%B0%E6%94%AF%E4%BB%98%E5%85%85%E5%80%BC"><span class="level2">3.4. </span>购买支付/充值</a>
+                 </li><li class="h2" title="个人资料">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E4%B8%AA%E4%BA%BA%E8%B5%84%E6%96%99"><span class="level2">3.5. </span>个人资料</a>
+                 </li><li class="h2" title="抽奖/活动">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E6%8A%BD%E5%A5%96%E6%B4%BB%E5%8A%A8"><span class="level2">3.6. </span>抽奖/活动</a>
+                 </li><li class="h2" title="代金券/优惠券">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E4%BB%A3%E9%87%91%E5%88%B8%E4%BC%98%E6%83%A0%E5%88%B8"><span class="level2">3.7. </span>代金券/优惠券</a>
+                 </li><li class="h2" title="订单">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E8%AE%A2%E5%8D%95"><span class="level2">3.8. </span>订单</a>
+                 </li><li class="h2" title="账户">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E8%B4%A6%E6%88%B7"><span class="level2">3.9. </span>账户</a>
+                 </li><li class="h2" title="会员系统">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E4%BC%9A%E5%91%98%E7%B3%BB%E7%BB%9F"><span class="level2">3.10. </span>会员系统</a>
+                 </li><li class="h2" title="传输过程">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E4%BC%A0%E8%BE%93%E8%BF%87%E7%A8%8B"><span class="level2">3.11. </span>传输过程</a>
+                 </li><li class="h2" title="评论模块">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E8%AF%84%E8%AE%BA%E6%A8%A1%E5%9D%97"><span class="level2">3.12. </span>评论模块</a>
+                 </li><li class="h2" title="第三方系统">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E7%AC%AC%E4%B8%89%E6%96%B9%E7%B3%BB%E7%BB%9F"><span class="level2">3.13. </span>第三方系统</a>
+                 </li><li class="h2" title="验证码安全">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E9%AA%8C%E8%AF%81%E7%A0%81%E5%AE%89%E5%85%A8"><span class="level2">3.14. </span>验证码安全</a>
+                 </li><li class="h2" title="接口调用">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8"><span class="level2">3.15. </span>接口调用</a>
+                 </li><li class="h1" title="逻辑漏洞利用">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="level1">4. </span>逻辑漏洞利用</a>
+                 </li><li class="h2" title="验证码">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E9%AA%8C%E8%AF%81%E7%A0%81"><span class="level2">4.1. </span>验证码</a>
+                 </li><li class="h2" title="短信轰炸">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E7%9F%AD%E4%BF%A1%E8%BD%B0%E7%82%B8"><span class="level2">4.2. </span>短信轰炸</a>
+                 </li><li class="h2" title="越权操作">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E8%B6%8A%E6%9D%83%E6%93%8D%E4%BD%9C"><span class="level2">4.3. </span>越权操作</a>
+                 </li><li class="h2" title="用户信息泄露">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2"><span class="level2">4.4. </span>用户信息泄露</a>
+                 </li><li class="h2" title="任意用户密码重置">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E4%BB%BB%E6%84%8F%E7%94%A8%E6%88%B7%E5%AF%86%E7%A0%81%E9%87%8D%E7%BD%AE"><span class="level2">4.5. </span>任意用户密码重置</a>
+                 </li><li class="h2" title="订单金额任意修改">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E8%AE%A2%E5%8D%95%E9%87%91%E9%A2%9D%E4%BB%BB%E6%84%8F%E4%BF%AE%E6%94%B9"><span class="level2">4.6. </span>订单金额任意修改</a>
+                 </li><li class="h2" title="未授权访问">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE"><span class="level2">4.7. </span>未授权访问</a>
+                 </li><li class="h2" title="接口无限制枚举">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E6%8E%A5%E5%8F%A3%E6%97%A0%E9%99%90%E5%88%B6%E6%9E%9A%E4%B8%BE"><span class="level2">4.8. </span>接口无限制枚举</a>
+                 </li><li class="h2" title="cookie/token设计存在缺陷">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#cookietoken%E8%AE%BE%E8%AE%A1%E5%AD%98%E5%9C%A8%E7%BC%BA%E9%99%B7"><span class="level2">4.9. </span>cookie/token设计存在缺陷</a>
+                 </li><li class="h2" title="找回密码存在设计缺陷">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E6%89%BE%E5%9B%9E%E5%AF%86%E7%A0%81%E5%AD%98%E5%9C%A8%E8%AE%BE%E8%AE%A1%E7%BC%BA%E9%99%B7"><span class="level2">4.10. </span>找回密码存在设计缺陷</a>
+                 </li><li class="h2" title="签约漏洞">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E7%AD%BE%E7%BA%A6%E6%BC%8F%E6%B4%9E"><span class="level2">4.11. </span>签约漏洞</a>
+                 </li><li class="h2" title="会员升级">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E4%BC%9A%E5%91%98%E5%8D%87%E7%BA%A7"><span class="level2">4.12. </span>会员升级</a>
+                 </li><li class="h2" title="订单关闭">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E8%AE%A2%E5%8D%95%E5%85%B3%E9%97%AD"><span class="level2">4.13. </span>订单关闭</a>
+                 </li><li class="h2" title="支付金额">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E6%94%AF%E4%BB%98%E9%87%91%E9%A2%9D"><span class="level2">4.14. </span>支付金额</a>
+                 </li><li class="h2" title="int整数溢出">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#int%E6%95%B4%E6%95%B0%E6%BA%A2%E5%87%BA"><span class="level2">4.15. </span>int整数溢出</a>
+                 </li><li class="h2" title="突破时间限制">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E7%AA%81%E7%A0%B4%E6%97%B6%E9%97%B4%E9%99%90%E5%88%B6"><span class="level2">4.16. </span>突破时间限制</a>
+                 </li><li class="h2" title="前端验证">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E5%89%8D%E7%AB%AF%E9%AA%8C%E8%AF%81"><span class="level2">4.17. </span>前端验证</a>
+                 </li><li class="h2" title="暴力破解/撞库">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3%E6%92%9E%E5%BA%93"><span class="level2">4.18. </span>暴力破解/撞库</a>
+                 </li><li class="h2" title="密码找回">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E5%AF%86%E7%A0%81%E6%89%BE%E5%9B%9E-1"><span class="level2">4.19. </span>密码找回</a>
+                 </li><li class="h2" title="任意url跳转">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E4%BB%BB%E6%84%8Furl%E8%B7%B3%E8%BD%AC"><span class="level2">4.20. </span>任意url跳转</a>
+                 </li><li class="h1" title="支付逻辑漏洞">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E6%94%AF%E4%BB%98%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E"><span class="level1">5. </span>支付逻辑漏洞</a>
+                 </li><li class="h2" title="测试思路">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E6%B5%8B%E8%AF%95%E6%80%9D%E8%B7%AF"><span class="level2">5.1. </span>测试思路</a>
+                 </li><li class="h3" title="订单模块">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E8%AE%A2%E5%8D%95%E6%A8%A1%E5%9D%97"><span class="level3">5.1.1. </span>订单模块</a>
+                 </li><li class="h3" title="结算模块">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E7%BB%93%E7%AE%97%E6%A8%A1%E5%9D%97"><span class="level3">5.1.2. </span>结算模块</a>
+                 </li><li class="h3" title="退货模块">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E9%80%80%E8%B4%A7%E6%A8%A1%E5%9D%97"><span class="level3">5.1.3. </span>退货模块</a>
+                 </li><li class="h3" title="收货模块">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E6%94%B6%E8%B4%A7%E6%A8%A1%E5%9D%97"><span class="level3">5.1.4. </span>收货模块</a>
+                 </li><li class="h3" title="边界值问题">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E8%BE%B9%E7%95%8C%E5%80%BC%E9%97%AE%E9%A2%98"><span class="level3">5.1.5. </span>边界值问题</a>
+                 </li><li class="h3" title="顺序执行缺陷">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E9%A1%BA%E5%BA%8F%E6%89%A7%E8%A1%8C%E7%BC%BA%E9%99%B7"><span class="level3">5.1.6. </span>顺序执行缺陷</a>
+                 </li><li class="h3" title="金额直接传输导致篡改">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E9%87%91%E9%A2%9D%E7%9B%B4%E6%8E%A5%E4%BC%A0%E8%BE%93%E5%AF%BC%E8%87%B4%E7%AF%A1%E6%94%B9"><span class="level3">5.1.7. </span>金额直接传输导致篡改</a>
+                 </li><li class="h3" title="确定支付之后还可以加入购物车">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E7%A1%AE%E5%AE%9A%E6%94%AF%E4%BB%98%E4%B9%8B%E5%90%8E%E8%BF%98%E5%8F%AF%E4%BB%A5%E5%8A%A0%E5%85%A5%E8%B4%AD%E7%89%A9%E8%BD%A6"><span class="level3">5.1.8. </span>确定支付之后还可以加入购物车</a>
+                 </li><li class="h3" title="请求重放">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E8%AF%B7%E6%B1%82%E9%87%8D%E6%94%BE"><span class="level3">5.1.9. </span>请求重放</a>
+                 </li><li class="h3" title="请求参数干扰">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0%E5%B9%B2%E6%89%B0"><span class="level3">5.1.10. </span>请求参数干扰</a>
+                 </li><li class="h3" title="订单替换">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E8%AE%A2%E5%8D%95%E6%9B%BF%E6%8D%A2"><span class="level3">5.1.11. </span>订单替换</a>
+                 </li><li class="h3" title="欺诈">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E6%AC%BA%E8%AF%88"><span class="level3">5.1.12. </span>欺诈</a>
+                 </li><li class="h3" title="单位替换">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E5%8D%95%E4%BD%8D%E6%9B%BF%E6%8D%A2"><span class="level3">5.1.13. </span>单位替换</a>
+                 </li><li class="h3" title="用户替换">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E7%94%A8%E6%88%B7%E6%9B%BF%E6%8D%A2"><span class="level3">5.1.14. </span>用户替换</a>
+                 </li><li class="h3" title="强制攻击">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E5%BC%BA%E5%88%B6%E6%94%BB%E5%87%BB"><span class="level3">5.1.15. </span>强制攻击</a>
+                 </li><li class="h3" title="秘钥泄漏">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E7%A7%98%E9%92%A5%E6%B3%84%E6%BC%8F"><span class="level3">5.1.16. </span>秘钥泄漏</a>
+                 </li><li class="h2" title="修复建议">
+                    <a class="esa-anchor-link" href="https://www.cnblogs.com/gk0d/p/16905038.html#%E4%BF%AE%E5%A4%8D%E5%BB%BA%E8%AE%AE"><span class="level2">5.2. </span>修复建议</a>
+                 </li></ul></div><script type="text/javascript">getFollowStatus('20acfbd1-36f4-4629-c8fe-08daa8657cf0');</script><div id="lightboxOverlay" tabindex="-1" class="lightboxOverlay" style="display: none;"></div><div id="lightbox" tabindex="-1" class="lightbox" style="display: none;"><div class="lb-outerContainer"><div class="lb-container"><img class="lb-image" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt=""><div class="lb-nav"><a class="lb-prev" aria-label="Previous image" href="https://www.cnblogs.com/gk0d/p/16905038.html"></a><a class="lb-next" aria-label="Next image" href="https://www.cnblogs.com/gk0d/p/16905038.html"></a></div><div class="lb-loader"><a class="lb-cancel"></a></div></div></div><div class="lb-dataContainer"><div class="lb-data"><div class="lb-details"><span class="lb-caption"></span><span class="lb-number"></span></div><div class="lb-closeContainer"><a class="lb-close"></a></div></div></div></div></body></html>

@@ -911,7 +911,7 @@ public final class System {
 
 IDEA非常智能，我们在使用项目中定义的类时，会自动帮我们将导入补全，所以说代码写起来非常高效。
 
-注意，在不同包下的类，即使类名相同，也是不同的两个类：
+**注意，在不同包下的类，即使类名相同，也是不同的两个类：**
 
 ```java
 package com.test.entity;
@@ -922,7 +922,7 @@ public class String {    //我们在自己的包中也建一个名为String的�
 
 当我们在使用时：
 
-![image-20220921121404900](/Users/nagocoler/Library/Application Support/typora-user-images/image-20220921121404900.png)
+![image-20220921121404900](/../../src.jpg)
 
 由于默认导入了系统自带的String类，并且也导入了我们自己定义的String类，那么此时就出现了歧义，编译器不知道到底我们想用的是哪一个String类，所以说我们需要明确指定：
 

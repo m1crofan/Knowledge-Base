@@ -1,0 +1,1627 @@
+<!DOCTYPE html>
+<!-- saved from url=(0029)https://xz.aliyun.com/t/12948 -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>我与逻辑漏洞的爱恨情仇 - 先知社区</title>
+    <meta name="description" content="先知社区，先知安全技术社区">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <link rel="icon" href="https://xz.aliyun.com/static/icon/favicon.ico" type="image/x-icon">
+    <link href="./谷歌语法+未授权_files/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./谷歌语法+未授权_files/editormd.min.css">
+    <link rel="stylesheet" href="./谷歌语法+未授权_files/tango.css">
+    <link href="./谷歌语法+未授权_files/bootstrap-responsive.min.css" rel="stylesheet">
+    <!-- Le styles -->
+    <link rel="stylesheet" href="./谷歌语法+未授权_files/OverlayStyle.css">
+    <link rel="stylesheet" href="./谷歌语法+未授权_files/topic.css">
+    <link rel="stylesheet" href="./谷歌语法+未授权_files/beautify.css">
+    
+    <link rel="stylesheet" href="./谷歌语法+未授权_files/editormd.css">
+    <link rel="stylesheet" href="./谷歌语法+未授权_files/tango.css">
+    <link rel="stylesheet" href="./谷歌语法+未授权_files/jquery.fancybox.min.css">
+
+    <!--[if lte IE 8]>
+        <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <![endif]-->
+    
+    
+
+    <!--[if !IE]> -->
+    <script type="text/javascript" src="./谷歌语法+未授权_files/jquery-2.1.3.min.js.下载"></script>
+    
+    
+    <script src="./谷歌语法+未授权_files/jquery.fancybox.min.js.下载"></script>
+
+    <!-- <![endif]-->
+<style type="text/css">@font-face {
+  font-family: "xm-iconfont";
+  src: url('//at.alicdn.com/t/font_792691_ptvyboo0bno.eot?t=1574048839056');
+  /* IE9 */
+  src: url('//at.alicdn.com/t/font_792691_ptvyboo0bno.eot?t=1574048839056#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('data:application/x-font-woff2;charset=utf-8;base64,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') format('woff2'), url('//at.alicdn.com/t/font_792691_ptvyboo0bno.woff?t=1574048839056') format('woff'), url('//at.alicdn.com/t/font_792691_ptvyboo0bno.ttf?t=1574048839056') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */ url('//at.alicdn.com/t/font_792691_ptvyboo0bno.svg?t=1574048839056#iconfont') format('svg');
+  /* iOS 4.1- */
+}
+.xm-iconfont {
+  font-family: "xm-iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.xm-icon-quanxuan:before {
+  content: "\e62c";
+}
+.xm-icon-caidan:before {
+  content: "\e610";
+}
+.xm-icon-fanxuan:before {
+  content: "\e837";
+}
+.xm-icon-pifu:before {
+  content: "\e668";
+}
+.xm-icon-qingkong:before {
+  content: "\e63e";
+}
+.xm-icon-sousuo:before {
+  content: "\e600";
+}
+.xm-icon-danx:before {
+  content: "\e62b";
+}
+.xm-icon-duox:before {
+  content: "\e613";
+}
+.xm-icon-close:before {
+  content: "\e601";
+}
+.xm-icon-expand:before {
+  content: "\e641";
+}
+.xm-icon-banxuan:before {
+  content: "\e60d";
+}
+</style><style type="text/css">@-webkit-keyframes xm-upbit {
+  from {
+    -webkit-transform: translate3d(0, 30px, 0);
+    opacity: 0.3;
+  }
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+@keyframes xm-upbit {
+  from {
+    transform: translate3d(0, 30px, 0);
+    opacity: 0.3;
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+@-webkit-keyframes loader {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes loader {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+xm-select {
+  background-color: #FFF;
+  position: relative;
+  border: 1px solid #E6E6E6;
+  border-radius: 2px;
+  display: block;
+  width: 100%;
+  cursor: pointer;
+  outline: none;
+}
+xm-select * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 14px;
+  font-weight: 400;
+  text-overflow: ellipsis;
+  user-select: none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+xm-select:hover,
+xm-select:focus {
+  border-color: #C0C4CC;
+}
+xm-select > .xm-tips {
+  color: #999999;
+  padding: 0 10px;
+  position: absolute;
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
+xm-select > .xm-icon {
+  display: inline-block;
+  overflow: hidden;
+  position: absolute;
+  width: 0;
+  height: 0;
+  right: 10px;
+  top: 50%;
+  margin-top: -3px;
+  cursor: pointer;
+  border: 6px dashed transparent;
+  border-top-color: #C2C2C2;
+  border-top-style: solid;
+  transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+}
+xm-select > .xm-icon-expand {
+  margin-top: -9px;
+  transform: rotate(180deg);
+}
+xm-select > .xm-label.single-row {
+  position: absolute;
+  top: 0;
+  bottom: 0px;
+  left: 0px;
+  right: 30px;
+  overflow: auto hidden;
+}
+xm-select > .xm-label.single-row .scroll {
+  overflow-y: hidden;
+}
+xm-select > .xm-label.single-row .label-content {
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+xm-select > .xm-label.auto-row .label-content {
+  flex-wrap: wrap;
+  padding-right: 30px !important;
+}
+xm-select > .xm-label.auto-row .xm-label-block > span {
+  white-space: unset;
+  height: 100%;
+}
+xm-select > .xm-label .scroll .label-content {
+  display: flex;
+  padding: 3px 10px;
+}
+xm-select > .xm-label .xm-label-block {
+  display: flex;
+  position: relative;
+  padding: 0px 5px;
+  margin: 2px 5px 2px 0;
+  border-radius: 3px;
+  align-items: baseline;
+  color: #FFF;
+}
+xm-select > .xm-label .xm-label-block > span {
+  display: flex;
+  color: #FFF;
+  white-space: nowrap;
+}
+xm-select > .xm-label .xm-label-block > i {
+  color: #FFF;
+  margin-left: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+}
+xm-select > .xm-label .xm-label-block.disabled {
+  background-color: #C2C2C2 !important;
+  cursor: no-drop !important;
+}
+xm-select > .xm-label .xm-label-block.disabled > i {
+  cursor: no-drop !important;
+}
+xm-select > .xm-body {
+  position: absolute;
+  left: 0;
+  top: 42px;
+  padding: 5px 0;
+  z-index: 999;
+  width: 100%;
+  min-width: fit-content;
+  border: 1px solid #E6E6E6;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+  animation-name: xm-upbit;
+  animation-duration: 0.3s;
+  animation-fill-mode: both;
+}
+xm-select > .xm-body .scroll-body {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+xm-select > .xm-body .scroll-body::-webkit-scrollbar {
+  width: 8px;
+}
+xm-select > .xm-body .scroll-body::-webkit-scrollbar-track {
+  -webkit-border-radius: 2em;
+  -moz-border-radius: 2em;
+  -ms-border-radius: 2em;
+  border-radius: 2em;
+  background-color: #FFF;
+}
+xm-select > .xm-body .scroll-body::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 2em;
+  -moz-border-radius: 2em;
+  -ms-border-radius: 2em;
+  border-radius: 2em;
+  background-color: #C2C2C2;
+}
+xm-select > .xm-body.up {
+  top: auto;
+  bottom: 42px;
+}
+xm-select > .xm-body.relative {
+  position: relative;
+  display: block !important;
+  top: 0;
+  box-shadow: none;
+  border: none;
+  animation-name: none;
+  animation-duration: 0;
+  min-width: 100%;
+}
+xm-select > .xm-body .xm-group {
+  cursor: default;
+}
+xm-select > .xm-body .xm-group-item {
+  display: inline-block;
+  cursor: pointer;
+  padding: 0 10px;
+  color: #999;
+  font-size: 12px;
+}
+xm-select > .xm-body .xm-option {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 0 10px;
+  cursor: pointer;
+}
+xm-select > .xm-body .xm-option-icon {
+  color: transparent;
+  display: flex;
+  border: 1px solid #E6E6E6;
+  border-radius: 3px;
+  justify-content: center;
+  align-items: center;
+}
+xm-select > .xm-body .xm-option-icon.xm-custom-icon {
+  color: unset;
+  border: unset;
+}
+xm-select > .xm-body .xm-option-icon-hidden {
+  margin-right: -10px;
+}
+xm-select > .xm-body .xm-option-icon.xm-icon-danx {
+  border-radius: 100%;
+}
+xm-select > .xm-body .xm-option-content {
+  display: flex;
+  position: relative;
+  padding-left: 15px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  ;
+  width: calc(100% - 20px);
+}
+xm-select > .xm-body .xm-option.hide-icon .xm-option-content {
+  padding-left: 0;
+}
+xm-select > .xm-body .xm-option.selected.hide-icon .xm-option-content {
+  color: #FFF !important;
+}
+xm-select > .xm-body .xm-option .loader {
+  width: 0.8em;
+  height: 0.8em;
+  margin-right: 6px;
+  color: #C2C2C2;
+}
+xm-select > .xm-body .xm-select-empty {
+  text-align: center;
+  color: #999;
+}
+xm-select > .xm-body .disabled {
+  cursor: no-drop;
+}
+xm-select > .xm-body .disabled:hover {
+  background-color: #FFF;
+}
+xm-select > .xm-body .disabled .xm-option-icon {
+  border-color: #C2C2C2 !important;
+}
+xm-select > .xm-body .disabled .xm-option-content {
+  color: #C2C2C2 !important;
+}
+xm-select > .xm-body .disabled.selected > .xm-option-icon {
+  color: #C2C2C2 !important;
+}
+xm-select > .xm-body .xm-search {
+  background-color: #FFF !important;
+  position: relative;
+  padding: 0 10px;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+xm-select > .xm-body .xm-search > i {
+  position: absolute;
+  color: ;
+}
+xm-select > .xm-body .xm-search-input {
+  border: none;
+  border-bottom: 1px solid #E6E6E6;
+  padding-left: 27px;
+  cursor: text;
+}
+xm-select > .xm-body .xm-paging {
+  padding: 0 10px;
+  display: flex;
+  margin-top: 5px;
+}
+xm-select > .xm-body .xm-paging > span:first-child {
+  border-radius: 2px 0 0 2px;
+}
+xm-select > .xm-body .xm-paging > span:last-child {
+  border-radius: 0 2px 2px 0;
+}
+xm-select > .xm-body .xm-paging > span {
+  display: flex;
+  flex: auto;
+  justify-content: center;
+  vertical-align: middle;
+  margin: 0 -1px 0 0;
+  background-color: #fff;
+  color: #333;
+  font-size: 12px;
+  border: 1px solid #e2e2e2;
+  flex-wrap: nowrap;
+  width: 100%;
+  overflow: hidden;
+  min-width: 50px;
+}
+xm-select > .xm-body .xm-toolbar {
+  padding: 0 10px;
+  display: flex;
+  margin: -3px 0;
+  cursor: default;
+}
+xm-select > .xm-body .xm-toolbar .toolbar-tag {
+  cursor: pointer;
+  display: flex;
+  margin-right: 20px;
+  color: ;
+  align-items: baseline;
+}
+xm-select > .xm-body .xm-toolbar .toolbar-tag:hover {
+  opacity: 0.8;
+}
+xm-select > .xm-body .xm-toolbar .toolbar-tag:active {
+  opacity: 1;
+}
+xm-select > .xm-body .xm-toolbar .toolbar-tag > i {
+  margin-right: 2px;
+  font-size: 14px;
+}
+xm-select > .xm-body .xm-toolbar .toolbar-tag:last-child {
+  margin-right: 0;
+}
+xm-select > .xm-body .xm-body-custom {
+  line-height: initial;
+  cursor: default;
+}
+xm-select > .xm-body .xm-body-custom * {
+  box-sizing: initial;
+}
+xm-select > .xm-body .xm-tree {
+  position: relative;
+}
+xm-select > .xm-body .xm-tree-icon {
+  display: inline-block;
+  margin-right: 3px;
+  cursor: pointer;
+  border: 6px dashed transparent;
+  border-left-color: #C2C2C2;
+  border-left-style: solid;
+  transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  z-index: 2;
+  visibility: hidden;
+}
+xm-select > .xm-body .xm-tree-icon.expand {
+  margin-top: 3px;
+  margin-right: 5px;
+  margin-left: -2px;
+  transform: rotate(90deg);
+}
+xm-select > .xm-body .xm-tree-icon.xm-visible {
+  visibility: visible;
+}
+xm-select > .xm-body .xm-tree .left-line {
+  position: absolute;
+  left: 13px;
+  width: 0;
+  z-index: 1;
+  border-left: 1px dotted #c0c4cc !important;
+}
+xm-select > .xm-body .xm-tree .top-line {
+  position: absolute;
+  left: 13px;
+  height: 0;
+  z-index: 1;
+  border-top: 1px dotted #c0c4cc !important;
+}
+xm-select > .xm-body .xm-tree .xm-tree-icon + .top-line {
+  margin-left: 1px;
+}
+xm-select > .xm-body .scroll-body > .xm-tree > .xm-option > .top-line,
+xm-select > .xm-body .scroll-body > .xm-option > .top-line {
+  width: 0 !important;
+}
+xm-select > .xm-body .xm-cascader-box {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  padding: 5px 0;
+  border: 1px solid #E6E6E6;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+  margin: -1px;
+}
+xm-select > .xm-body .xm-cascader-box::before {
+  content: ' ';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-right-color: #E6E6E6;
+  top: 10px;
+  left: -12px;
+}
+xm-select > .xm-body .xm-cascader-box::after {
+  content: ' ';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-right-color: #fff;
+  top: 10px;
+  left: -11px;
+}
+xm-select > .xm-body .xm-cascader-scroll {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+xm-select > .xm-body.cascader {
+  width: unset;
+  min-width: unset;
+}
+xm-select > .xm-body.cascader .xm-option-content {
+  padding-left: 8px;
+}
+xm-select > .xm-body.cascader .disabled .xm-right-arrow {
+  color: #C2C2C2 !important;
+}
+xm-select > .xm-body.cascader .hide-icon.disabled .xm-right-arrow {
+  color: #999 !important;
+}
+xm-select .xm-input {
+  cursor: pointer;
+  border-radius: 2px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #E6E6E6;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #FFF;
+  line-height: 1.3;
+  padding-left: 10px;
+  outline: 0;
+  user-select: text;
+  -ms-user-select: text;
+  -moz-user-select: text;
+  -webkit-user-select: text;
+}
+xm-select .dis {
+  display: none;
+}
+xm-select .loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+xm-select .loader {
+  border: 0.2em dotted currentcolor;
+  border-radius: 50%;
+  -webkit-animation: 1s loader linear infinite;
+  animation: 1s loader linear infinite;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  color: inherit;
+  vertical-align: middle;
+  pointer-events: none;
+}
+xm-select .xm-select-default {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: none;
+  visibility: hidden;
+}
+xm-select .xm-select-disabled {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  cursor: no-drop;
+  z-index: 2;
+  opacity: 0.3;
+  background-color: #FFF;
+}
+xm-select .item--divided {
+  border-top: 1px solid #ebeef5;
+  width: calc(100% - 20px);
+  cursor: initial;
+}
+xm-select .xm-right-arrow {
+  position: absolute;
+  color: ;
+  right: 5px;
+  top: -1px;
+  font-weight: 700;
+  transform: scale(0.6, 1);
+}
+xm-select .xm-right-arrow::after {
+  content: '>';
+}
+xm-select[size='large'] {
+  min-height: 40px;
+  line-height: 40px;
+}
+xm-select[size='large'] .xm-input {
+  height: 40px;
+}
+xm-select[size='large'] .xm-label .scroll .label-content {
+  line-height: 34px;
+}
+xm-select[size='large'] .xm-label .xm-label-block {
+  height: 30px;
+  line-height: 30px;
+}
+xm-select[size='large'] .xm-body .xm-option .xm-option-icon {
+  height: 20px;
+  width: 20px;
+  font-size: 20px;
+}
+xm-select[size='large'] .xm-paging > span {
+  height: 34px;
+  line-height: 34px;
+}
+xm-select[size='large'] .xm-tree .left-line {
+  height: 100%;
+  bottom: 20px;
+}
+xm-select[size='large'] .xm-tree .left-line-group {
+  height: calc(100% - 40px);
+}
+xm-select[size='large'] .xm-tree .xm-tree-icon.xm-hidden + .top-line {
+  top: 19px;
+}
+xm-select[size='large'] .item--divided {
+  margin: 10px;
+}
+xm-select {
+  min-height: 36px;
+  line-height: 36px;
+}
+xm-select .xm-input {
+  height: 36px;
+}
+xm-select .xm-label .scroll .label-content {
+  line-height: 30px;
+}
+xm-select .xm-label .xm-label-block {
+  height: 26px;
+  line-height: 26px;
+}
+xm-select .xm-body .xm-option .xm-option-icon {
+  height: 18px;
+  width: 18px;
+  font-size: 18px;
+}
+xm-select .xm-paging > span {
+  height: 30px;
+  line-height: 30px;
+}
+xm-select .xm-tree .left-line {
+  height: 100%;
+  bottom: 18px;
+}
+xm-select .xm-tree .left-line-group {
+  height: calc(100% - 36px);
+}
+xm-select .xm-tree .xm-tree-icon.xm-hidden + .top-line {
+  top: 17px;
+}
+xm-select .item--divided {
+  margin: 9px;
+}
+xm-select[size='small'] {
+  min-height: 32px;
+  line-height: 32px;
+}
+xm-select[size='small'] .xm-input {
+  height: 32px;
+}
+xm-select[size='small'] .xm-label .scroll .label-content {
+  line-height: 26px;
+}
+xm-select[size='small'] .xm-label .xm-label-block {
+  height: 22px;
+  line-height: 22px;
+}
+xm-select[size='small'] .xm-body .xm-option .xm-option-icon {
+  height: 16px;
+  width: 16px;
+  font-size: 16px;
+}
+xm-select[size='small'] .xm-paging > span {
+  height: 26px;
+  line-height: 26px;
+}
+xm-select[size='small'] .xm-tree .left-line {
+  height: 100%;
+  bottom: 16px;
+}
+xm-select[size='small'] .xm-tree .left-line-group {
+  height: calc(100% - 32px);
+}
+xm-select[size='small'] .xm-tree .xm-tree-icon.xm-hidden + .top-line {
+  top: 15px;
+}
+xm-select[size='small'] .item--divided {
+  margin: 8px;
+}
+xm-select[size='mini'] {
+  min-height: 28px;
+  line-height: 28px;
+}
+xm-select[size='mini'] .xm-input {
+  height: 28px;
+}
+xm-select[size='mini'] .xm-label .scroll .label-content {
+  line-height: 22px;
+}
+xm-select[size='mini'] .xm-label .xm-label-block {
+  height: 18px;
+  line-height: 18px;
+}
+xm-select[size='mini'] .xm-body .xm-option .xm-option-icon {
+  height: 14px;
+  width: 14px;
+  font-size: 14px;
+}
+xm-select[size='mini'] .xm-paging > span {
+  height: 22px;
+  line-height: 22px;
+}
+xm-select[size='mini'] .xm-tree .left-line {
+  height: 100%;
+  bottom: 14px;
+}
+xm-select[size='mini'] .xm-tree .left-line-group {
+  height: calc(100% - 28px);
+}
+xm-select[size='mini'] .xm-tree .xm-tree-icon.xm-hidden + .top-line {
+  top: 13px;
+}
+xm-select[size='mini'] .item--divided {
+  margin: 7px;
+}
+.layui-form-pane xm-select {
+  margin: -1px -1px -1px 0;
+}
+</style><style data-id="immersive-translate-input-injected-css">.immersive-translate-input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 2147483647;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.immersive-translate-loading-spinner {
+  vertical-align: middle !important;
+  width: 10px !important;
+  height: 10px !important;
+  display: inline-block !important;
+  margin: 0 4px !important;
+  border: 2px rgba(221, 244, 255, 0.6) solid !important;
+  border-top: 2px rgba(0, 0, 0, 0.375) solid !important;
+  border-left: 2px rgba(0, 0, 0, 0.375) solid !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  -webkit-animation: immersive-translate-loading-animation 0.6s infinite linear !important;
+  animation: immersive-translate-loading-animation 0.6s infinite linear !important;
+}
+
+@-webkit-keyframes immersive-translate-loading-animation {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+
+  to {
+    -webkit-transform: rotate(359deg);
+  }
+}
+
+@keyframes immersive-translate-loading-animation {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+
+.immersive-translate-input-loading {
+  --loading-color: #f78fb6;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: block;
+  margin: 12px auto;
+  position: relative;
+  color: white;
+  left: -100px;
+  box-sizing: border-box;
+  animation: immersiveTranslateShadowRolling 1.5s linear infinite;
+}
+
+@keyframes immersiveTranslateShadowRolling {
+  0% {
+    box-shadow: 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0);
+  }
+
+  12% {
+    box-shadow: 100px 0 var(--loading-color), 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0);
+  }
+
+  25% {
+    box-shadow: 110px 0 var(--loading-color), 100px 0 var(--loading-color), 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0);
+  }
+
+  36% {
+    box-shadow: 120px 0 var(--loading-color), 110px 0 var(--loading-color), 100px 0 var(--loading-color), 0px 0 rgba(255, 255, 255, 0);
+  }
+
+  50% {
+    box-shadow: 130px 0 var(--loading-color), 120px 0 var(--loading-color), 110px 0 var(--loading-color), 100px 0 var(--loading-color);
+  }
+
+  62% {
+    box-shadow: 200px 0 rgba(255, 255, 255, 0), 130px 0 var(--loading-color), 120px 0 var(--loading-color), 110px 0 var(--loading-color);
+  }
+
+  75% {
+    box-shadow: 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 130px 0 var(--loading-color), 120px 0 var(--loading-color);
+  }
+
+  87% {
+    box-shadow: 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 130px 0 var(--loading-color);
+  }
+
+  100% {
+    box-shadow: 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0);
+  }
+}
+
+
+.immersive-translate-search-recomend {
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  position: relative;
+  font-size: 16px;
+}
+.immersive-translate-search-enhancement-en-title {
+  color: #4d5156;
+}
+/* dark */
+@media (prefers-color-scheme: dark) {
+  .immersive-translate-search-recomend {
+    border: 1px solid #3c4043;
+  }
+  .immersive-translate-close-action svg {
+    fill: #bdc1c6;
+  }
+
+.immersive-translate-search-enhancement-en-title {
+  color: #bdc1c6;
+}
+}
+
+
+.immersive-translate-search-settings {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  cursor: pointer;
+}
+
+.immersive-translate-search-recomend::before {
+  /* content: " "; */
+  /* width: 20px; */
+  /* height: 20px; */
+  /* top: 16px; */
+  /* position: absolute; */
+  /* background: center / contain url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAxlBMVEUAAADpTInqTIjpSofnSIfqS4nfS4XqS4nqTIjsTYnrTInqTIroS4jvQIDqTIn////+/v7rSYjpTIn8/v7uaZzrTIr9/f3wfansWJL88/b85e73qc39+/v3xNnylrvrVI/98fb62Obva5/8+fr76vH4y9zpSIj74e353Oj1ocTzm77xhK/veKbtYpjsXJTqU47oTInxjrXyh7L99fj40eH2ttH1udD3sc31ssz1rMnykLXucqPtbqD85e/1xdn2u9DzqcXrUY6FaJb8AAAADnRSTlMA34BgIM8Q37/fz7+/EGOHcVQAAAGhSURBVDjLhZPncuowEEZFTW7bXVU7xsYYTO/p7bb3f6lICIOYJOT4h7/VnFmvrBFjrF3/CR/SajBHswafctG0Qg3O8O0Xa8BZ6uw7eLjqr30SofCDVSkemMinfL1ecy20r5ygR5zz3ArcAqJExPTPKhDENEmS30Q9+yo4lEQkqVTiIEAHCT10xWERRdH0Bq0aCOPZNDV3s0xaYce1lHEoDHU8wEh3qRJypNcTAeKUIjgKMeGLDoRCLVLTVf+Ownj8Kk6H9HM6QXPgYjQSB0F00EJEu10ILQrs/QeP77BSSr0MzLOyuJJQbnUoOOIUI/A8EeJk9E4YUHUWiRyTVKGgQUB8/3e/NpdGlfI+FMQyWsCBWyz4A/ZyHXyiiz0Ne5aGZssoxRmcChw8/EFKQ5JwwkUo3FRT5yXS7q+Y/rHDZmFktzpGMvO+5QofA4FPpEmGw+EWRCFvnaof7Zhe8NuYSLR0xErKLThUSs8gnODh87ssy6438yzbLzxl012HS19vfCf3CNhnbWOL1eEsDda+gDPUvri8tSZzNFrwIZf1NmNvqC1I/t8j7nYAAAAASUVORK5CYII='); */
+}
+
+.immersive-translate-search-title {}
+
+.immersive-translate-search-title-wrapper {}
+
+.immersive-translate-search-time {
+  font-size: 12px;
+  margin: 4px 0 24px;
+  color: #70757a;
+}
+
+.immersive-translate-expand-items {
+  display: none;
+}
+
+.immersive-translate-search-more {
+  margin-top: 16px;
+  font-size: 14px;
+}
+
+.immersive-translate-modal {
+  display: none;
+  position: fixed;
+  z-index: 1000000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+  font-size:15px;
+}
+
+.immersive-translate-modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 500px;
+  font-family: system-ui, -apple-system, "Segoe UI", "Roboto", "Ubuntu",
+    "Cantarell", "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+.immersive-translate-modal-title {
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin-bottom: 20px;
+  color: hsl(205, 20%, 32%);
+}
+
+.immersive-translate-modal-body {
+  color: hsl(205, 20%, 32%)
+}
+
+.immersive-translate-close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.immersive-translate-close:hover,
+.immersive-translate-close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.immersive-translate-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.immersive-translate-btn {
+  width: fit-content;
+  color: #fff;
+  background-color: #ea4c89;
+  border: none;
+  font-size: 14px;
+  margin: 5px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.immersive-translate-btn:hover {
+  background-color: #f082ac;
+}
+.immersive-translate-cancel-btn {
+  /* gray color */
+  background-color: rgb(89, 107, 120);
+}
+
+
+.immersive-translate-cancel-btn:hover {
+  background-color: hsl(205, 20%, 32%);
+}
+
+
+.immersive-translate-btn svg {
+  margin-right: 5px;
+}
+
+.immersive-translate-link {
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-drag: none;
+  text-decoration: none;
+  color: #007bff;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, .1);
+}
+
+.immersive-translate-primary-link {
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-drag: none;
+  text-decoration: none;
+  color: #ea4c89;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, .1);
+}
+
+.immersive-translate-modal input[type="radio"] {
+  margin: 0 6px;
+  cursor: pointer;
+}
+
+.immersive-translate-modal label {
+  cursor: pointer;
+}
+
+.immersive-translate-close-action {
+  position: absolute;
+  top: 2px;
+  right: 0px;
+  cursor: pointer;
+}
+</style></head>
+<body>
+<!-- navbar begin -->
+<div class="navbar navbar-default">
+    <div class="navbar-inner">
+        <div class="container" style="text-align: center; position:relative;">
+            <!--[if lte IE 8]>
+            <span style="display:inline-block;margin:0 auto;color:red;">为了更好的体验，请使用IE10及以上版本</span>
+            <![endif]-->
+            <div class="brand-box">
+                <a class="brand" href="https://xz.aliyun.com/tab/1"></a>
+            </div>
+            
+                <a href="https://account.aliyun.com/login/login.htm?oauth_callback=https%3A%2F%2Fxz.aliyun.com%2Ft%2F12948&amp;from_type=xianzhi" class="pull-right anonymous-user hh_loding">
+                    登录</a>
+            
+            <div class="nav-collapse collapse">
+                <div class="search d1 text-right">
+                    <form method="get" action="https://xz.aliyun.com/search">
+                        <input type="text" placeholder="搜索" name="keyword">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- navbar end -->
+<!-- main content begin -->
+<div id="Wrapper" class="container">
+    
+    
+    <div class="row2">
+        <div class="span10">
+            
+    
+
+
+
+    <script src="./谷歌语法+未授权_files/jquery.toc.min.js.下载"></script>
+    <script src="./谷歌语法+未授权_files/toc.min.js.下载"></script>
+    <script src="./谷歌语法+未授权_files/dt.js.下载"></script>
+    
+
+
+<div class="row box content">
+    
+    <div class="box-container">
+        <div class="main-topic">
+            <div class="clearfix user-info topic-list">
+                <p><span class="content-title ">我与逻辑漏洞的爱恨情仇</span>
+                </p>
+                <div class="topic-info">
+                <span class="info-left">
+                    <a href="https://xz.aliyun.com/u/8351">
+                        <span class="username cell"> 小陈</span></a> <span class="i-seprator"> / </span>
+                    <span> 2023-11-01 18:49:00</span><span class="i-seprator"> / </span>
+                    
+                        <span>发表于安徽 / </span>
+                    
+                    <span>浏览数 6512</span>
+                    
+                    
+                    <span class="content-node">
+                    
+                        <span class="label label-default label-node-first">
+                            <a href="https://xz.aliyun.com/tab/1">技术文章</a></span>
+                        <span class="label label-default">
+                            <a href="https://xz.aliyun.com/node/11">技术文章</a></span>
+                    
+                    </span>
+                </span>
+                    <span class="pull-right t-vote cell info-right"><a class="vote vote-up" href="javascript:" onclick="voteUp(12948);">
+             顶(4)</a>
+             <a class="vote vote-down" href="javascript:" onclick="voteDown(12948);">
+             踩(0)</a></span>
+                </div>
+            </div>
+            <hr>
+            <div id="topic_content" class="topic-content markdown-body">
+                <h1 id="toc-0">前言：</h1>
+<p>逻辑漏洞自始至终一直是一个永恒的话题，逻辑漏洞是一种设计缺陷，通常表现为设计者或开发者在思考过程中做出的特殊假设存在明显或隐含的错误，也是目前大环境下比例比较高的漏洞，在以前挖逻辑也是id换着测，但随着时间的推移，人员安全意识的增高，也逐渐出现更多新奇的手段，比如敏感字符加密处理，让你抓不到包各种验证等等，可以尝试全局代理抓包，js前端解密等绕过。</p>
+<h1 id="toc-1">总结下逻辑漏洞相关的类型</h1>
+<ul>
+<li>撞库，爆破账号/密码</li>
+<li>登陆处验证码可绕过，登录注册等</li>
+<li>无限制的短信轰炸/突破限制的短信轰炸</li>
+<li>任意用户登录/任意用户注册</li>
+<li>任意用户密码找回</li>
+<li>支付漏洞/零元购/并发/优惠券/签约/占用商品/溢出等</li>
+<li>条件竞争/并发突破限制</li>
+<li>验证码可控/DDos</li>
+<li>水平越权/垂直越权</li>
+<li>越权删除/评论/登录/点赞/修改资料</li>
+<li>非会员使用会员功能</li>
+<li>前端js某些限制绕过/解密</li>
+<li>其他突破限制或影响业务的功能</li>
+</ul>
+<h1 id="toc-2">正文</h1>
+<p>相信各位师傅都看过很多逻辑漏洞的文章，本文也不重复叙述那些文章，只讲一些技巧型的思路，批量挖掘逻辑漏洞，希望各位师傅看完能有所收获举一反三，为了不产生不必要麻烦，故很多地方打码处理。</p>
+<p>在2019年时，利用搜索引擎发现了大量逻辑漏洞，可以说刷分很强，但是至今在网上也没看到过这种的文章，思路其实很简单，挖洞就是脑子要灵活<br>
+<a id="img0" href="./谷歌语法+未授权_files/20231031230524-eadc33da-77fe-1.png"><img src="./谷歌语法+未授权_files/20231031230524-eadc33da-77fe-1.png"></a><br>
+先来一张图冲击一下视野<br>
+<a id="img1" href="./谷歌语法+未授权_files/20231031230642-1966e07e-77ff-1.png"><img src="./谷歌语法+未授权_files/20231031230642-1966e07e-77ff-1.png"></a><br>
+Ps：2019年7月的图<br>
+<a id="img2" href="./谷歌语法+未授权_files/20231031230739-3b70ea84-77ff-1.png"><img src="./谷歌语法+未授权_files/20231031230739-3b70ea84-77ff-1.png"></a><br>
+Ps：现在的图</p>
+<p>当时没有刷，相对更喜欢做一些研究然后放起来，然后当兵去了，<br>
+时隔两三年，发现被刷掉了一部分，但还是有思路的，先来看个案例<br>
+<a id="img3" href="./谷歌语法+未授权_files/20231031231049-acf180ec-77ff-1.png"><img src="./谷歌语法+未授权_files/20231031231049-acf180ec-77ff-1.png"></a></p>
+<p>仅举例一些关键词，自行发挥：</p>
+
+<pre><code>inurl:m intitle:订单详情 inurl:id=
+我的订单 订单详情
+inurl:order 订单详情
+inurl:wap intitle:订单详情
+inurl:m intitle:订单详情
+inurl:php intitle:订单详情
+title:订单详情 手机号
+site:.com title:订单详情
+title:订单详情 身份证</code></pre>
+<p>当然不止这些，你还可以根据规律去构造关键词，用google搜索结果如下（ps:你也可以使用其他搜索引擎）：<br>
+<a id="img4" href="./谷歌语法+未授权_files/20231101183633-86f9dfc6-78a2-1.png"><img src="./谷歌语法+未授权_files/20231101183633-86f9dfc6-78a2-1.png"></a></p>
+<p>部分案例：<br>
+<a id="img5" href="./谷歌语法+未授权_files/20231031231605-691e7676-7800-1.png"><img src="./谷歌语法+未授权_files/20231031231605-691e7676-7800-1.png"></a><br>
+<a id="img6" href="./谷歌语法+未授权_files/20231031232145-338f36b6-7801-1.png"><img src="./谷歌语法+未授权_files/20231031232145-338f36b6-7801-1.png"></a><br>
+<a id="img7" href="./谷歌语法+未授权_files/20231031232540-bfa2abf6-7801-1.png"><img src="./谷歌语法+未授权_files/20231031232540-bfa2abf6-7801-1.png"></a><br>
+<a id="img8" href="./谷歌语法+未授权_files/20231101183848-d76625e6-78a2-1.png"><img src="./谷歌语法+未授权_files/20231101183848-d76625e6-78a2-1.png"></a></p>
+<p>其实细心的师傅看到这里就已经可以构造自己的关键词了 比如上面第一张图 orderdetail.ac/?id=1</p>
+<p>首先id 是一个参数，orderdetai 也可以当一个参数，可得到关键词 inurl:orderdetail 订单详情</p>
+<p>这个思路其实可以一直刷，为什么这么说，因为Google会不断收录网址，即使部分厂商修复了，但互联网一直存在，不断有产商开发web程序，各种web功能上线，再收录！</p>
+<p>我们利用url中的参数去构造，当你找到了第一个，你就可以找到N个，多去观察url地址以及网站标题和网站内容特征。</p>
+<h2 id="toc-3">扩展思路1</h2>
+<p>当然，这些根据市场已经不能满足于我们的需求，我们需要寻找相同的系统<br>
+例如：<a href="http://domain/wechat/orderDetail.ac?id=887" target="_blank">http://domain/wechat/orderDetail.ac?id=887</a><br>
+可以构造关键词：inurl:orderDetail intitle:订单　　inurl:wechat intitle:订单<br>
+<a id="img9" href="./谷歌语法+未授权_files/20231101184839-376e877a-78a4-1.png"><img src="./谷歌语法+未授权_files/20231101184839-376e877a-78a4-1.png"></a></p>
+<h2 id="toc-4">扩展思路2</h2>
+<p>我们同样可以利用关键词，例如参数中为order 翻译为订单<br>
+我们就可以继续构造相似关键词，例如：inurl:orders intitle:订单</p>
+<h2 id="toc-5">扩展思路3</h2>
+<p>我们还可以利用网站标题继续构造关键词，例如标题：管理系统<br>
+inurl:order intitle:管理系统</p>
+<h2 id="toc-6">扩展思路4</h2>
+<p>发现存在越权漏洞的网址，我们利用fofa等搜索引擎搜索网站特定指纹去寻找相同系统实现批量越权<br>
+然后同理google搜索  inurl:domain intitle:订单详情，思维跳跃一点</p>
+<h1 id="toc-7">其他案例</h1>
+<p>部分垂直越权直接进入管理员账户<br>
+<a id="img10" href="./谷歌语法+未授权_files/20231101143136-4e689160-7880-1.png"><img src="./谷歌语法+未授权_files/20231101143136-4e689160-7880-1.png"></a><br>
+<a id="img11" href="./谷歌语法+未授权_files/20231101143641-04858d36-7881-1.png"><img src="./谷歌语法+未授权_files/20231101143641-04858d36-7881-1.png"></a><br>
+<a id="img12" href="./谷歌语法+未授权_files/20231101143745-2a5dbba0-7881-1.png"><img src="./谷歌语法+未授权_files/20231101143745-2a5dbba0-7881-1.png"></a></p>
+<h1 id="toc-8">某SRC经典案例</h1>
+<p>通过搜索引擎得到漏洞url：<br>
+<a href="https://domain/xxxxxxxx?openid=xxxx&amp;sign=xxxxx" target="_blank">https://domain/xxxxxxxx?openid=xxxx&amp;sign=xxxxx</a></p>
+<p>访问后可发现手机号关键位置都有*<br>
+<a id="img13" href="./谷歌语法+未授权_files/20231101144138-b534550e-7881-1.png"><img src="./谷歌语法+未授权_files/20231101144138-b534550e-7881-1.png"></a></p>
+<p>刷新看请求数据包，common接口可以看到原手机号，导致信息泄露</p>
+<p>数据包信息如下（下面泄露的手机号均为修改后的手机号）：</p>
+
+<pre><code>{"resultcode" : 0,"resultinfo" : {"errMsg" : "查询成功","list" : [{"output1" : "0","output2" : "[{\"payTime\":\"1622222277\",\"payFee\":\"3000\",\"paydateformat\":\"08月02日 00:00\",\"itemName\":\"河南中国移动30元-秒充\",\"dealType\":\"1\",\"moblileNum\":\"175*******6\",\"dealId\":\"7921022761202209021872368048\",\"sellerName\":\"\",\"dealState\":\"5\"},{\"payTime\":\"1661919758\",\"payFee\":\"3000\",\"paydateformat\":\"08月02日 00:00\",\"itemName\":\"河南中国移动30元-秒充\",\"dealType\":\"1\",\"moblileNum\":\"157*******1\",\"dealId\":\"7921022741202208310771116347\",\"sellerName\":\"\",\"dealState\":\"5\"},{\"payTime\":\"1653019410\",\"payFee\":\"3000\",\"paydateformat\":\"08月02日 00:00\",\"itemName\":\"河南中国移动30元-秒充\",\"dealType\":\"1\",\"moblileNum\":\"157*******9\",\"dealId\":\"7921020951202205208438499741\",\"sellerName\":\"\",\"dealState\":\"5\"},{\"payTime\":\"1650012506\",\"payFee\":\"5000\",\"paydateformat\":\"08月03日 00:00\",\"itemName\":\"河南中国联通50元-秒充\",\"dealType\":\"1\",\"moblileNum\":\"131*******1\",\"dealId\":\"7921022741202204157844385151\",\"sellerName\":\"\",\"dealState\":\"5\"},{\"payTime\":\"1647566320\",\"payFee\":\"3000\",\"paydateformat\":\"08月03日 00:00\",\"itemName\":\"河南中国移动30元-秒充}
+{\"payTime\":\"1650012506\",\"payFee\":\"5000\",\"paydateformat\":\"08月04日 00:00\",\"itemName\":\"河南中国联通50元-秒充\",\"dealType\":\"1\",\"moblileNum\":\"131*******2\",\"dealId\":\"7921022741202204157844385545\",\"sellerName\":\"\",\"dealState\":\"5\"},{\"payTime\":\"1687566320\",\"payFee\":\"3000\",\"paydateformat\":\"08月04日 00:00\",\"itemName\":\"河南中国移动30元-秒充}
+{\"payTime\":\"1690012506\",\"payFee\":\"5000\",\"paydateformat\":\"08月05日 00:00\",\"itemName\":\"河南中国联通50元-秒充\",\"dealType\":\"1\",\"moblileNum\":\"131*******1\",\"dealId\":\"7921022741202204157844385987\",\"sellerName\":\"\",\"dealState\":\"5\"},{\"payTime\":\"1727566320\",\"payFee\":\"3000\",\"paydateformat\":\"08月05日 00:00\",\"itemName\":\"河南中国移动30元-秒充}</code></pre>
+<p>构造相关语法，得到更多的订单：<br>
+<a id="img14" href="./谷歌语法+未授权_files/20231102095204-6c3a9f2e-7922-1.jpg"><img src="./谷歌语法+未授权_files/20231102095204-6c3a9f2e-7922-1.jpg"></a></p>
+<h1 id="toc-9">结束语</h1>
+<p>如上仅为百度的展示结果，google还有更多结果，希望师傅们看完可以举一反三，吸取经验的技巧，利用此思路挖SRC挣了5k，当然不止于上面的案例，上面仅举例，具体操作还要看实际情况再去利用。</p>
+
+            </div>
+            
+
+            <div class="post-user-action" style="margin-top: 34px;">
+                <span class="btn btn-default pull-right" id="mark" data-action="topic" data-pk="12948">
+                    <span id="mark-text">点击收藏 </span><span class="i-seprator"> | </span><span id="mark-count">11</span>
+                </span>
+                
+                    <span class="btn btn-default pull-right" id="follow_topic" data-pk="12948">
+                     <span>关注</span><span class="i-seprator"> | </span><span id="follow-count">2</span>
+                    </span>
+                
+                
+                    <span class="btn btn-default pull-right">
+                     <span>
+                         
+                             <span id="ready_reward" data-toggle="modal" data-target="#myModal">打赏</span>
+                         
+                     </span>
+                    </span>
+                
+                <div class="clearfix"></div>
+            </div>
+            
+                <div class="related-section">
+                    <div class="related-box">
+                        
+                            <span><a class="pull-left" href="https://xz.aliyun.com/t/12944" title="F5 BIG-IP RCE（CVE-2023-46747）漏洞分析复现"><span class="related-label" style="padding: 3px 4px;margin-right: 3px;">上一篇：</span>F5 BIG-IP RCE（CVE...</a></span>
+                        
+                        
+                            <span><a class="pull-left" href="https://xz.aliyun.com/t/12950" title="亿赛通漏洞浅析"><span class="related-label" style="">下一篇：</span>亿赛通漏洞浅析</a></span>
+                        
+                    </div>
+                </div>
+            
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel" style="text-align: center">
+                    积分打赏
+                </h4>
+            </div>
+            <div class="modal-body" id="button-value">
+                <div style="text-align: center;">
+                 <div role="group">
+                    <button type="button" class="btn btn-secondary m64" style="min-width: 64px;" data-value="type1">
+                        1分
+                    </button>
+                    <button type="button" class="btn btn-secondary m64" style="min-width: 64px;" data-value="type2">
+                        2分
+                    </button>
+                    <button type="button" class="btn btn-secondary m64" style="min-width: 64px;" data-value="type3">
+                        5分
+                    </button>
+                 </div>
+                 <br>
+                 <div style="margin-top: 20px">
+                    <button type="button" class="btn btn-secondary m64" style="min-width: 64px;" data-value="type4">
+                        8分
+                    </button>
+                    <button type="button" class="btn btn-secondary m64" style="min-width: 64px;" data-value="type5">
+                        10分
+                    </button>
+                    <button type="button" class="btn btn-secondary m64" style="min-width: 64px;" data-value="type6">
+                        20分
+                    </button>
+                 </div>
+                </div>
+            </div>
+            <div class="modal-footer" id="confirm">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="reward_topic" data-pk="12948">确定</button>
+            </div>
+        </div>
+    </div><!-- /.modal -->
+</div>
+
+    <!-- topic & appendix -->
+    
+
+
+
+<div class="row box">
+    <ol class="breadcrumb">
+        <li class="active">1 条回复</li>
+    </ol>
+    <div class="box-container post-container">
+        
+            
+                <ul class="post-info" id="reply-19529">
+                    <li>
+                        <div class="row1 user-info clearfix">
+                            
+                                <img class="avatar pull-left tiny-avatar" src="./谷歌语法+未授权_files/default_avatar.png">
+                            
+                            <span class="post-info ">
+                                 
+                                <a class="label label-default" href="https://xz.aliyun.com/u/76876">1554462452483983</a>
+                                
+                                <span class="bbs-time">2023-12-13 16:37:02</span>
+                                
+                                    <span>来自安徽 </span>
+                                
+                            </span>
+                            <div class="post-content markdown-body">
+                                <p>师傅退役后专升本了吗退役士兵免试的</p>
+
+                            </div>
+                            <div class="manual-box">
+                                <span class="thumbs " data-action="post" data-pk="19529" data-topic="12948"><i class="fa fa-thumbs-o-up"></i><span>0</span></span>
+                                <span class="reply-jump reply reply-count " data-nickname="1554462452483983">回复Ta</span>
+                            </div>
+                        </div>
+
+                        <hr>
+                    </li>
+                </ul>
+            
+        
+    </div>
+</div>
+
+
+    <!-- posts of topic -->
+    
+        <div class="row box" id="reply-box">
+            
+            <div class="box-container clearfix">
+                
+                    <div class="reminder">
+                        <a href="https://account.aliyun.com/login/login.htm?oauth_callback=https%3A%2F%2Fxz.aliyun.com%2Ft%2F12948&amp;from_type=xianzhi"><strong>登录</strong></a> 后跟帖
+                    </div>
+                
+            </div>
+        </div>
+    
+    <!-- editor for post -->
+    
+
+        </div>
+        <div class="span3 pull-right offset sidebar">
+            
+
+
+    <div class="box">
+        <div class="info-panel">
+            <p><strong>先知社区</strong></p>
+            <hr>
+            <p class="text-center login-btn">
+                <a href="https://account.aliyun.com/login/login.htm?oauth_callback=https%3A%2F%2Fxz.aliyun.com%2Ft%2F12948&amp;from_type=xianzhi" class="btn">现在登录</a>
+            </p>
+        </div>
+    </div>
+
+
+
+    <div class="box">
+        <div class="hot-node notice">
+            <div class="info-body">
+                <a href="https://xz.aliyun.com/notice" style="padding: 4px 10px 4px 10px;">社区小黑板</a>
+            </div>
+        </div>
+    </div>
+
+
+<div class="box">
+    <div class="global-charts">
+        <div id="chart-header">
+            <div class="col-sm-4 text-center charts" data-type="year">
+                年度贡献榜
+            </div>
+            <div class="text-center charts active" data-type="month">
+                月度贡献榜
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div id="chart_body">
+            <div class="info-body" data-type="year">
+
+                
+                    <div class="member">
+                        <div class="pull-left chart-avatar">
+                            
+                                <img src="./谷歌语法+未授权_files/default_avatar.png">
+                            
+                        </div>
+                        <div class="chart-name">
+                            <a class="nickname" href="https://xz.aliyun.com/u/45806" title="0x0101">0x0101</a>
+                            <span class="num-box">
+                                <span class="badge badge-important">1</span>
+                            </span>
+                        </div>
+
+                    </div>
+                
+                    <div class="member">
+                        <div class="pull-left chart-avatar">
+                            
+                                <img src="./谷歌语法+未授权_files/default_avatar.png">
+                            
+                        </div>
+                        <div class="chart-name">
+                            <a class="nickname" href="https://xz.aliyun.com/u/49646" title="frank·zhu">frank·zhu</a>
+                            <span class="num-box">
+                                <span class="badge badge-important">1</span>
+                            </span>
+                        </div>
+
+                    </div>
+                
+                    <div class="member">
+                        <div class="pull-left chart-avatar">
+                            
+                                <img src="./谷歌语法+未授权_files/default_avatar.png">
+                            
+                        </div>
+                        <div class="chart-name">
+                            <a class="nickname" href="https://xz.aliyun.com/u/42027" title="yxxxdd">yxxxdd</a>
+                            <span class="num-box">
+                                <span class="badge badge-important">1</span>
+                            </span>
+                        </div>
+
+                    </div>
+                
+                    <div class="member">
+                        <div class="pull-left chart-avatar">
+                            
+                                <img src="./谷歌语法+未授权_files/26703_bc0e9e35623dbb9aa3.png">
+                            
+                        </div>
+                        <div class="chart-name">
+                            <a class="nickname" href="https://xz.aliyun.com/u/26703" title="任意门">任意门</a>
+                            <span class="num-box">
+                                <span class="badge badge-important">1</span>
+                            </span>
+                        </div>
+
+                    </div>
+                
+            </div>
+            <div class="info-body" data-type="month">
+                
+                     <div class="member">
+                        <div class="pull-left chart-avatar">
+                            
+                                <img src="./谷歌语法+未授权_files/default_avatar.png">
+                            
+                        </div>
+                        <div class="chart-name">
+                            <a class="nickname" href="https://xz.aliyun.com/u/45806" title="0x0101" style="">0x0101</a>
+                            <span class="num-box">
+                                <span class="badge badge-important">1</span>
+                            </span>
+                        </div>
+                    </div>
+                
+                     <div class="member">
+                        <div class="pull-left chart-avatar">
+                            
+                                <img src="./谷歌语法+未授权_files/default_avatar.png">
+                            
+                        </div>
+                        <div class="chart-name">
+                            <a class="nickname" href="https://xz.aliyun.com/u/49646" title="frank·zhu" style="">frank·zhu</a>
+                            <span class="num-box">
+                                <span class="badge badge-important">1</span>
+                            </span>
+                        </div>
+                    </div>
+                
+                     <div class="member">
+                        <div class="pull-left chart-avatar">
+                            
+                                <img src="./谷歌语法+未授权_files/default_avatar.png">
+                            
+                        </div>
+                        <div class="chart-name">
+                            <a class="nickname" href="https://xz.aliyun.com/u/42027" title="yxxxdd" style="">yxxxdd</a>
+                            <span class="num-box">
+                                <span class="badge badge-important">1</span>
+                            </span>
+                        </div>
+                    </div>
+                
+                     <div class="member">
+                        <div class="pull-left chart-avatar">
+                            
+                                <img src="./谷歌语法+未授权_files/26703_bc0e9e35623dbb9aa3.png">
+                            
+                        </div>
+                        <div class="chart-name">
+                            <a class="nickname" href="https://xz.aliyun.com/u/26703" title="任意门" style="">任意门</a>
+                            <span class="num-box">
+                                <span class="badge badge-important">1</span>
+                            </span>
+                        </div>
+                    </div>
+                
+            </div>
+        </div>
+
+    </div>
+</div>
+
+    <div class="box sfixed" id="toc-container" style="width: 176px;">
+        <div class="panel-info">
+            <div class="panel-heading">
+                <h4>目录</h4>
+            </div>
+            <div id="toc">
+                <div class="high-light" style="display: block; background-color: rgb(243, 243, 243); position: absolute; height: 26px; top: 102px;"></div>
+            <ol style="top: 50px;"><li><a href="https://xz.aliyun.com/t/12948#toc-0">前言：</a></li><li><a href="https://xz.aliyun.com/t/12948#toc-1">总结下逻辑漏洞相关的类型</a></li><li><a href="https://xz.aliyun.com/t/12948#toc-2">正文</a><ol><li><a href="https://xz.aliyun.com/t/12948#toc-3">扩展思路1</a></li><li><a href="https://xz.aliyun.com/t/12948#toc-4">扩展思路2</a></li><li><a href="https://xz.aliyun.com/t/12948#toc-5">扩展思路3</a></li><li><a href="https://xz.aliyun.com/t/12948#toc-6">扩展思路4</a></li></ol></li><li><a href="https://xz.aliyun.com/t/12948#toc-7">其他案例</a></li><li><a href="https://xz.aliyun.com/t/12948#toc-8">某SRC经典案例</a></li><li><a href="https://xz.aliyun.com/t/12948#toc-9">结束语</a></li></ol></div>
+        </div>
+    </div>
+    <div style="clear: both;"></div>
+
+
+    <script type="text/javascript">
+        $(function () {
+            $(".charts").click(switchChart);
+            $("[data-toggle='tooltip']").tooltip();
+
+            function switchChart() {
+                let _this = $(this);
+                let idx = _this.attr("data-type")
+                let content = $(`#chart_body>.info-body[data-type='${idx}']`)
+                if (!_this.hasClass("active")) {
+                    _this.addClass("active").siblings().removeClass("active")
+                    content.show().siblings().hide()
+                }
+            }
+        })
+    </script>
+
+
+    <style>
+
+    </style>
+
+
+        </div>
+    </div>
+
+
+</div>
+<footer class="bs-docs-footer">
+    <div class="container text-center">
+        <div class="links">
+            <a href="https://xz.aliyun.com/feed" target="_blank">RSS</a>
+            <a href="https://xz.aliyun.com/about" target="_blank"><span>关于社区</span></a>
+            <a href="https://xz.aliyun.com/partner" target="_blank"><span>友情链接</span></a>
+            <a href="https://xz.aliyun.com/notice">社区小黑板</a>
+            <a href="https://report.aliyun.com/" target="_blank">举报中心</a>
+            <a href="https://www.aliyun.com/complaint" target="_blank">我要投诉</a>
+        </div>
+    </div>
+</footer>
+
+<script src="./谷歌语法+未授权_files/bootstrap.min.js.下载"></script>
+<script src="./谷歌语法+未授权_files/xz.js.下载"></script>
+
+
+    
+    <script type="text/javascript">
+        $(document).ready(function () {
+            voteUp = function (topicPk) {
+                if (topicPk) {
+                    $.ajax({
+                        url: '/forum/topic/up/',
+                        data: {'pk': topicPk},
+                        type: 'post',
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.not_authenticated) {
+                                window.location.href = 'https://account.aliyun.com/login/login.htm?oauth_callback=https%3A%2F%2Fxz.aliyun.com%2Ft%2F12948&amp;from_type=xianzhi'
+                            } else {
+                                if (data.success) {
+                                    $('.t-vote > .vote-up').html(data.html);
+                                }
+                            }
+                        }
+                    });
+                }
+            };
+            voteDown = function (topicPk) {
+                if (topicPk) {
+                    $.ajax({
+                        url: '/forum/topic/down/',
+                        data: {'pk': topicPk},
+                        type: 'post',
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.not_authenticated) {
+                                window.location.href = 'https://account.aliyun.com/login/login.htm?oauth_callback=https%3A%2F%2Fxz.aliyun.com%2Ft%2F12948&amp;from_type=xianzhi'
+                            } else {
+                                if (data.success) {
+                                    $('.t-vote > .vote-down').html(data.html);
+                                }
+                            }
+
+                        }
+                    });
+                }
+            };
+            
+            $("[data-toggle='tooltip']").tooltip();
+        });
+    </script>
+
+
+    <script src="./谷歌语法+未授权_files/z_stat.php"></script>
+
+
+</body></html>
