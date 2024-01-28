@@ -1,3 +1,18 @@
+### 什么是Web应用型API
+
+通常使用HTTP协议，在企业与企业、企业内部不同的应用程序之间，通过Web开发过程中架构设计方法，以一组服务的形式对外提供调用接口，以满足不同类型、不同服务消费者的需求。例如，社交应用新浪微博的用户登录
+
+![image-20240110223454225](C:/Users/microfan/AppData/Roaming/Typora/typora-user-images/image-20240110223454225.png)
+
+**RESTful API**: 以REST风格为主，是当前业界主流API技术形式。典型的消息格式样例如下：
+
+```http
+GET /V1/apiendpoint HTTP/1.1
+Host: api.example.com
+```
+
+- 资源URL格式为schema://host[:port]/version/path,其中schema是制定使用的应用层协议，比如HTTP、HTTPS等；host是IP地址或者域名；port是API服务器端口，version是API请求的版本；path是API请求资源的路径。
+
 **发现并测试前端未完全使用的API**
 
 API testing
@@ -111,5 +126,21 @@ Lab：Finding and exploiting and unused API endpoint
 
 可以测试任意用户输入是否存在任何类型的参数污染。例如，查询参数、表单字段、标头和URL路径参数都可能容易受到攻击。
 
+### 案例
 
+Facebook OAuth漏洞
+
+Facebooke登录功能遵循OAuth 2.0授权协议，第三方网站使用Facebook账号认证通过后获取访问令牌access_token来访问获取用户授权许可的资源信息。恶意攻击者通过技术手段劫持OAuth授权流程，窃取应用程序的access_token，从而达到接管用户账号的目的。
+
+![image-20240110224708363](https://raw.githubusercontent.com/m1crofan/image/main/image-20240110224708363.png)
+
+Facebook网站和国内的社交应用腾讯、微信、微博一样，提供第三方集成授权功能。正常情况下，Facebook第三方应用OAuth授权流程中，其中获取用户访问令牌access_token的URL请求格式如下：
+
+>https://www.facebook.com/connect/ping?client_id=APP_ID&redirect_uri=https://staticxx.faceebook.com/connect/xd_arbiter.php?version=42#origin=https://www.instagram.com
+
+参数APP_ID为第三方应用在Facebook注册时生成的应用ID值，/connect/ping为Facebook提供给第三方应用获取用户访问令牌access_token的API端点，这是大多数互联网平台OAuth认证时都需要提供的功能。
+
+Facebook为开发者提供javascript SDK作为接入方式，接入时，开发者通过编码在后台创建跨域通信的代理iframe，再使用window.postMessage()收发令牌。
+
+在测试中发现，此链接中跳转地址xd_arbiter.php?v=42的值可以被篡改，可以通过篡改来添加更多路径和参数，比如修改为xd_arbiter/?v=42，而且xd_arbiter也是请求的白名单路径。通过这样的方式，可以获取访问令牌的hash值。但若想获取可读写的访问令牌值，最好是借助于postMessage()将消息传送出去。而恰好在staticxx.facebook.com域名下，存在了提供上述代码功能的js文件，于是攻击者可以利用这个链接构造出登录的额URL。
 
